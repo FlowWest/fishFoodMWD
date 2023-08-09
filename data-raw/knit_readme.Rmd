@@ -1,0 +1,111 @@
+---
+title: "fishFoodMWD"
+output: github_document
+date: "`r Sys.Date()`"
+knit: (function(inputFile, encoding) {
+  rmarkdown::render(inputFile, 
+    encoding = encoding, 
+    output_dir = "../", 
+    output_file = "README.md"
+    )
+  })
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(tidyverse)
+library(sf)
+ggplot2::theme_set(theme_minimal())
+```
+
+# Import 
+
+```{r imports, echo=TRUE, message=FALSE}
+library(fishFoodMWD)
+```
+
+# Main datasets
+
+```{r data-fields, echo=TRUE, message=FALSE}
+fields
+```
+
+```{r data-distances, echo=TRUE, message=FALSE}
+distances
+```
+
+```{r data-watersheds, echo=TRUE, message=FALSE}
+watersheds
+```
+
+```{r data-returns, echo=TRUE, message=FALSE}
+returns
+```
+
+# Join structure
+
+![join diagram][man/figures/join_diagram.png]
+
+# Other layers
+
+```{r data-streams, echo=TRUE, message=FALSE}
+streams
+```
+
+```{r data-canals, echo=TRUE, message=FALSE}
+canals
+```
+
+
+# Plotting
+
+```{r plot-fields, echo=TRUE, message=FALSE}
+plot_fields()
+```
+
+```{r plot-distances, echo=TRUE, message=FALSE}
+plot_distances()
+```
+
+```{r plot-watersheds, echo=TRUE, message=FALSE}
+plot_watersheds()
+```
+
+# Calculations
+
+Moss et al. (2009) estimated that invertebrate biomass in flooded post-harvest agricultural fields increased at an average rate of  0.186 g/m^2 per day. 
+
+How much invertebrate biomass is produced by each field in 14 days?
+
+```{r calc-mass-by-field, echo=TRUE, message=FALSE}
+fields |> 
+  calc_inv_mass(14) |>
+  ggplot() + 
+    geom_sf(aes(fill = total_prod_g, color = total_prod_g)) + 
+    geom_sf(data=streams) + geom_sf(data=canals) + geom_sf(data=returns) 
+```
+
+Which watersheds produce the most invertebrate biomass?
+
+```{r calc-mass-by-watershed, echo=TRUE, message=FALSE}
+total_prod_by_group <- fields |> 
+  calc_inv_mass(14) |>
+  group_by(group_id) |> 
+  summarize(sum_total_prod_g = sum(total_prod_g)) |>
+  st_drop_geometry()
+
+watersheds |> 
+  left_join(total_prod_by_group) |>
+  ggplot() + 
+    geom_sf(aes(fill = sum_total_prod_g, color = sum_total_prod_g)) + 
+    geom_sf(data=streams) + geom_sf(data=canals) + geom_sf(data=returns) 
+```
+
+Growth in biomass over time by field
+
+```{r calc-field-ts, echo=TRUE, message=FALSE}
+fields |> 
+  head(n = 10) |>
+  calc_inv_mass_ts(14) |>
+  ggplot() + geom_line(aes(x=day, y=total_prod_g, color=unique_id)) + guides(color="none")
+```
