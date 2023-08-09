@@ -2,13 +2,6 @@
 title: "fishFoodMWD"
 output: github_document
 date: "`r Sys.Date()`"
-knit: (function(inputFile, encoding) {
-  rmarkdown::render(inputFile, 
-    encoding = encoding, 
-    output_dir = "../", 
-    output_file = "README.md"
-    )
-  })
 ---
 
 ```{r setup, include=FALSE}
@@ -44,7 +37,7 @@ returns
 
 # Join structure
 
-![join diagram][man/figures/join_diagram.png]
+![](man/figures/join_diagram.png)
 
 # Other layers
 

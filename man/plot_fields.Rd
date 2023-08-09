@@ -7,5 +7,5 @@
 plot_fields()
 }
 \description{
-Plot all fields. Display the watersheds, return points, and waterways on the basemap. Returns are distinguished as draining directly into the fish-bearing stream or via a seocndary waterway.
+Plot all fields. Displays the watersheds, return points, and waterways as well. Returns are distinguished as draining directly into the fish-bearing stream or via a secondary waterway.
 }

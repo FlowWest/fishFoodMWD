@@ -40,18 +40,18 @@ distances
 ```
 
     ## # A tibble: 9,628 × 11
-    ##    unique_id return_id dist_fbs return_dis totdist_ft totdist_mi fbs_name       
-    ##  * <chr>         <dbl>    <dbl>      <dbl>      <dbl>      <dbl> <chr>          
-    ##  1 1103539          49  261359.     41551.     302910       57.4 Lower-mid Sacr…
-    ##  2 1102849          49  261359.     60092.     321452       60.9 Lower-mid Sacr…
-    ##  3 1103353          49  261359.     69094.     330454       62.6 Lower-mid Sacr…
-    ##  4 1103425          50  266763.     69577.     336340       63.7 Lower-mid Sacr…
-    ##  5 1103546          50  266763.     21440.     288203       54.6 Lower-mid Sacr…
-    ##  6 1103560          49  261359.     41578.     302937       57.4 Lower-mid Sacr…
-    ##  7 1103561          49  261359.     38583.     299942       56.8 Lower-mid Sacr…
-    ##  8 1103563          50  266763.     74263.     341026       64.6 Lower-mid Sacr…
-    ##  9 1103564          50  266763.     77700.     344463       65.2 Lower-mid Sacr…
-    ## 10 1103566          50  266763.     81684.     348447       66.0 Lower-mid Sacr…
+    ##    unique_id return_id ds_fbs_dist return_dis totdist_ft totdist_mi fbs_name    
+    ##  * <chr>         <dbl>       <dbl>      <dbl>      <dbl>      <dbl> <chr>       
+    ##  1 1103539          49     261359.     41551.     302910       57.4 Lower-mid S…
+    ##  2 1102849          49     261359.     60092.     321452       60.9 Lower-mid S…
+    ##  3 1103353          49     261359.     69094.     330454       62.6 Lower-mid S…
+    ##  4 1103425          50     266763.     69577.     336340       63.7 Lower-mid S…
+    ##  5 1103546          50     266763.     21440.     288203       54.6 Lower-mid S…
+    ##  6 1103560          49     261359.     41578.     302937       57.4 Lower-mid S…
+    ##  7 1103561          49     261359.     38583.     299942       56.8 Lower-mid S…
+    ##  8 1103563          50     266763.     74263.     341026       64.6 Lower-mid S…
+    ##  9 1103564          50     266763.     77700.     344463       65.2 Lower-mid S…
+    ## 10 1103566          50     266763.     81684.     348447       66.0 Lower-mid S…
     ## # ℹ 9,618 more rows
     ## # ℹ 4 more variables: totrect_ft <dbl>, totrect_mi <dbl>, return_rec <dbl>,
     ## #   wet_dry <chr>
@@ -107,7 +107,7 @@ returns
 
 # Join structure
 
-\[join diagram\]\[man/figures/join_diagram.png\]
+![](man/figures/join_diagram.png)
 
 # Other layers
 
@@ -165,19 +165,19 @@ canals
 plot_fields()
 ```
 
-![](C:/Users/skylerlewis/Documents/GitHub/fishFoodMWD/README_files/figure-gfm/plot-fields-1.png)<!-- -->
+![](README_files/figure-gfm/plot-fields-1.png)<!-- -->
 
 ``` r
 plot_distances()
 ```
 
-![](C:/Users/skylerlewis/Documents/GitHub/fishFoodMWD/README_files/figure-gfm/plot-distances-1.png)<!-- -->
+![](README_files/figure-gfm/plot-distances-1.png)<!-- -->
 
 ``` r
 plot_watersheds()
 ```
 
-![](C:/Users/skylerlewis/Documents/GitHub/fishFoodMWD/README_files/figure-gfm/plot-watersheds-1.png)<!-- -->
+![](README_files/figure-gfm/plot-watersheds-1.png)<!-- -->
 
 # Calculations
 
@@ -195,7 +195,7 @@ fields |>
     geom_sf(data=streams) + geom_sf(data=canals) + geom_sf(data=returns) 
 ```
 
-![](C:/Users/skylerlewis/Documents/GitHub/fishFoodMWD/README_files/figure-gfm/calc-mass-by-field-1.png)<!-- -->
+![](README_files/figure-gfm/calc-mass-by-field-1.png)<!-- -->
 
 Which watersheds produce the most invertebrate biomass?
 
@@ -213,7 +213,7 @@ watersheds |>
     geom_sf(data=streams) + geom_sf(data=canals) + geom_sf(data=returns) 
 ```
 
-![](C:/Users/skylerlewis/Documents/GitHub/fishFoodMWD/README_files/figure-gfm/calc-mass-by-watershed-1.png)<!-- -->
+![](README_files/figure-gfm/calc-mass-by-watershed-1.png)<!-- -->
 
 Growth in biomass over time by field
 
@@ -224,4 +224,4 @@ fields |>
   ggplot() + geom_line(aes(x=day, y=total_prod_g, color=unique_id)) + guides(color="none")
 ```
 
-![](C:/Users/skylerlewis/Documents/GitHub/fishFoodMWD/README_files/figure-gfm/calc-field-ts-1.png)<!-- -->
+![](README_files/figure-gfm/calc-field-ts-1.png)<!-- -->

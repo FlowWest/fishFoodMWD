@@ -31,7 +31,7 @@ distances <-
   janitor::clean_names() |>
   select(unique_id,
          return_id,
-         dist_fbs,
+         ds_fbs_dist = dist_fbs,
          return_dis,
          totdist_ft,
          totdist_mi,
@@ -51,8 +51,7 @@ fields <-
   st_join(select(watersheds,
                  group_id)) |>
   mutate(area_ac = units::drop_units(units::set_units(st_area(geometry), "acre")),
-         volume_af = area_ac * 5/12) # |>
-  #left_join(distances, by=join_by(unique_id))
+         volume_af = area_ac * 5/12)
 
 # BASEMAP LAYERS
 

@@ -1,3 +1,4 @@
+#' @name calc_inv_mass
 #' @title Calculate invertebrate mass
 #' @description Calculates invertebrate mass (grams) based on field acreage. Requires input of the fields data frame with area_ac attribute. Returns the data frame with additional columns for calculated values. Can be chained with pipes.
 #' @importFrom tidyverse
@@ -9,6 +10,7 @@ calc_inv_mass <- function(df, day) {
            total_prod_g = daily_prod_g * day)
 }
 
+#' @name calc_inv_mass_ts
 #' @title Calculate invertebrate mass time series
 #' @description A wrapper for calc_inv_mass that runs the calculation for a series of elapsed days from 1 to ndays. Returns a data frame with total invertebrate mass (grams) by field unique_id and day.
 #' @importFrom tidyverse

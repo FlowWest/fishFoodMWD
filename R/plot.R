@@ -1,5 +1,5 @@
 #' @title Plot fields
-#' @description Plot all fields. Displays the watersheds, return points, and waterways as well. Returns are distinguished as draining directly into the fish-bearing stream or via a seocndary waterway.
+#' @description Plot all fields. Displays the watersheds, return points, and waterways as well. Returns are distinguished as draining directly into the fish-bearing stream or via a secondary waterway.
 #' @importFrom tidyverse
 #' @importFrom sf
 plot_fields <- function() {
@@ -46,27 +46,3 @@ plot_watersheds <- function() {
     scale_fill_manual(values = c("Direct" = "lightblue", "Indirect" = "pink", "Lateral" = "lightyellow")) +
     theme_minimal()
 }
-
-# plot_leaflet <- function() {}
-#
-# SCRATCH AREA
-#
-#plot_by_return_id <- function(id) {
-#  ggplot() +
-#    geom_sf(data = fishFoodMWD::watersheds |> filter(return_id == id)) +
-#    geom_sf(data = left_join(fishFoodMWD::fields, fishFoodMWD::distances) |> filter(return_id == id)) +
-#    geom_sf(data = fishFoodMWD::returns |> filter(return_id == id)) +
-#    theme_minimal()
-#}
-#plot_by_return_id(9)
-#
-#plot_by_watershed <- function() {
-#  ggplot() +
-#    geom_sf(data = left_join(fishFoodMWD::fields, fishFoodMWD::distances),
-#            aes(fill=totdist_mi, color=totdist_mi)) +
-#    geom_sf(data = fishFoodMWD::watersheds, color="white") +
-#    facet_wrap(vars(group_id)) +
-#    theme_minimal()
-#}
-# select a field, highlight the stream, the return_id, the watershed
-# select a return_id, highlight the stream, and all fields and watersheds that drain into it

@@ -7,5 +7,5 @@
 plot_watersheds()
 }
 \description{
-Plot watersheds
+Plot all watersheds (groups) showing their type of flow: lateral to fish-bearing stream, direct to fish-bearing stream via return point outlet, or indirect to fish-bearing stream via return point outlet and secondary canal. Displays the watersheds, return points, and waterways on the basemap.
 }

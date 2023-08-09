@@ -7,5 +7,5 @@
 plot_distances()
 }
 \description{
-Plot distances
+Plot all fields showing their calculated flow distances. Distance table is first joined to the fields table. Displays the watersheds, return points, and waterways on the basemap.
 }
