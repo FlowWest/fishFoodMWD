@@ -1,6 +1,6 @@
 fishFoodMWD
 ================
-2023-08-09
+2023-08-11
 
 # Import
 
@@ -165,19 +165,19 @@ canals
 plot_fields()
 ```
 
-![](README_files/figure-gfm/plot-fields-1.png)<!-- -->
+![](man/figures/plot-fields-1.png)<!-- -->
 
 ``` r
 plot_distances()
 ```
 
-![](README_files/figure-gfm/plot-distances-1.png)<!-- -->
+![](man/figures/plot-distances-1.png)<!-- -->
 
 ``` r
 plot_watersheds()
 ```
 
-![](README_files/figure-gfm/plot-watersheds-1.png)<!-- -->
+![](man/figures/plot-watersheds-1.png)<!-- -->
 
 # Calculations
 
@@ -192,10 +192,16 @@ fields |>
   calc_inv_mass(14) |>
   ggplot() + 
     geom_sf(aes(fill = total_prod_g, color = total_prod_g)) + 
-    geom_sf(data=streams) + geom_sf(data=canals) + geom_sf(data=returns) 
+    geom_sf(data=streams) + geom_sf(data=canals) + geom_sf(data=returns) +
+    scale_fill_viridis_c(aesthetics = c("colour", "fill"),
+                                  option="cividis",
+                                  direction=-1,
+                                  name="Total 14-day production (g) \nby field") +
+    ggplot2::scale_y_continuous(breaks = seq(38, 40, by=0.5)) +
+    ggplot2::scale_x_continuous(breaks = seq(-122.5, -120.5, by=0.5))
 ```
 
-![](README_files/figure-gfm/calc-mass-by-field-1.png)<!-- -->
+![](man/figures/calc-mass-by-field-1.png)<!-- -->
 
 Which watersheds produce the most invertebrate biomass?
 
@@ -210,18 +216,26 @@ watersheds |>
   left_join(total_prod_by_group) |>
   ggplot() + 
     geom_sf(aes(fill = sum_total_prod_g, color = sum_total_prod_g)) + 
-    geom_sf(data=streams) + geom_sf(data=canals) + geom_sf(data=returns) 
+    geom_sf(data=streams) + geom_sf(data=canals) + geom_sf(data=returns) +
+    scale_fill_viridis_c(aesthetics = c("colour", "fill"),
+                                  option="cividis",
+                                  direction=-1,
+                                  name="Total 14-day production (g) \nby watershed") +
+    ggplot2::scale_y_continuous(breaks = seq(38, 40, by=0.5)) +
+    ggplot2::scale_x_continuous(breaks = seq(-122.5, -120.5, by=0.5))
 ```
 
-![](README_files/figure-gfm/calc-mass-by-watershed-1.png)<!-- -->
+![](man/figures/calc-mass-by-watershed-1.png)<!-- -->
 
-Growth in biomass over time by field
+These results are directly proportional to field acreage.
+
+Growth in biomass over time by field (illustrative example):
 
 ``` r
 fields |> 
   head(n = 10) |>
   calc_inv_mass_ts(14) |>
-  ggplot() + geom_line(aes(x=day, y=total_prod_g, color=unique_id)) + guides(color="none")
+  ggplot() + geom_line(aes(x=day, y=total_prod_g, color=unique_id))
 ```
 
-![](README_files/figure-gfm/calc-field-ts-1.png)<!-- -->
+![](man/figures/calc-field-ts-1.png)<!-- -->

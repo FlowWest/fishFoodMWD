@@ -7,7 +7,7 @@
 calc_inv_mass(df, day)
 }
 \arguments{
-\item{df}{An \code{sf} SpatialPolygonsDataFrame, such as the provided dataframe \code{fields}, which includes an attribute area_ac containing the field area in acres. Also works with an ordinary data.frame or tibble.}
+\item{df}{An \code{sf} dataset, such as the provided dataframe \code{fields}, which includes an attribute area_ac containing the field area in acres. Also works with an ordinary data.frame or tibble.}
 
 \item{day}{The day number for which to calculate the invertebrate mass.}
 }
@@ -16,5 +16,5 @@ Calculates invertebrate mass (grams) based on field acreage. Requires input of t
 }
 \examples{
 # calculate the invertebrate mass after 14 days for each field
-fields |> calc_inv_mass(14)
+fields |> head(1) |> calc_inv_mass(14)
 }

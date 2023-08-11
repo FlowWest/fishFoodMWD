@@ -3,7 +3,7 @@
 \docType{data}
 \name{distances}
 \alias{distances}
-\title{distances}
+\title{Rice field distance attributes}
 \format{
 An object of class \code{tbl_df} (inherits from \code{tbl}, \code{data.frame}) with 9628 rows and 11 columns.
 }
@@ -14,18 +14,23 @@ FlowWest
 distances
 }
 \description{
-A data frame containing the results of the FlowWest analysis of flow distances to the nearest fish-bearing stream. Intended to be joined to the `fields` dataset.
+A data frame containing the results of the FlowWest analysis of flow distances to the nearest fish-bearing stream. Intended to be joined to the \code{fields} dataset.
 }
 \details{
-- `unique_id` = the unique identifier of the rice field as defined in the original CNRA dataset
-- `return_id` = the return point from the `returns` dataset used in the distance calculation for this rice field, as determined based on watershed in which the field is located.  For watersheds with a `return_id` of zero, fields are assumed to flow laterally into the nearest major stream rather than via the return point
-- `ds_fbs_dist` = for fields flowing into "Indirect" return points, this is the downstream flow distance from the return point to the nearest fish-bearing stream, else zero
-- `return_dis` = linear distance from the centroid of the rice field to the return point (or laterally to the nearest fish-bearing stream)
-- `return_rec` = rectangular grid distance from the centroid of the rice field to the return point (or laterally to the nearest fish-bearing stream)
-- `totdist_ft` = total distance from the rice field to the nearest fish-bearing stream, calculated via `ds_fbs_dist` + `return_dis` using linear distances
-- `totrect_ft` = total distance from the rice field to the nearest fish-bearing stream, calculated via `ds_fbs_dist` + `return_rec` using rectangular grid distances
-- `totdist_mi` = `totdist_ft` converted to miles
-- `totrect_mi` = `totrect_ft` converted to miles
-- `wet_dry` = identifier of the rice field as on the wet or dry side of the levee
+\itemize{
+\item \code{unique_id} = the unique identifier of the rice field as defined in the original CNRA dataset
+\item \code{return_id} = the return point from the \code{returns} dataset used in the distance calculation for this rice field, as determined based on watershed in which the field is located.  For watersheds with a \code{return_id} of zero, fields are assumed to flow laterally into the nearest major stream rather than via the return point
+\item \code{ds_fbs_dist} = for fields flowing into "Indirect" return points, this is the downstream flow distance from the return point to the nearest fish-bearing stream, else zero
+\item \code{return_dis} = linear distance from the centroid of the rice field to the return point (or laterally to the nearest fish-bearing stream)
+\item \code{return_rec} = rectangular grid distance from the centroid of the rice field to the return point (or laterally to the nearest fish-bearing stream)
+\item \code{totdist_ft} = total distance from the rice field to the nearest fish-bearing stream, calculated via \code{ds_fbs_dist} + \code{return_dis} using linear distances
+\item \code{totrect_ft} = total distance from the rice field to the nearest fish-bearing stream, calculated via \code{ds_fbs_dist} + \code{return_rec} using rectangular grid distances
+\item \code{totdist_mi} = \code{totdist_ft} converted to miles
+\item \code{totrect_mi} = \code{totrect_ft} converted to miles
+\item \code{wet_dry} = identifier of the rice field as on the wet or dry side of the levee
+}
+}
+\examples{
+head(distances)
 }
 \keyword{datasets}

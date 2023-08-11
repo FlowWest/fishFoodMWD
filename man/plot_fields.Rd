@@ -2,10 +2,15 @@
 % Please edit documentation in R/plot.R
 \name{plot_fields}
 \alias{plot_fields}
-\title{Plot fields}
+\title{Plot rice fields}
 \usage{
 plot_fields()
 }
 \description{
 Plot all fields. Displays the watersheds, return points, and waterways as well. Returns are distinguished as draining directly into the fish-bearing stream or via a secondary waterway.
+}
+\examples{
+plot_fields()
+# Returns a ggplot object that can be chained to additional ggplot functions
+plot_fields() + ggplot2::ggtitle("Rice Fields") + ggplot2::theme_void()
 }

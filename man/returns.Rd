@@ -3,7 +3,7 @@
 \docType{data}
 \name{returns}
 \alias{returns}
-\title{returns}
+\title{Return points}
 \format{
 An object of class \code{sf} (inherits from \code{tbl_df}, \code{tbl}, \code{data.frame}) with 38 rows and 7 columns.
 }
@@ -25,5 +25,10 @@ This \code{sf} dataset contains the point locations of outlets for return flow f
 \item \code{ds_return_id} = for Indirect returns, the \code{return_id} of the downstream return that this return flows into, else the identifier of this same return if it directly flows into a fish-bearing stream
 \item \code{ds_fbs_name} = name of the fish-bearing stream that the return drains directly or indirectly into
 }
+}
+\examples{
+head(returns)
+
+plot(returns$geometry)
 }
 \keyword{datasets}

@@ -2,10 +2,15 @@
 % Please edit documentation in R/plot.R
 \name{plot_distances}
 \alias{plot_distances}
-\title{Plot distances}
+\title{Plot rice fields with flow distances}
 \usage{
 plot_distances()
 }
 \description{
 Plot all fields showing their calculated flow distances. Distance table is first joined to the fields table. Displays the watersheds, return points, and waterways on the basemap.
+}
+\examples{
+plot_distances()
+# Returns a ggplot object that can be chained to additional ggplot functions
+plot_distances() + ggplot2::ggtitle("Rice Field Distances") + ggplot2::theme_void()
 }

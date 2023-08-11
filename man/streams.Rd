@@ -3,7 +3,7 @@
 \docType{data}
 \name{streams}
 \alias{streams}
-\title{streams}
+\title{Fish-bearing streams}
 \format{
 An object of class \code{sf} (inherits from \code{tbl_df}, \code{tbl}, \code{data.frame}) with 41 rows and 3 columns.
 }
@@ -15,5 +15,10 @@ streams
 }
 \description{
 Supplementary `sf` geometry layer containing the fish-bearing streams used to calculate flow distances
+}
+\examples{
+head(streams)
+
+plot(streams$geometry)
 }
 \keyword{datasets}

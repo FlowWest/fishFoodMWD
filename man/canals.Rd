@@ -3,7 +3,7 @@
 \docType{data}
 \name{canals}
 \alias{canals}
-\title{canals}
+\title{Canals connecting indirect return points to fish-bearing streams}
 \format{
 An object of class \code{sf} (inherits from \code{tbl_df}, \code{tbl}, \code{data.frame}) with 80 rows and 3 columns.
 }
@@ -15,5 +15,10 @@ canals
 }
 \description{
 Supplementary `sf` geometry layer containing the non-fish-bearing streams and canals used to calculate the flow distances from indirect return points to their nearest fish-bearing stream (in the `ds_fbs_dist` attribute of `returns`)
+}
+\examples{
+head(canals)
+
+plot(canals$geometry)
 }
 \keyword{datasets}

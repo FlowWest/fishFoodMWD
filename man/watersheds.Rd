@@ -3,7 +3,7 @@
 \docType{data}
 \name{watersheds}
 \alias{watersheds}
-\title{watersheds}
+\title{Watersheds}
 \format{
 An object of class \code{sf} (inherits from \code{tbl_df}, \code{tbl}, \code{data.frame}) with 47 rows and 5 columns.
 }
@@ -14,12 +14,19 @@ NHD; FlowWest
 watersheds
 }
 \description{
-This `sf` dataset contains watershed polygons used to group rice fields and organize flow patterns. Based on HUC10 watersheds, but split in some cases where necessary.
+This \code{sf} dataset contains watershed polygons used to group rice fields and organize flow patterns. Based on HUC10 watersheds, but split in some cases where necessary.
 }
 \details{
-- `group_id` = the unique identifier of the watershed group, which is based on the HUC10
-- `return_id` = the corresponding unique identifier of the return point, used to join to the `returns` dataset. For watersheds with a `return_id` of zero, fields are assumed to flow laterally into the nearest major stream rather than via the return point.
-- `huc10` = the original HUC10 identifier from the NHD dataset
-- `watershed_name` = the original HUC10 common name from the NHD dataset
+\itemize{
+\item \code{group_id} = the unique identifier of the watershed group, which is based on the HUC10
+\item \code{return_id} = the corresponding unique identifier of the return point, used to join to the \code{returns} dataset. For watersheds with a \code{return_id} of zero, fields are assumed to flow laterally into the nearest major stream rather than via the return point.
+\item \code{huc10} = the original HUC10 identifier from the NHD dataset
+\item \code{watershed_name} = the original HUC10 common name from the NHD dataset
+}
+}
+\examples{
+head(watersheds)
+
+plot(watersheds$geometry)
 }
 \keyword{datasets}
