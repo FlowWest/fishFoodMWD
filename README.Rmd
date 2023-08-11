@@ -1,0 +1,119 @@
+---
+title: "fishFoodMWD"
+output: github_document
+date: "`r Sys.Date()`"
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+knitr::opts_chunk$set(fig.path = "man/figures/")
+library(tidyverse)
+library(sf)
+ggplot2::theme_set(ggplot2::theme_minimal())
+```
+
+# Import 
+
+```{r imports, echo=TRUE, message=FALSE}
+library(fishFoodMWD)
+```
+
+# Main datasets
+
+```{r data-fields, echo=TRUE, message=FALSE}
+fields
+```
+
+```{r data-distances, echo=TRUE, message=FALSE}
+distances
+```
+
+```{r data-watersheds, echo=TRUE, message=FALSE}
+watersheds
+```
+
+```{r data-returns, echo=TRUE, message=FALSE}
+returns
+```
+
+# Join structure
+
+![](man/figures/join_diagram.png)
+
+# Other layers
+
+```{r data-streams, echo=TRUE, message=FALSE}
+streams
+```
+
+```{r data-canals, echo=TRUE, message=FALSE}
+canals
+```
+
+
+# Plotting
+
+```{r plot-fields, echo=TRUE, message=FALSE}
+plot_fields()
+```
+
+```{r plot-distances, echo=TRUE, message=FALSE}
+plot_distances()
+```
+
+```{r plot-watersheds, echo=TRUE, message=FALSE}
+plot_watersheds()
+```
+
+# Calculations
+
+Moss et al. (2009) estimated that invertebrate biomass in flooded post-harvest agricultural fields increased at an average rate of  0.186 g/m^2 per day. 
+
+How much invertebrate biomass is produced by each field in 14 days?
+
+```{r calc-mass-by-field, echo=TRUE, message=FALSE}
+fields |> 
+  calc_inv_mass(14) |>
+  ggplot() + 
+    geom_sf(aes(fill = total_prod_g, color = total_prod_g)) + 
+    geom_sf(data=streams) + geom_sf(data=canals) + geom_sf(data=returns) +
+    scale_fill_viridis_c(aesthetics = c("colour", "fill"),
+                                  option="cividis",
+                                  direction=-1,
+                                  name="Total 14-day production (g) \nby field") +
+    ggplot2::scale_y_continuous(breaks = seq(38, 40, by=0.5)) +
+    ggplot2::scale_x_continuous(breaks = seq(-122.5, -120.5, by=0.5))
+```
+
+Which watersheds produce the most invertebrate biomass?
+
+```{r calc-mass-by-watershed, echo=TRUE, message=FALSE}
+total_prod_by_group <- fields |> 
+  calc_inv_mass(14) |>
+  group_by(group_id) |> 
+  summarize(sum_total_prod_g = sum(total_prod_g)) |>
+  st_drop_geometry()
+
+watersheds |> 
+  left_join(total_prod_by_group) |>
+  ggplot() + 
+    geom_sf(aes(fill = sum_total_prod_g, color = sum_total_prod_g)) + 
+    geom_sf(data=streams) + geom_sf(data=canals) + geom_sf(data=returns) +
+    scale_fill_viridis_c(aesthetics = c("colour", "fill"),
+                                  option="cividis",
+                                  direction=-1,
+                                  name="Total 14-day production (g) \nby watershed") +
+    ggplot2::scale_y_continuous(breaks = seq(38, 40, by=0.5)) +
+    ggplot2::scale_x_continuous(breaks = seq(-122.5, -120.5, by=0.5))
+```
+
+These results are directly proportional to field acreage.
+
+Growth in biomass over time by field (illustrative example):
+
+```{r calc-field-ts, echo=TRUE, message=FALSE}
+fields |> 
+  head(n = 10) |>
+  calc_inv_mass_ts(14) |>
+  ggplot() + geom_line(aes(x=day, y=total_prod_g, color=unique_id))
+```
