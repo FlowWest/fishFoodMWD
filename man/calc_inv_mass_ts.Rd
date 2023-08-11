@@ -6,6 +6,17 @@
 \usage{
 calc_inv_mass_ts(df, ndays)
 }
+\arguments{
+\item{df}{An \code{sf} SpatialPolygonsDataFrame, such as the provided dataframe \code{fields}, which includes an attribute area_ac containing the field area in acres. Also works with an ordinary data.frame or tibble.}
+
+\item{ndays}{The total number of days over which to conduct the mass calculation. A sequence of days from 1 to \code{ndays} is fed into the \code{day} parameter of the \code{calc_inv_mass} function.}
+}
 \description{
-A wrapper for calc_inv_mass that runs the calculation for a series of elapsed days from 1 to ndays. Returns a data frame with total invertebrate mass (grams) by field unique_id and day.
+A wrapper for \code{calc_inv_mass} that runs the calculation for a series of elapsed days from 1 to ndays. Returns a data frame with total invertebrate mass (grams) by field \code{unique_id} and \code{day}.
+}
+\examples{
+# calculate the invertebrate mass time series
+fields |> calc_inv_mass_ts(14)
+# calculate the invertebrate mass time series for a particular field
+fields |> dplyr::filter(unique_id=="1103539") |> calc_inv_mass_ts(14)
 }
