@@ -6,7 +6,6 @@
 #' @export
 #' @examples
 #' # calculate the invertebrate mass after 14 days for each field
-#' library(sf)
 #' fields |> calc_inv_mass(14)
 #' @md
 calc_inv_mass <- function(df, day) {
