@@ -9,12 +9,13 @@ calc_inv_mass(df, day)
 \arguments{
 \item{df}{An \code{sf} dataset, such as the provided dataframe \code{fields}, which includes an attribute area_ac containing the field area in acres. Also works with an ordinary data.frame or tibble.}
 
-\item{day}{The day number for which to calculate the invertebrate mass.}
+\item{day}{The day number for which to calculate the invertebrate mass. If not provided, then only a daily mass is calculated.}
 }
 \description{
-Calculates invertebrate mass (grams) based on field acreage. Requires input of the fields data frame with area_ac attribute. Returns the data frame with additional columns for calculated values. Can be chained with pipes.
+Calculates invertebrate mass (kg) based on field acreage. Requires input of the fields data frame with area_ac attribute. Returns the data frame with additional columns for calculated values. Can be chained with pipes.
 }
 \examples{
 # calculate the invertebrate mass after 14 days for each field
-fields |> head(1) |> calc_inv_mass(14)
+library(sf)
+fields |> calc_inv_mass(14)
 }

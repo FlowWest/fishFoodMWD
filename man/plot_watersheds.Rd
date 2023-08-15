@@ -4,13 +4,22 @@
 \alias{plot_watersheds}
 \title{Plot watersheds by flow type}
 \usage{
-plot_watersheds()
+plot_watersheds(filename, width = NA, height = NA, units = NULL)
+}
+\arguments{
+\item{filename}{File name to create PNG image on disk. Optional if saving the plot is desired.}
+
+\item{width}{Plot width in \code{units}. If not supplied, uses the size of current graphics device.}
+
+\item{height}{Plot height in \code{units}. If not supplied, uses the size of current graphics device.}
+
+\item{units}{Units used for the width and height ("in", "cm", "mm", or "px"). Uses default \code{ggplot} dpi settings for resolution.}
 }
 \description{
 Plot all watersheds (groups) showing their type of flow: lateral to fish-bearing stream, direct to fish-bearing stream via return point outlet, or indirect to fish-bearing stream via return point outlet and secondary canal. Displays the watersheds, return points, and waterways on the basemap.
 }
 \examples{
-plot_distances()
+plot_watersheds()
 # Returns a ggplot object that can be chained to additional ggplot functions
-plot_distances() + ggplot2::ggtitle("Watersheds") + ggplot2::theme_void()
+plot_watersheds() + ggplot2::ggtitle("Watersheds") + ggplot2::theme_void()
 }

@@ -10,8 +10,6 @@
 #' * `ds_fbs_name` = name of the fish-bearing stream that the return drains directly or indirectly into
 #' @md
 #' @source FlowWest
-#' @importClassesFrom sf sf
-#' @export
 #' @examples
 #' head(returns)
 #'
@@ -28,8 +26,6 @@
 #' * `watershed_name` = the original HUC10 common name from the NHD dataset
 #' @md
 #' @source NHD; FlowWest
-#' @importClassesFrom sf sf
-#' @export
 #' @examples
 #' head(watersheds)
 #'
@@ -47,8 +43,6 @@
 #' * `volume_af` = inundated volume of the rice field assuming 5 inches of water
 #' @md
 #' @source California Department of Water Resources Land Use Program - i15 Crop Mapping YYYY; FlowWest
-#' @importClassesFrom sf sf
-#' @export
 #' @examples
 #' head(fields)
 #'
@@ -72,7 +66,6 @@
 #' @md
 #' @source FlowWest
 #' @importClassesFrom tibble tbl_df
-#' @export
 #' @examples
 #' head(distances)
 "distances"
@@ -81,8 +74,6 @@
 #' @title Fish-bearing streams
 #' @description Supplementary `sf` geometry layer containing the fish-bearing streams used to calculate flow distances
 #' @source Modified from CVPIA rearing habitat
-#' @importClassesFrom sf sf
-#' @export
 #' @examples
 #' head(streams)
 #'
@@ -93,8 +84,6 @@
 #' @title Canals connecting indirect return points to fish-bearing streams
 #' @description Supplementary `sf` geometry layer containing the non-fish-bearing streams and canals used to calculate the flow distances from indirect return points to their nearest fish-bearing stream (in the `ds_fbs_dist` attribute of `returns`)
 #' @source NHD; FlowWest
-#' @importClassesFrom sf sf
-#' @export
 #' @examples
 #' head(canals)
 #'
