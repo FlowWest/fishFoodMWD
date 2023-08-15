@@ -144,3 +144,28 @@ fields |>
     geom_sf(data=streams) +
     scale_graticule_lat + scale_graticule_lon
 ```
+
+An alternative "rectangular" distance calculation was also included, using grid distance (east-west plus north-south) rather than straight-line (hypotenuse) distance. At the scale of this analysis, the difference between the two versions is minimal.  
+
+```{r model-distances-total-rect, echo=FALSE, message=FALSE, warning=FALSE}
+fields |> 
+  left_join(distances, by=join_by(unique_id)) |>
+  ggplot() + 
+    geom_sf(aes(fill=totrect_ft/5280), color=NA) + 
+    scale_fill_gradient(low="moccasin", high="tomato", name="Total distance (mi) \n(grid distance)") + 
+    geom_sf(data=returns) +
+    geom_sf(data=canals) +
+    geom_sf(data=streams) +
+    scale_graticule_lat + scale_graticule_lon
+```
+The straight-line and rectangular distance measures help to place a lower and upper bound, respectively, on the true flow distance from each rice field to its return point. Except for very circuitous flow paths, all distances should be between these two values. Rectangular distances are never greater than $\sqrt(2)$ times the straight-line flow distance, so true return flow distances will not be more than 1.4 times the straight-line approximation used in this study.
+
+```{r model-distances-comparison, echo=FALSE, message=FALSE, warning=FALSE}
+distances |> ggplot(aes(x = return_dis/5280, y = return_rec/5280, color=return_dis/5280)) + 
+  geom_point(alpha=0.1) + coord_fixed() + 
+  geom_abline(aes(linetype="lower", slope=1, intercept = 0), linewidth=1) + 
+  geom_abline(aes(linetype="upper", slope=sqrt(2), intercept = 0), linewidth=1) + 
+  scale_color_gradient(low="moccasin", high="tomato", name="Straight-line distance \nto return point (mi)") + 
+  scale_linetype_manual(values=c("lower" = "solid", "upper" = "dashed"), labels=c("lower"="y=x","upper"="y=sqrt(2)*x"), name="Reference Line") +
+  xlab("Straight-line distance to return point (mi)") + ylab("Rectangular distance to return point (mi)") 
+```
