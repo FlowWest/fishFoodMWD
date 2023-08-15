@@ -27,7 +27,7 @@ returns <-
   mutate(return_direct = case_when(ds_return_id == return_id ~ "Direct", TRUE ~ "Indirect"))
 
 distances <-
-  read_sf(dsn = "data-raw/shp", layer = "ricefields_groups_distances_20230808") |>
+  read_sf(dsn = "data-raw/shp", layer = "ricefields_groups_distances_20230815") |>
   janitor::clean_names() |>
   select(unique_id,
          return_id,
