@@ -67,6 +67,12 @@ canals <-
   st_transform(project_crs) |>
   select(canal_id = objectid, canal_name = name)
 
+wetdry <-
+  read_sf(dsn = "data-raw/shp", layer = "wet_and_dry_sides_20230802") |>
+  janitor::clean_names() |>
+  st_transform(project_crs) |>
+  select(wet_dry = hydro)
+
 #export this dataset
 usethis::use_data(watersheds, overwrite = TRUE)
 usethis::use_data(returns, overwrite = TRUE)
@@ -74,3 +80,4 @@ usethis::use_data(fields, overwrite = TRUE)
 usethis::use_data(distances, overwrite = TRUE)
 usethis::use_data(streams, overwrite = TRUE)
 usethis::use_data(canals, overwrite = TRUE)
+usethis::use_data(wetdry, overwrite = TRUE)

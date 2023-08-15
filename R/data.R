@@ -89,3 +89,17 @@
 #'
 #' plot(canals$geometry)
 "canals"
+
+#' @name wetdry
+#' @title Sacramento Valley wet and dry areas
+#' @description This `sf` dataset contains polygons identifying which parts of the Sacramento Valley are behind levees ("dry") or directly exposed to rivers or floodways ("wet")
+#' @details
+#' * `wet_dry` = identifier of the enclosed area as "wet" or "dry"
+#' @md
+#' @source compiled from data from Ducks Unlimited and others
+#' @export
+#' @examples
+#' head(wetdry)
+#'
+#' plot(wetdry)
+"wetdry"
