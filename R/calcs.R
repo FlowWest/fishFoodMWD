@@ -2,7 +2,7 @@
 #' @title Calculate invertebrate mass
 #' @description Calculates invertebrate mass (kg) based on field acreage. Requires input of the fields data frame with area_ac attribute. Returns the data frame with additional columns for calculated values. Can be chained with pipes.
 #' @param df An `sf` dataset, such as the provided dataframe `fields`, which includes an attribute area_ac containing the field area in acres. Also works with an ordinary data.frame or tibble.
-#' @param day The day number for which to calculate the invertebrate mass.
+#' @param day The day number for which to calculate the invertebrate mass. If not provided, then only a daily mass is calculated.
 #' @importClassesFrom sf sf
 #' @importMethodsFrom sf print.sf
 #' @export
@@ -14,7 +14,9 @@
 calc_inv_mass <- function(df, day) {
   df$area_m2 = df$area_ac * 4047
   df$daily_prod_kg = df$area_m2 * 0.186 / 1000
-  df$total_prod_kg = df$daily_prod_kg * day
+  if (!missing(day)){
+    df$total_prod_kg = df$daily_prod_kg * day
+  }
   return(df)
 }
 

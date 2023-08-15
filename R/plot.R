@@ -139,7 +139,7 @@ plot_watersheds <- function(filename, width=NA, height=NA, units=NULL) {
 #' @title Plot rice fields with invertebrate mass production
 #' @description Plot all fields showing their calculated invertebrate mass production (based on acreage). The `calc_inv_mass` function is first run on the `fields` dataset using the defined number of days. Displays the watersheds, return points, and waterways on the basemap.
 #' @importClassesFrom sf sf
-#' @param day The day number for which to calculate the invertebrate mass.
+#' @param day The day number for which to calculate the invertebrate mass. Defaults to one day.
 #' @param filename File name to create PNG image on disk. Optional if saving the plot is desired.
 #' @param width Plot width in `units`. If not supplied, uses the size of current graphics device.
 #' @param height Plot height in `units`. If not supplied, uses the size of current graphics device.
@@ -162,7 +162,7 @@ plot_watersheds <- function(filename, width=NA, height=NA, units=NULL) {
 #' plot_inv_mass(14, colors=c(low="darkorange", mid="lightyellow", high="darkorchid4"))
 #' # Returns a ggplot object that can be chained to additional ggplot functions
 #' plot_inv_mass(14) + ggplot2::ggtitle("Rice Field Distances") + ggplot2::theme_void()
-plot_inv_mass <- function(day, filename=NULL, width=NULL, height=NULL, units=NULL,
+plot_inv_mass <- function(day=1, filename=NULL, width=NULL, height=NULL, units=NULL,
                            colors=NULL, direction=1) {
   df <- fishFoodMWD::fields |> calc_inv_mass(day)
   legend_name <- paste0("Total ",day,"-day \ninvertebrate mass \nproduction (kg)")
