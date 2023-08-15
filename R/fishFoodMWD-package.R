@@ -1,4 +1,5 @@
 #' @keywords internal
+#' @import sf
 "_PACKAGE"
 
 ## usethis namespace: start

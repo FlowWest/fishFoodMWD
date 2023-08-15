@@ -1,7 +1,6 @@
 #' @name plot_fields
 #' @title Plot rice fields
 #' @description Plot all fields. Displays the watersheds, return points, and waterways as well. Returns are distinguished as draining directly into the fish-bearing stream or via a secondary waterway.
-#' @importClassesFrom sf sf
 #' @param filename File name to create PNG image on disk. Optional if saving the plot is desired.
 #' @param width Plot width in `units`. If not supplied, uses the size of current graphics device.
 #' @param height Plot height in `units`. If not supplied, uses the size of current graphics device.
@@ -35,9 +34,7 @@ plot_fields <- function(filename, width=NA, height=NA, units=NULL) {
 #' @name plot_distances
 #' @title Plot rice fields with flow distances
 #' @description Plot all fields showing their calculated flow distances. Distance table is first joined to the fields table. Displays the watersheds, return points, and waterways on the basemap.
-#' @importClassesFrom sf sf
 #' @importFrom dplyr left_join
-#' @importMethodsFrom sf left_join.sf
 #' @param filename File name to create PNG image on disk. Optional if saving the plot is desired.
 #' @param width Plot width in `units`. If not supplied, uses the size of current graphics device.
 #' @param height Plot height in `units`. If not supplied, uses the size of current graphics device.
@@ -99,9 +96,7 @@ plot_distances <- function(filename=NULL, width=NULL, height=NULL, units=NULL,
 #' @name plot_watersheds
 #' @title Plot watersheds by flow type
 #' @description Plot all watersheds (groups) showing their type of flow: lateral to fish-bearing stream, direct to fish-bearing stream via return point outlet, or indirect to fish-bearing stream via return point outlet and secondary canal. Displays the watersheds, return points, and waterways on the basemap.
-#' @importClassesFrom sf sf
 #' @importFrom dplyr mutate
-#' @importMethodsFrom sf mutate.sf
 #' @param filename File name to create PNG image on disk. Optional if saving the plot is desired.
 #' @param width Plot width in `units`. If not supplied, uses the size of current graphics device.
 #' @param height Plot height in `units`. If not supplied, uses the size of current graphics device.
@@ -138,7 +133,6 @@ plot_watersheds <- function(filename, width=NA, height=NA, units=NULL) {
 #' @name plot_inv_mass
 #' @title Plot rice fields with invertebrate mass production
 #' @description Plot all fields showing their calculated invertebrate mass production (based on acreage). The `calc_inv_mass` function is first run on the `fields` dataset using the defined number of days. Displays the watersheds, return points, and waterways on the basemap.
-#' @importClassesFrom sf sf
 #' @param day The day number for which to calculate the invertebrate mass. Defaults to one day.
 #' @param filename File name to create PNG image on disk. Optional if saving the plot is desired.
 #' @param width Plot width in `units`. If not supplied, uses the size of current graphics device.

@@ -4,7 +4,16 @@
 \alias{plot_fields}
 \title{Plot rice fields}
 \usage{
-plot_fields()
+plot_fields(filename, width = NA, height = NA, units = NULL)
+}
+\arguments{
+\item{filename}{File name to create PNG image on disk. Optional if saving the plot is desired.}
+
+\item{width}{Plot width in \code{units}. If not supplied, uses the size of current graphics device.}
+
+\item{height}{Plot height in \code{units}. If not supplied, uses the size of current graphics device.}
+
+\item{units}{Units used for the width and height ("in", "cm", "mm", or "px"). Uses default \code{ggplot} dpi settings for resolution.}
 }
 \description{
 Plot all fields. Displays the watersheds, return points, and waterways as well. Returns are distinguished as draining directly into the fish-bearing stream or via a secondary waterway.
@@ -13,4 +22,6 @@ Plot all fields. Displays the watersheds, return points, and waterways as well. 
 plot_fields()
 # Returns a ggplot object that can be chained to additional ggplot functions
 plot_fields() + ggplot2::ggtitle("Rice Fields") + ggplot2::theme_void()
+# Save the output (or for more options, follow the function with a call to ggplot2::ggsave)
+plot_fields(filename="temp/out.png", width=5, height=7, units="in")
 }

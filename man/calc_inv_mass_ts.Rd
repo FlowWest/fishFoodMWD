@@ -12,7 +12,7 @@ calc_inv_mass_ts(df, ndays)
 \item{ndays}{The total number of days over which to conduct the mass calculation. A sequence of days from 1 to \code{ndays} is fed into the \code{day} parameter of the \code{calc_inv_mass} function.}
 }
 \description{
-A wrapper for \code{calc_inv_mass} that runs the calculation for a series of elapsed days from 1 to \code{ndays}. Returns a data frame with total invertebrate mass (grams) by field \code{unique_id} and \code{day}.
+A wrapper for \code{calc_inv_mass} that runs the calculation for a series of elapsed days from 1 to \code{ndays}. Returns a data frame with total invertebrate mass (kg) by field \code{unique_id} and \code{day}.
 }
 \examples{
 # calculate the invertebrate mass time series
