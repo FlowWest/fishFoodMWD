@@ -12,6 +12,9 @@ LazyData: true
 Depends: 
     R (>= 2.10)
 Imports: 
-    tidyverse,
-    sf
+    dplyr,
+    tidyr,
+    ggplot2,
+    sf,
+    shiny
 RoxygenNote: 7.2.3
