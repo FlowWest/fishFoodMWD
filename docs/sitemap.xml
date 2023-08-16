@@ -37,6 +37,48 @@
     <loc>/reference/distances.html</loc>
   </url>
   <url>
+    <loc>/reference/ff_calc_inv_mass.html</loc>
+  </url>
+  <url>
+    <loc>/reference/ff_calc_inv_mass_ts.html</loc>
+  </url>
+  <url>
+    <loc>/reference/ff_canals.html</loc>
+  </url>
+  <url>
+    <loc>/reference/ff_distances.html</loc>
+  </url>
+  <url>
+    <loc>/reference/ff_fields.html</loc>
+  </url>
+  <url>
+    <loc>/reference/ff_plot_distances.html</loc>
+  </url>
+  <url>
+    <loc>/reference/ff_plot_fields.html</loc>
+  </url>
+  <url>
+    <loc>/reference/ff_plot_inv_mass.html</loc>
+  </url>
+  <url>
+    <loc>/reference/ff_plot_watersheds.html</loc>
+  </url>
+  <url>
+    <loc>/reference/ff_plot_wetdry.html</loc>
+  </url>
+  <url>
+    <loc>/reference/ff_returns.html</loc>
+  </url>
+  <url>
+    <loc>/reference/ff_streams.html</loc>
+  </url>
+  <url>
+    <loc>/reference/ff_watersheds.html</loc>
+  </url>
+  <url>
+    <loc>/reference/ff_wetdry.html</loc>
+  </url>
+  <url>
     <loc>/reference/fields.html</loc>
   </url>
   <url>

@@ -80,7 +80,7 @@
       <h1 data-toc-skip>Calculation Functions</h1>
                         <h4 data-toc-skip class="author">FlowWest</h4>
             
-            <h4 data-toc-skip class="date">2023-08-15</h4>
+            <h4 data-toc-skip class="date">2023-08-16</h4>
       
       
       <div class="hidden name"><code>calcs.Rmd</code></div>
@@ -93,19 +93,20 @@
 <div class="section level2">
 <h2 id="invertebrate-mass">Invertebrate mass<a class="anchor" aria-label="anchor" href="#invertebrate-mass"></a>
 </h2>
-<p>The <code>calc_inv_mass</code> and <code>calc_inv_mass_ts</code>
-functions use the rice field geometries in the <code>fields</code>
-dataset to predict invertebrate mass production over time based on field
-acreage. Moss et al. (2009)<a href="#fn1" class="footnote-ref" id="fnref1"><sup>1</sup></a> estimated that invertebrate biomass in
-flooded post-harvest agricultural fields increased at an average rate of
-0.186 g/m² per day. This relationship between area and invertebrate mass
-production forms the basis for these functions.</p>
+<p>The <code>ff_calc_inv_mass</code> and
+<code>ff_calc_inv_mass_ts</code> functions use the rice field geometries
+in the <code>ff_fields</code> dataset to predict invertebrate mass
+production over time based on field acreage. Moss et al. (2009)<a href="#fn1" class="footnote-ref" id="fnref1"><sup>1</sup></a> estimated
+that invertebrate biomass in flooded post-harvest agricultural fields
+increased at an average rate of 0.186 g/m² per day. This relationship
+between area and invertebrate mass production forms the basis for these
+functions.</p>
 <p>We begin with the <code>fields</code> dataset, which contains the
 rice field geometries and their areas. Techically, any
 <code>data.frame</code>, <code>tibble</code>, or <code>sf</code> object
 with an <code>area_ac</code> column containing area in acres can be used
 for this function.</p>
-<pre><code><span><span class="va">fields</span></span></code></pre>
+<pre><code><span><span class="va">ff_fields</span></span></code></pre>
 <table class="table">
 <colgroup>
 <col width="12%">
@@ -177,7 +178,7 @@ on area</li>
 <code>total_prod_kg</code> multiplies this value by the number of
 days provided</li>
 </ul>
-<pre><code><span><span class="va">fields</span> <span class="op">|&gt;</span> <span class="fu"><a href="../reference/calc_inv_mass.html">calc_inv_mass</a></span><span class="op">(</span><span class="fl">14</span><span class="op">)</span></span></code></pre>
+<pre><code><span><span class="va">ff_fields</span> <span class="op">|&gt;</span> <span class="fu"><a href="../reference/ff_calc_inv_mass.html">ff_calc_inv_mass</a></span><span class="op">(</span><span class="fl">14</span><span class="op">)</span></span></code></pre>
 <table class="table">
 <colgroup>
 <col width="8%">
@@ -318,23 +319,23 @@ days provided</li>
 <code>daily_prod_kg</code> column is created.</p>
 <p>A plotting function shorthand is also provided to map the result:</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="../reference/plot_inv_mass.html">plot_inv_mass</a></span><span class="op">(</span><span class="fl">14</span><span class="op">)</span></span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/ff_plot_inv_mass.html">ff_plot_inv_mass</a></span><span class="op">(</span><span class="fl">14</span><span class="op">)</span></span></code></pre></div>
 <p><img src="calcs_files/figure-html/plot-inv-mass-1.png" width="680"></p>
 <p>These functions can be applied in combination with the other datasets
 to synthesize and ask additional questions. For example, which
 <em>watersheds</em> produce the most invertebrate biomass?</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">total_prod_by_group</span> <span class="op">&lt;-</span> <span class="va">fields</span> <span class="op">|&gt;</span> </span>
-<span>  <span class="fu"><a href="../reference/calc_inv_mass.html">calc_inv_mass</a></span><span class="op">(</span><span class="fl">14</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<code class="sourceCode R"><span><span class="va">total_prod_by_group</span> <span class="op">&lt;-</span> <span class="va">ff_fields</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="fu"><a href="../reference/ff_calc_inv_mass.html">ff_calc_inv_mass</a></span><span class="op">(</span><span class="fl">14</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu">group_by</span><span class="op">(</span><span class="va">group_id</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
 <span>  <span class="fu">summarize</span><span class="op">(</span>sum_total_prod_kg <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/sum.html" class="external-link">sum</a></span><span class="op">(</span><span class="va">total_prod_kg</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu">st_drop_geometry</span><span class="op">(</span><span class="op">)</span></span>
 <span></span>
-<span><span class="va">watersheds</span> <span class="op">|&gt;</span> </span>
+<span><span class="va">ff_watersheds</span> <span class="op">|&gt;</span> </span>
 <span>  <span class="fu">left_join</span><span class="op">(</span><span class="va">total_prod_by_group</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu">ggplot</span><span class="op">(</span><span class="op">)</span> <span class="op">+</span> </span>
 <span>    <span class="fu">geom_sf</span><span class="op">(</span><span class="fu">aes</span><span class="op">(</span>fill <span class="op">=</span> <span class="va">sum_total_prod_kg</span>, color <span class="op">=</span> <span class="va">sum_total_prod_kg</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> </span>
-<span>    <span class="fu">geom_sf</span><span class="op">(</span>data<span class="op">=</span><span class="va">streams</span><span class="op">)</span> <span class="op">+</span> <span class="fu">geom_sf</span><span class="op">(</span>data<span class="op">=</span><span class="va">canals</span><span class="op">)</span> <span class="op">+</span> <span class="fu">geom_sf</span><span class="op">(</span>data<span class="op">=</span><span class="va">returns</span><span class="op">)</span> <span class="op">+</span></span>
+<span>    <span class="fu">geom_sf</span><span class="op">(</span>data<span class="op">=</span><span class="va">ff_streams</span><span class="op">)</span> <span class="op">+</span> <span class="fu">geom_sf</span><span class="op">(</span>data<span class="op">=</span><span class="va">ff_canals</span><span class="op">)</span> <span class="op">+</span> <span class="fu">geom_sf</span><span class="op">(</span>data<span class="op">=</span><span class="va">ff_returns</span><span class="op">)</span> <span class="op">+</span></span>
 <span>    <span class="fu">scale_fill_viridis_c</span><span class="op">(</span>aesthetics <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"colour"</span>, <span class="st">"fill"</span><span class="op">)</span>,</span>
 <span>                                  option<span class="op">=</span><span class="st">"cividis"</span>,</span>
 <span>                                  direction<span class="op">=</span><span class="op">-</span><span class="fl">1</span>,</span>
@@ -344,12 +345,12 @@ to synthesize and ask additional questions. For example, which
 <p><img src="calcs_files/figure-html/calc-mass-by-watershed-1.png" width="680"></p>
 <p>These results will always be directly proportional to total rice
 field acreage, as this is the only input into the relationship.</p>
-<p>The <code>calc_inv_mass_ts</code> function returns the growth in
+<p>The <code>ff_calc_inv_mass_ts</code> function returns the growth in
 biomass over time for a selected number of days. This returns a simple
 <code>tibble</code> in the following format…</p>
-<pre><code><span><span class="va">fields</span> <span class="op">|&gt;</span> <span class="fu"><a href="../reference/calc_inv_mass_ts.html">calc_inv_mass_ts</a></span><span class="op">(</span><span class="fl">14</span><span class="op">)</span> </span></code></pre>
+<pre><code><span><span class="va">ff_fields</span> <span class="op">|&gt;</span> <span class="fu"><a href="../reference/ff_calc_inv_mass_ts.html">ff_calc_inv_mass_ts</a></span><span class="op">(</span><span class="fl">14</span><span class="op">)</span> </span></code></pre>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">fields</span> <span class="op">|&gt;</span> <span class="fu"><a href="../reference/calc_inv_mass_ts.html">calc_inv_mass_ts</a></span><span class="op">(</span><span class="fl">14</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="fl">10</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu">knitr</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/knitr/man/kable.html" class="external-link">kable</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">ff_fields</span> <span class="op">|&gt;</span> <span class="fu"><a href="../reference/ff_calc_inv_mass_ts.html">ff_calc_inv_mass_ts</a></span><span class="op">(</span><span class="fl">14</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="fl">10</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu">knitr</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/knitr/man/kable.html" class="external-link">kable</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
 <table class="table">
 <thead><tr class="header">
 <th align="right">day</th>
@@ -410,7 +411,8 @@ biomass over time for a selected number of days. This returns a simple
 </tbody>
 </table>
 <p>…which can be pivoted as so if needed…</p>
-<pre><code><span><span class="va">fields</span> <span class="op">|&gt;</span> <span class="fu"><a href="../reference/calc_inv_mass_ts.html">calc_inv_mass_ts</a></span><span class="op">(</span><span class="fl">7</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu">pivot_wider</span><span class="op">(</span>names_from <span class="op">=</span> <span class="va">day</span>, values_from <span class="op">=</span> <span class="va">total_prod_kg</span>, names_prefix <span class="op">=</span> <span class="st">"day_"</span><span class="op">)</span></span></code></pre>
+<pre><code><span><span class="va">ff_fields</span> <span class="op">|&gt;</span> <span class="fu"><a href="../reference/ff_calc_inv_mass_ts.html">ff_calc_inv_mass_ts</a></span><span class="op">(</span><span class="fl">7</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="fu">pivot_wider</span><span class="op">(</span>names_from <span class="op">=</span> <span class="va">day</span>, values_from <span class="op">=</span> <span class="va">total_prod_kg</span>, names_prefix <span class="op">=</span> <span class="st">"day_"</span><span class="op">)</span></span></code></pre>
 <table style="width:100%;" class="table">
 <colgroup>
 <col width="13%">
@@ -537,9 +539,9 @@ biomass over time for a selected number of days. This returns a simple
 </table>
 <p>…or plotted to show growth in biomass over time:</p>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">fields</span> <span class="op">|&gt;</span> </span>
+<code class="sourceCode R"><span><span class="va">ff_fields</span> <span class="op">|&gt;</span> </span>
 <span>  <span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span>n <span class="op">=</span> <span class="fl">20</span><span class="op">)</span> <span class="op">|&gt;</span></span>
-<span>  <span class="fu"><a href="../reference/calc_inv_mass_ts.html">calc_inv_mass_ts</a></span><span class="op">(</span><span class="fl">10</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="../reference/ff_calc_inv_mass_ts.html">ff_calc_inv_mass_ts</a></span><span class="op">(</span><span class="fl">10</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu">ggplot</span><span class="op">(</span><span class="op">)</span> <span class="op">+</span> <span class="fu">geom_line</span><span class="op">(</span><span class="fu">aes</span><span class="op">(</span>x<span class="op">=</span><span class="va">day</span>, y<span class="op">=</span><span class="va">total_prod_kg</span>, color<span class="op">=</span><span class="va">unique_id</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <p><img src="calcs_files/figure-html/calc-field-ts-plot-1.png" width="680"></p>
 </div>
