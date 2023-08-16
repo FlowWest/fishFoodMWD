@@ -208,11 +208,13 @@ plot_inv_mass <- function(day=1, filename=NULL, width=NULL, height=NULL, units=N
 #' # Save the output (or for more options, follow the function with a call to ggplot2::ggsave)
 #' plot_wetdry(filename="temp/out.png", width=5, height=7, units="in")
 plot_wetdry <- function(filename, width=NA, height=NA, units=NULL) {
+  df <- fishFoodMWD::fields |> dplyr::left_join(fishFoodMWD::distances)
   gg <- ggplot2::ggplot() +
-    geom_sf(data=wetdry, aes(fill=wet_dry, color=wet_dry)) +
-    geom_sf(data=streams) +
-    scale_fill_manual(values=c("Dry"="moccasin", "Wet"="mediumaquamarine"),
-                      aesthetics=c("fill","color"), name="Wet vs Dry") +
+    ggplot2::geom_sf(data=wetdry, ggplot2::aes(fill=wet_dry), alpha=0.5, color=NA) +
+    ggplot2::geom_sf(data=df, ggplot2::aes(fill=wet_dry, color=wet_dry)) +
+    ggplot2::geom_sf(data=streams) +     ggplot2::geom_sf(data=canals) +
+    ggplot2::scale_fill_manual(values=c("Dry"="moccasin", "Wet"="mediumaquamarine"),
+                      aesthetics=c("fill","color"), name="Wet vs Dry \n(rice fields shaded)") +
     ggplot2::theme_minimal() +
     ggplot2::scale_y_continuous(breaks = seq(38, 40, by=0.5)) +
     ggplot2::scale_x_continuous(breaks = seq(-122.5, -120.5, by=0.5))
