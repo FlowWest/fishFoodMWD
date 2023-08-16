@@ -26,17 +26,21 @@ library(fishFoodMWD)
 The `fishFoodMWD` package provides shortcut functions for creating static maps of the data.
 
 ```{r plot-fields, echo=TRUE, message=FALSE}
-plot_fields()
+ff_plot_fields()
 ```
 
 ```{r plot-distances, echo=TRUE, message=FALSE}
-plot_distances()
+ff_plot_distances()
 ```
 
 ```{r plot-watersheds, echo=TRUE, message=FALSE}
-plot_watersheds()
+ff_plot_watersheds()
 ```
 
 ```{r plot-inv-mass, echo=TRUE, message=FALSE}
-plot_inv_mass(14)
+ff_plot_inv_mass(14)
+```
+
+```{r plot-wetdry, echo=TRUE, message=FALSE}
+ff_plot_wetdry()
 ```
