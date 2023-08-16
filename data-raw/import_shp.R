@@ -2,7 +2,7 @@ library(tidyverse)
 library(sf)
 
 # import the watersheds shapefile
-watersheds <-
+ff_watersheds <-
   read_sf(dsn = "data-raw/shp", layer = "project_watershed_groups") |>
   janitor::clean_names() |>
   select(group_id,
@@ -12,9 +12,9 @@ watersheds <-
   )
 
 # use this layer to define the project CRS
-project_crs <- st_crs(watersheds)
+project_crs <- st_crs(ff_watersheds)
 
-returns <-
+ff_returns <-
   read_sf(dsn = "data-raw/shp", layer = "project_returns_20230807") |>
   janitor::clean_names() |>
   st_transform(project_crs) |>
@@ -26,7 +26,7 @@ returns <-
   ) |>
   mutate(return_direct = case_when(ds_return_id == return_id ~ "Direct", TRUE ~ "Indirect"))
 
-distances <-
+ff_distances <-
   read_sf(dsn = "data-raw/shp", layer = "ricefields_groups_distances_20230815") |>
   janitor::clean_names() |>
   select(unique_id,
@@ -43,41 +43,43 @@ distances <-
   )  |>
   st_drop_geometry()
 
-fields <-
+ff_fields <-
   read_sf(dsn = "data-raw/shp", layer = "ricefield_groups") |>
   janitor::clean_names() |>
   st_transform(project_crs) |>
   select(unique_id, county) |>
-  st_join(select(watersheds,
+  st_join(select(ff_watersheds,
                  group_id)) |>
   mutate(area_ac = units::drop_units(units::set_units(st_area(geometry), "acre")),
          volume_af = area_ac * 5/12)
 
 # BASEMAP LAYERS
 
-streams <-
+ff_streams <-
   read_sf(dsn = "data-raw/shp", layer = "project_rearing_streams") |>
   janitor::clean_names() |>
   st_transform(project_crs) |>
   select(stream_id = id, stream_name = river)
 
-canals <-
+ff_canals <-
   read_sf(dsn = "data-raw/shp", layer = "project_return_canals") |>
   janitor::clean_names() |>
   st_transform(project_crs) |>
   select(canal_id = objectid, canal_name = name)
 
-wetdry <-
+ff_wetdry <-
   read_sf(dsn = "data-raw/shp", layer = "wet_and_dry_sides_20230802") |>
   janitor::clean_names() |>
   st_transform(project_crs) |>
   select(wet_dry = hydro)
 
-#export this dataset
-usethis::use_data(watersheds, overwrite = TRUE)
-usethis::use_data(returns, overwrite = TRUE)
-usethis::use_data(fields, overwrite = TRUE)
-usethis::use_data(distances, overwrite = TRUE)
-usethis::use_data(streams, overwrite = TRUE)
-usethis::use_data(canals, overwrite = TRUE)
-usethis::use_data(wetdry, overwrite = TRUE)
+# export tabular datasets
+usethis::use_data(ff_distances, overwrite = TRUE)
+
+#export spatial datasets
+usethis::use_data(ff_watersheds, overwrite = TRUE)
+usethis::use_data(ff_returns, overwrite = TRUE)
+usethis::use_data(ff_fields, overwrite = TRUE)
+usethis::use_data(ff_streams, overwrite = TRUE)
+usethis::use_data(ff_canals, overwrite = TRUE)
+usethis::use_data(ff_wetdry, overwrite = TRUE)
