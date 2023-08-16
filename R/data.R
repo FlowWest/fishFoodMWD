@@ -1,4 +1,4 @@
-#' @name returns
+#' @name ff_returns
 #' @title Return points
 #' @description This `sf` dataset contains the point locations of outlets for return flow from rice field drainage networks into adjacent canals or streams.
 #' @details
@@ -11,12 +11,12 @@
 #' @md
 #' @source FlowWest
 #' @examples
-#' head(returns)
+#' head(ff_returns)
 #'
-#' plot(returns$geometry)
-"returns"
+#' plot(ff_returns$geometry)
+"ff_returns"
 #'
-#' @name watersheds
+#' @name ff_watersheds
 #' @title Watersheds
 #' @description This `sf` dataset contains watershed polygons used to group rice fields and organize flow patterns. Based on HUC10 watersheds, but split in some cases where necessary.
 #' @details
@@ -27,12 +27,12 @@
 #' @md
 #' @source NHD; FlowWest
 #' @examples
-#' head(watersheds)
+#' head(ff_watersheds)
 #'
-#' plot(watersheds$geometry)
-"watersheds"
+#' plot(ff_watersheds$geometry)
+"ff_watersheds"
 #'
-#' @name fields
+#' @name ff_fields
 #' @title Rice field geometries
 #' @description This `sf` dataset contains polygon geometries of rice fields based on crop mapping from YYYY.
 #' @details
@@ -44,12 +44,12 @@
 #' @md
 #' @source California Department of Water Resources Land Use Program - i15 Crop Mapping YYYY; FlowWest
 #' @examples
-#' head(fields)
+#' head(ff_fields)
 #'
-#' plot(fields$geometry)
-"fields"
+#' plot(ff_fields$geometry)
+"ff_fields"
 #'
-#' @name distances
+#' @name ff_distances
 #' @title Rice field distance attributes
 #' @description A data frame containing the results of the FlowWest analysis of flow distances to the nearest fish-bearing stream. Intended to be joined to the `fields` dataset.
 #' @details
@@ -67,30 +67,30 @@
 #' @source FlowWest
 #' @importClassesFrom tibble tbl_df
 #' @examples
-#' head(distances)
-"distances"
+#' head(ff_distances)
+"ff_distances"
 #'
-#' @name streams
+#' @name ff_streams
 #' @title Fish-bearing streams
 #' @description Supplementary `sf` geometry layer containing the fish-bearing streams used to calculate flow distances
 #' @source Modified from CVPIA rearing habitat
 #' @examples
-#' head(streams)
+#' head(ff_streams)
 #'
-#' plot(streams$geometry)
-"streams"
+#' plot(ff_streams$geometry)
+"ff_streams"
 #'
-#' @name canals
+#' @name ff_canals
 #' @title Canals connecting indirect return points to fish-bearing streams
 #' @description Supplementary `sf` geometry layer containing the non-fish-bearing streams and canals used to calculate the flow distances from indirect return points to their nearest fish-bearing stream (in the `ds_fbs_dist` attribute of `returns`)
 #' @source NHD; FlowWest
 #' @examples
-#' head(canals)
+#' head(ff_canals)
 #'
-#' plot(canals$geometry)
-"canals"
+#' plot(ff_canals$geometry)
+"ff_canals"
 
-#' @name wetdry
+#' @name ff_wetdry
 #' @title Sacramento Valley wet and dry areas
 #' @description This `sf` dataset contains polygons identifying which parts of the Sacramento Valley are behind levees ("dry") or directly exposed to rivers or floodways ("wet")
 #' @details
@@ -98,7 +98,7 @@
 #' @md
 #' @source compiled from data from Ducks Unlimited and others
 #' @examples
-#' head(wetdry)
+#' head(ff_wetdry)
 #'
-#' plot(wetdry)
-"wetdry"
+#' plot(ff_wetdry)
+"ff_wetdry"
