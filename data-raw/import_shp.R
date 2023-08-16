@@ -51,7 +51,8 @@ ff_fields <-
   st_join(select(ff_watersheds,
                  group_id)) |>
   mutate(area_ac = units::drop_units(units::set_units(st_area(geometry), "acre")),
-         volume_af = area_ac * 5/12)
+         volume_af = area_ac * 5/12) |>
+  st_zm()
 
 # BASEMAP LAYERS
 
@@ -71,7 +72,8 @@ ff_wetdry <-
   read_sf(dsn = "data-raw/shp", layer = "wet_and_dry_sides_20230802") |>
   janitor::clean_names() |>
   st_transform(project_crs) |>
-  select(wet_dry = hydro)
+  select(wet_dry = hydro) |>
+  st_zm()
 
 # export tabular datasets
 usethis::use_data(ff_distances, overwrite = TRUE)
