@@ -40,7 +40,13 @@
     <loc>/reference/plot_fields.html</loc>
   </url>
   <url>
+    <loc>/reference/plot_inv_mass.html</loc>
+  </url>
+  <url>
     <loc>/reference/plot_watersheds.html</loc>
+  </url>
+  <url>
+    <loc>/reference/plot_wetdry.html</loc>
   </url>
   <url>
     <loc>/reference/returns.html</loc>
@@ -50,5 +56,8 @@
   </url>
   <url>
     <loc>/reference/watersheds.html</loc>
+  </url>
+  <url>
+    <loc>/reference/wetdry.html</loc>
   </url>
 </urlset>
