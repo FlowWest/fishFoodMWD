@@ -328,7 +328,7 @@ to synthesize and ask additional questions. For example, which
 <span>  <span class="fu"><a href="../reference/calc_inv_mass.html">calc_inv_mass</a></span><span class="op">(</span><span class="fl">14</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu">group_by</span><span class="op">(</span><span class="va">group_id</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
 <span>  <span class="fu">summarize</span><span class="op">(</span>sum_total_prod_kg <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/sum.html" class="external-link">sum</a></span><span class="op">(</span><span class="va">total_prod_kg</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span></span>
-<span>  <span class="fu"><a href="https://r-spatial.github.io/sf/reference/st_geometry.html" class="external-link">st_drop_geometry</a></span><span class="op">(</span><span class="op">)</span></span>
+<span>  <span class="fu">st_drop_geometry</span><span class="op">(</span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">watersheds</span> <span class="op">|&gt;</span> </span>
 <span>  <span class="fu">left_join</span><span class="op">(</span><span class="va">total_prod_by_group</span><span class="op">)</span> <span class="op">|&gt;</span></span>
