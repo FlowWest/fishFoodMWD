@@ -34,7 +34,7 @@ Four core datasets are provided: `returns`, `watersheds`, `fields`, and `distanc
 | `returns`    | `sf` Point   | `return_id`     | Return point geometries, flow types, indirect flow distances, and downstream `return_id`s |
 | `watersheds` | `sf` Polygon | `group_id`      | Watershed geometries and return point `return_id`s |
 | `fields`     | `sf` Polygon | `unique_id`     | Rice field geometries, areas, and watershed `group_id`s |
-| `distances`  | `tibble`     | `unique_id`     | Rice field distance calculation results |
+| `distances`  | `tbl_df`     | `unique_id`     | Rice field distance calculation results |
 
 These four datasets are heirarchically nested and can be joined to each other using the indicated `*_id` fields in order to access all required data. 
 
