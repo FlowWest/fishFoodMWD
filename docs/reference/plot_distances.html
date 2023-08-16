@@ -44,19 +44,64 @@
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">plot_distances</span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">plot_distances</span><span class="op">(</span></span>
+<span>  filename <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  width <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  height <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  units <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  colors <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  direction <span class="op">=</span> <span class="fl">1</span></span>
+<span><span class="op">)</span></span></code></pre></div>
     </div>
 
+    <div id="arguments">
+    <h2>Arguments</h2>
+    <dl><dt>filename</dt>
+<dd><p>File name to create PNG image on disk. Optional if saving the plot is desired.</p></dd>
+
+
+<dt>width</dt>
+<dd><p>Plot width in <code>units</code>. If not supplied, uses the size of current graphics device.</p></dd>
+
+
+<dt>height</dt>
+<dd><p>Plot height in <code>units</code>. If not supplied, uses the size of current graphics device.</p></dd>
+
+
+<dt>units</dt>
+<dd><p>Units used for the width and height ("in", "cm", "mm", or "px"). Uses default <code>ggplot</code> dpi settings for resolution.</p></dd>
+
+
+<dt>colors</dt>
+<dd><p>Color palette to use. Choose from either a character string indicating the <code>viridis</code> color map option to use (listed below), or a named vector defining a custom continuous gradient with <code>low</code> and <code>high</code> or a diverging gradient with <code>low</code>, <code>mid</code>, and <code>high</code>, e.g. <code>colors = c(low="red", mid="white", high="blue")</code>. For the diverging gradient, the average value is used as the midpoint.</p><ul><li><p><code>magma</code> (or <code>A</code>)</p></li>
+<li><p><code>inferno</code> (or <code>B</code>)</p></li>
+<li><p><code>plasma</code> (or <code>C</code>)</p></li>
+<li><p><code>viridis</code> (or <code>D</code>)</p></li>
+<li><p><code>cividis</code> (or <code>E</code>)</p></li>
+<li><p><code>rocket</code> (or <code>F</code>)</p></li>
+<li><p><code>mako</code> (or <code>G</code>)</p></li>
+<li><p><code>turbo</code> (or <code>H</code>)</p></li>
+</ul></dd>
+
+
+<dt>direction</dt>
+<dd><p>If using one of the <code>viridis</code> scales for the <code>color</code> option, sets the order of colors in the scale. If 1, the default, colors are ordered from darkest to lightest. If -1, the order of colors is reversed.</p></dd>
+
+</dl></div>
 
     <div id="ref-examples">
     <h2>Examples</h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="fu">plot_distances</span><span class="op">(</span><span class="op">)</span></span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Joining with `by = join_by(unique_id)`</span>
 <span class="r-plt img"><img src="plot_distances-1.png" alt="" width="700" height="433"></span>
+<span class="r-in"><span><span class="co"># Choose custom colors</span></span></span>
+<span class="r-in"><span><span class="fu">plot_distances</span><span class="op">(</span>colors<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span>low<span class="op">=</span><span class="st">"darkorange"</span>, mid<span class="op">=</span><span class="st">"lightyellow"</span>, high<span class="op">=</span><span class="st">"darkorchid4"</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Joining with `by = join_by(unique_id)`</span>
+<span class="r-plt img"><img src="plot_distances-2.png" alt="" width="700" height="433"></span>
 <span class="r-in"><span><span class="co"># Returns a ggplot object that can be chained to additional ggplot functions</span></span></span>
 <span class="r-in"><span><span class="fu">plot_distances</span><span class="op">(</span><span class="op">)</span> <span class="op">+</span> <span class="fu">ggplot2</span><span class="fu">::</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">ggtitle</a></span><span class="op">(</span><span class="st">"Rice Field Distances"</span><span class="op">)</span> <span class="op">+</span> <span class="fu">ggplot2</span><span class="fu">::</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html" class="external-link">theme_void</a></span><span class="op">(</span><span class="op">)</span></span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Joining with `by = join_by(unique_id)`</span>
-<span class="r-plt img"><img src="plot_distances-2.png" alt="" width="700" height="433"></span>
+<span class="r-plt img"><img src="plot_distances-3.png" alt="" width="700" height="433"></span>
 </code></pre></div>
     </div>
   </div>

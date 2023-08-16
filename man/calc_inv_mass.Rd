@@ -16,6 +16,5 @@ Calculates invertebrate mass (kg) based on field acreage. Requires input of the 
 }
 \examples{
 # calculate the invertebrate mass after 14 days for each field
-library(sf)
 fields |> calc_inv_mass(14)
 }
