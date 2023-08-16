@@ -97,7 +97,6 @@
 #' * `wet_dry` = identifier of the enclosed area as "wet" or "dry"
 #' @md
 #' @source compiled from data from Ducks Unlimited and others
-#' @export
 #' @examples
 #' head(wetdry)
 #'
