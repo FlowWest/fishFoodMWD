@@ -158,7 +158,8 @@ fields |>
     geom_sf(data=streams) +
     scale_graticule_lat + scale_graticule_lon
 ```
-The straight-line and rectangular distance measures help to place a lower and upper bound, respectively, on the true flow distance from each rice field to its return point. Except for very circuitous flow paths, all distances should be between these two values. Rectangular distances are never greater than $\sqrt(2)$ times the straight-line flow distance, so true return flow distances will not be more than 1.4 times the straight-line approximation used in this study.
+
+The straight-line and rectangular distance measures help to place a lower and upper bound, respectively, on the true flow distance from each rice field to its return point. Except for very circuitous flow paths, all distances should be between these two values. Rectangular distances are never greater than sqrt(2) times the straight-line flow distance, so true return flow distances will not be more than 1.41 times the straight-line approximation used in this study.
 
 ```{r model-distances-comparison, echo=FALSE, message=FALSE, warning=FALSE}
 distances |> ggplot(aes(x = return_dis/5280, y = return_rec/5280, color=return_dis/5280)) + 

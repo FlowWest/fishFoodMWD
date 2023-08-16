@@ -156,3 +156,17 @@ ggplot() +
   geom_sf(data=canals, aes(color="Indirect")) + 
   geom_sf(data=returns, aes(color=return_direct))
 ```
+
+The `wetdry` layer simply provides polygons outlining "wet" (river/floodway-exposed) and "dry" (levee-protected) areas of the Sacramento Valley.
+
+```
+wetdry
+```
+```{r dataset-wetdry, echo=FALSE}
+wetdry |> head(5) |> knitr::kable()
+```
+
+```{r dataset-wetdry-plot, message=FALSE, warning=FALSE}
+ggplot() + 
+  geom_sf(data=wetdry, aes(fill=wet_dry, color=wet_dry)) 
+```
