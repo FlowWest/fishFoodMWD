@@ -73,11 +73,13 @@ ff_wetdry <-
   st_transform(project_crs) |>
   select(wet_dry = hydro)
 
-#export this dataset
+# export tabular datasets
+usethis::use_data(ff_distances, overwrite = TRUE)
+
+#export spatial datasets
 usethis::use_data(ff_watersheds, overwrite = TRUE)
 usethis::use_data(ff_returns, overwrite = TRUE)
 usethis::use_data(ff_fields, overwrite = TRUE)
-usethis::use_data(ff_distances, overwrite = TRUE)
 usethis::use_data(ff_streams, overwrite = TRUE)
 usethis::use_data(ff_canals, overwrite = TRUE)
 usethis::use_data(ff_wetdry, overwrite = TRUE)
