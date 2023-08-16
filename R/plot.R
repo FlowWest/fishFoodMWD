@@ -192,3 +192,32 @@ plot_inv_mass <- function(day=1, filename=NULL, width=NULL, height=NULL, units=N
   return(gg)
 }
 
+#' @name plot_wetdry
+#' @title Plot wet/dry sides
+#' @description Plot all fields. Displays the watersheds, return points, and waterways as well. Returns are distinguished as draining directly into the fish-bearing stream or via a secondary waterway.
+#' @param filename File name to create PNG image on disk. Optional if saving the plot is desired.
+#' @param width Plot width in `units`. If not supplied, uses the size of current graphics device.
+#' @param height Plot height in `units`. If not supplied, uses the size of current graphics device.
+#' @param units Units used for the width and height ("in", "cm", "mm", or "px"). Uses default `ggplot` dpi settings for resolution.
+#' @md
+#' @export
+#' @examples
+#' plot_wetdry()
+#' # Returns a ggplot object that can be chained to additional ggplot functions
+#' plot_wetdry() + ggplot2::ggtitle("Wet/Dry Sides") + ggplot2::theme_void()
+#' # Save the output (or for more options, follow the function with a call to ggplot2::ggsave)
+#' plot_wetdry(filename="temp/out.png", width=5, height=7, units="in")
+plot_wetdry <- function(filename, width=NA, height=NA, units=NULL) {
+  gg <- ggplot2::ggplot() +
+    geom_sf(data=wetdry, aes(fill=wet_dry, color=wet_dry)) +
+    geom_sf(data=streams) +
+    scale_fill_manual(values=c("Dry"="moccasin", "Wet"="mediumaquamarine"),
+                      aesthetics=c("fill","color"), name="Wet vs Dry") +
+    ggplot2::theme_minimal() +
+    ggplot2::scale_y_continuous(breaks = seq(38, 40, by=0.5)) +
+    ggplot2::scale_x_continuous(breaks = seq(-122.5, -120.5, by=0.5))
+  if(!(missing(filename))){
+    ggplot2::ggsave(filename=filename, width=width, height=height, units=units)
+  }
+  return(gg)
+}
