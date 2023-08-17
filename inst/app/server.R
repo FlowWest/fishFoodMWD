@@ -1,4 +1,5 @@
 function(input, output, session){
+<<<<<<< HEAD
   output$field_map <- renderLeaflet({
     leaflet() |>
       addProviderTiles(providers$Esri.WorldImagery,
