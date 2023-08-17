@@ -5,13 +5,13 @@ reference:
 - title: "Static plots"
   desc: "Functions for quickly viewing the spatial results"
   contents:
-  - starts_with("plot_")
+  - starts_with("ff_plot_")
 - title: "Calculations"
   desc: "Functions for calculating additional attributes on the datasets"
   contents:
-  - starts_with("calc_")
+  - starts_with("ff_calc_")
 - title: "Datasets"
   desc: "Packaged datasets containing results and basemap layers"
   contents:
-  - -starts_with("plot_")
-  - -starts_with("calc_")
+  - -starts_with("ff_plot_")
+  - -starts_with("ff_calc_")

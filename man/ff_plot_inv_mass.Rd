@@ -40,7 +40,7 @@ ff_plot_inv_mass(
 \item{direction}{If using one of the \code{viridis} scales for the \code{color} option, sets the order of colors in the scale. If 1, the default, colors are ordered from darkest to lightest. If -1, the order of colors is reversed.}
 }
 \description{
-Plot all fields showing their calculated invertebrate mass production (based on acreage). The \code{calc_inv_mass} function is first run on the \code{fields} dataset using the defined number of days. Displays the watersheds, return points, and waterways on the basemap.
+Plot all fields showing their calculated invertebrate mass production (based on acreage). The \code{ff_calc_inv_mass} function is first run on the \code{ff_fields} dataset using the defined number of days. Displays the watersheds, return points, and waterways on the basemap.
 }
 \examples{
 ff_plot_inv_mass(14)

@@ -7,7 +7,7 @@
 ff_calc_inv_mass_ts(df, ndays)
 }
 \arguments{
-\item{df}{An \code{sf} dataset, such as the provided dataframe \code{fields}, which includes an attribute area_ac containing the field area in acres. Also works with an ordinary data.frame or tibble.}
+\item{df}{An \code{sf} dataset, such as the provided dataframe \code{ff_fields}, which includes an attribute area_ac containing the field area in acres. Also works with an ordinary data.frame or tibble.}
 
 \item{ndays}{The total number of days over which to conduct the mass calculation. A sequence of days from 1 to \code{ndays} is fed into the \code{day} parameter of the \code{ff_calc_inv_mass} function.}
 }
