@@ -44,10 +44,10 @@ Pass the fields to the `calc_inv_mass` function, along with the desired number o
 * `total_prod_kg` multiplies this value by the number of days provided
 
 ```
-ff_fields |> ff_calc_inv_mass(14)
+ff_calc_inv_mass(ff_fields, 14)
 ```
 ```{r calc-inv-mass, echo=FALSE}
-ff_fields |> ff_calc_inv_mass(14) |> head(10) |> knitr::kable()
+ff_fields |> ff_calc_inv_mass(14) |> head(5) |> knitr::kable()
 ```
 
 If no number of days is provided, then only the `daily_prod_kg` column is created.
@@ -61,8 +61,9 @@ ff_plot_inv_mass(14)
 These functions can be applied in combination with the other datasets to synthesize and ask additional questions. For example, which *watersheds* produce the most invertebrate biomass?
 
 ```{r calc-mass-by-watershed, echo=TRUE, message=FALSE}
-total_prod_by_group <- ff_fields |> 
-  ff_calc_inv_mass(14) |>
+inv_mass_14_days <- ff_calc_inv_mass(ff_fields, 14)
+
+total_prod_by_group <- inv_mass_14_days |>
   group_by(group_id) |> 
   summarize(sum_total_prod_kg = sum(total_prod_kg)) |>
   st_drop_geometry()
@@ -85,14 +86,14 @@ These results will always be directly proportional to total rice field acreage, 
 The `ff_calc_inv_mass_ts` function returns the growth in biomass over time for a selected number of days. This returns a simple `tibble` in the following format...
 
 ```
-ff_fields |> ff_calc_inv_mass_ts(14) 
+ff_calc_inv_mass_ts(ff_fields, 14) 
 ```
 ```{r calc-field-ts, echo=TRUE, message=FALSE}
 ff_fields |> ff_calc_inv_mass_ts(14) |> head(10) |> knitr::kable()
 ```
 ...which can be pivoted as so if needed...
 ```
-ff_fields |> ff_calc_inv_mass_ts(7) |> 
+ff_calc_inv_mass_ts(ff_fields, 7) |> 
   pivot_wider(names_from = day, values_from = total_prod_kg, names_prefix = "day_")
 ```
 ```{r calc-field-ts-pivot, echo=FALSE, message=FALSE, warning=FALSE}
