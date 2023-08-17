@@ -80,7 +80,7 @@
       <h1 data-toc-skip>Calculation Functions</h1>
                         <h4 data-toc-skip class="author">FlowWest</h4>
             
-            <h4 data-toc-skip class="date">2023-08-16</h4>
+            <h4 data-toc-skip class="date">2023-08-17</h4>
       
       
       <div class="hidden name"><code>calcs.Rmd</code></div>
@@ -178,7 +178,7 @@ on area</li>
 <code>total_prod_kg</code> multiplies this value by the number of
 days provided</li>
 </ul>
-<pre><code><span><span class="va">ff_fields</span> <span class="op">|&gt;</span> <span class="fu"><a href="../reference/ff_calc_inv_mass.html">ff_calc_inv_mass</a></span><span class="op">(</span><span class="fl">14</span><span class="op">)</span></span></code></pre>
+<pre><code><span><span class="fu"><a href="../reference/ff_calc_inv_mass.html">ff_calc_inv_mass</a></span><span class="op">(</span><span class="va">ff_fields</span>, <span class="fl">14</span><span class="op">)</span></span></code></pre>
 <table class="table">
 <colgroup>
 <col width="8%">
@@ -258,61 +258,6 @@ days provided</li>
 <td align="right">36.8091393</td>
 <td align="right">515.32795</td>
 </tr>
-<tr class="even">
-<td align="left">1103560</td>
-<td align="left">Glenn</td>
-<td align="left">POLYGON Z ((6499898 2267008…</td>
-<td align="left">1802010405</td>
-<td align="right">15.058855</td>
-<td align="right">6.2745228</td>
-<td align="right">60943.185</td>
-<td align="right">11.3354323</td>
-<td align="right">158.69605</td>
-</tr>
-<tr class="odd">
-<td align="left">1103561</td>
-<td align="left">Glenn</td>
-<td align="left">POLYGON Z ((6505757 2270476…</td>
-<td align="left">1802010405</td>
-<td align="right">34.727949</td>
-<td align="right">14.4699788</td>
-<td align="right">140544.010</td>
-<td align="right">26.1411859</td>
-<td align="right">365.97660</td>
-</tr>
-<tr class="even">
-<td align="left">1103563</td>
-<td align="left">Glenn</td>
-<td align="left">POLYGON Z ((6544553 2330567…</td>
-<td align="left">1802010404</td>
-<td align="right">24.851694</td>
-<td align="right">10.3548725</td>
-<td align="right">100574.805</td>
-<td align="right">18.7069138</td>
-<td align="right">261.89679</td>
-</tr>
-<tr class="odd">
-<td align="left">1103564</td>
-<td align="left">Glenn</td>
-<td align="left">POLYGON Z ((6529293 2334151…</td>
-<td align="left">1802010404</td>
-<td align="right">74.682450</td>
-<td align="right">31.1176873</td>
-<td align="right">302239.873</td>
-<td align="right">56.2166164</td>
-<td align="right">787.03263</td>
-</tr>
-<tr class="even">
-<td align="left">1103566</td>
-<td align="left">Glenn</td>
-<td align="left">POLYGON Z ((6551712 2337179…</td>
-<td align="left">1802010404</td>
-<td align="right">56.033045</td>
-<td align="right">23.3471023</td>
-<td align="right">226765.735</td>
-<td align="right">42.1784267</td>
-<td align="right">590.49797</td>
-</tr>
 </tbody>
 </table>
 <p>If no number of days is provided, then only the
@@ -325,8 +270,9 @@ days provided</li>
 to synthesize and ask additional questions. For example, which
 <em>watersheds</em> produce the most invertebrate biomass?</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">total_prod_by_group</span> <span class="op">&lt;-</span> <span class="va">ff_fields</span> <span class="op">|&gt;</span> </span>
-<span>  <span class="fu"><a href="../reference/ff_calc_inv_mass.html">ff_calc_inv_mass</a></span><span class="op">(</span><span class="fl">14</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<code class="sourceCode R"><span><span class="va">inv_mass_14_days</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/ff_calc_inv_mass.html">ff_calc_inv_mass</a></span><span class="op">(</span><span class="va">ff_fields</span>, <span class="fl">14</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">total_prod_by_group</span> <span class="op">&lt;-</span> <span class="va">inv_mass_14_days</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu">group_by</span><span class="op">(</span><span class="va">group_id</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
 <span>  <span class="fu">summarize</span><span class="op">(</span>sum_total_prod_kg <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/sum.html" class="external-link">sum</a></span><span class="op">(</span><span class="va">total_prod_kg</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu">st_drop_geometry</span><span class="op">(</span><span class="op">)</span></span>
@@ -348,9 +294,7 @@ field acreage, as this is the only input into the relationship.</p>
 <p>The <code>ff_calc_inv_mass_ts</code> function returns the growth in
 biomass over time for a selected number of days. This returns a simple
 <code>tibble</code> in the following format…</p>
-<pre><code><span><span class="va">ff_fields</span> <span class="op">|&gt;</span> <span class="fu"><a href="../reference/ff_calc_inv_mass_ts.html">ff_calc_inv_mass_ts</a></span><span class="op">(</span><span class="fl">14</span><span class="op">)</span> </span></code></pre>
-<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">ff_fields</span> <span class="op">|&gt;</span> <span class="fu"><a href="../reference/ff_calc_inv_mass_ts.html">ff_calc_inv_mass_ts</a></span><span class="op">(</span><span class="fl">14</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="fl">10</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu">knitr</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/knitr/man/kable.html" class="external-link">kable</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
+<pre><code><span><span class="fu"><a href="../reference/ff_calc_inv_mass_ts.html">ff_calc_inv_mass_ts</a></span><span class="op">(</span><span class="va">ff_fields</span>, <span class="fl">14</span><span class="op">)</span> </span></code></pre>
 <table class="table">
 <thead><tr class="header">
 <th align="right">day</th>
@@ -411,7 +355,7 @@ biomass over time for a selected number of days. This returns a simple
 </tbody>
 </table>
 <p>…which can be pivoted as so if needed…</p>
-<pre><code><span><span class="va">ff_fields</span> <span class="op">|&gt;</span> <span class="fu"><a href="../reference/ff_calc_inv_mass_ts.html">ff_calc_inv_mass_ts</a></span><span class="op">(</span><span class="fl">7</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
+<pre><code><span><span class="fu"><a href="../reference/ff_calc_inv_mass_ts.html">ff_calc_inv_mass_ts</a></span><span class="op">(</span><span class="va">ff_fields</span>, <span class="fl">7</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
 <span>  <span class="fu">pivot_wider</span><span class="op">(</span>names_from <span class="op">=</span> <span class="va">day</span>, values_from <span class="op">=</span> <span class="va">total_prod_kg</span>, names_prefix <span class="op">=</span> <span class="st">"day_"</span><span class="op">)</span></span></code></pre>
 <table style="width:100%;" class="table">
 <colgroup>
@@ -538,7 +482,7 @@ biomass over time for a selected number of days. This returns a simple
 </tbody>
 </table>
 <p>…or plotted to show growth in biomass over time:</p>
-<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">ff_fields</span> <span class="op">|&gt;</span> </span>
 <span>  <span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span>n <span class="op">=</span> <span class="fl">20</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="../reference/ff_calc_inv_mass_ts.html">ff_calc_inv_mass_ts</a></span><span class="op">(</span><span class="fl">10</span><span class="op">)</span> <span class="op">|&gt;</span></span>

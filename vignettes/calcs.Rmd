@@ -88,7 +88,7 @@ The `ff_calc_inv_mass_ts` function returns the growth in biomass over time for a
 ```
 ff_calc_inv_mass_ts(ff_fields, 14) 
 ```
-```{r calc-field-ts, echo=TRUE, message=FALSE}
+```{r calc-field-ts, echo=FALSE, message=FALSE, warning=FALSE}
 ff_fields |> ff_calc_inv_mass_ts(14) |> head(10) |> knitr::kable()
 ```
 ...which can be pivoted as so if needed...
