@@ -13,11 +13,11 @@ function(input, output, session){
               zoom = 10) |>
       addPolygons(
         data = fishFoodMWD::ff_fields_gcs,
-        fillOpacity = .8,
+        fillOpacity = .2,
         color = "#FBFAA2",
         fillColor = "#28b62c",
-        opacity = 1,
-        dashArray = "6",
+        opacity = 0.5,
+        dashArray = "3",
         group = "default_fields",
         popup = as.character(paste(
           "County:", fishFoodMWD::ff_fields_gcs$county,
@@ -36,14 +36,19 @@ function(input, output, session){
       )
     })
   selected_field <- reactive({
-    p <- input$field_map_shape_click
-    # print(p)
-    pnt <- tibble(y=p$lat, x=p$lng) |>
-      st_as_sf(coords=c('x', 'y'), crs=st_crs(fishFoodMWD::ff_fields_gcs))
-    field_row_index <- st_within(pnt, fishFoodMWD::ff_fields_gcs)[[1]]
+    if (length(input$field_map_shape_click['lat']) >0) {
+      p <- input$field_map_shape_click
+      # print(p)
+      pnt <- tibble(y=p$lat, x=p$lng) |>
+        st_as_sf(coords=c('x', 'y'), crs=st_crs(fishFoodMWD::ff_fields_gcs))
+      field_row_index <- st_within(pnt, fishFoodMWD::ff_fields_gcs)[[1]]
 
-    fishFoodMWD::ff_fields_gcs[field_row_index, ]
-  })
+      fishFoodMWD::ff_fields_gcs[field_row_index, ]
+    }
+  else(
+    fishFoodMWD::ff_fields_gcs
+  )
+  }) |> bindCache(input$field_map_shape_click['lat'])
 
 
   observeEvent(input$field_map_shape_click, {
@@ -55,7 +60,7 @@ function(input, output, session){
     # field_id <- st_within(pnt, fishFoodMWD::ff_fields_gcs)[[1]]
 
     leafletProxy("field_map") %>%
-      clearGroup("default_fields")%>%
+      # clearGroup("default_fields")%>%
       clearGroup('selected_field') %>%
       addPolygons(
         data = selected_field(),
