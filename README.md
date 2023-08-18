@@ -1,16 +1,50 @@
 fishFoodMWD
 ================
-2023-08-17
 
-<img src="man/figures/logo.png" align="right" alt="fishFoodMWD" style="height: 139px; margin: 10px"/>
+<img src="man/figures/logo.png" align="right" alt="fishFoodMWD" style="height: 139px; margin: 24px"/>
 
-The R package **fishFoodMWD** provides access to… lorem ipsum dolor sit
-amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
-labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud
-exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
-Duis aute irure dolor in reprehenderit in voluptate velit esse cillum
-dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
-proident, sunt in culpa qui officia deserunt mollit anim id est laborum
+***A spatial database for salmonid rearing on Sacramento Valley rice
+fields***
+
+Substantial recent research has demonstrated the food production
+benefits of floodplain inundation can increase growth and survival of
+rearing juvenile salmonids (see Goertler et al 2018, Katz et al 2017,
+Jeffres 2006, Grosholz and Gallo 2005). Approximately 500,000 acres of
+rice fields have the potential to produce food (phytoplankton and
+zooplankton) that can be delivered to the Delta, the Sacramento River,
+and their contributing watersheds to benefit juvenile salmon and other
+native fish.
+
+Detailed data on rice field drainage conveyance systems that move water
+between farm fields and the Delta and its watershed is essential to
+scale up fish food production management actions. This project—a
+collaborative effort between FlowWest, RD108, the California Rice
+Commission, the Metropolitan Water District of Southern California, and
+CalTrout—addresses the significant information gap around the system of
+natural channels, canals, and structures that move flows (and in some
+cases fish) to and from these fields.
+
+FlowWest assembled a quantitative spatial database of the Sacramento
+Valley rice field drainage system, mapping and calculating drainage
+system characteristics influencing suitability for fish food production
+and/or delivery, such as:
+
+- the locations of outflows from arterial canals into fish-bearing
+  streams
+- groupings of rice fields by their outflow location
+- distance from rice fields to their flow delivery site and the nearest
+  fish-bearing stream
+- estimated invertebrate food mass production based on rice field
+  acreage
+
+The R package **fishFoodMWD**, and this accompanying website, provides
+access to the resulting spatial database. Results, including the
+distances and relationships between rice fields and their connected
+canals and rivers, can be explored and filtered using the [**interactive
+map**](link-to-map) on this website. The datasets and accompanying
+plotting and calculation functions can be accessed directly by
+installing the R package. Datasets are also available in standard GIS
+(shapefile) format.
 
 # Installation
 
