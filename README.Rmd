@@ -34,10 +34,7 @@ The R package **fishFoodMWD**, and this accompanying website, provides access to
 Install the latest development version of **fishFoodMWD** from GitHub:
 
 ```{r eval=FALSE, include=TRUE}
-if (!require("devtools")) {
-  install.packages("devtools")
-}
-devtools::install_github("FlowWest/fishFoodMWD")
+remotes::install_github("flowwest/fishFoodMWD")
 ```
 
 # Getting started

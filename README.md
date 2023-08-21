@@ -51,10 +51,7 @@ installing the R package. Datasets are also available in standard GIS
 Install the latest development version of **fishFoodMWD** from GitHub:
 
 ``` r
-if (!require("devtools")) {
-  install.packages("devtools")
-}
-devtools::install_github("FlowWest/fishFoodMWD")
+remotes::install_github("flowwest/fishFoodMWD")
 ```
 
 # Getting started
