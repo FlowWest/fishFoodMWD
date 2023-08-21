@@ -1,5 +1,5 @@
 function(input, output, session){
-  vol_pal <- colorQuantile(palette = "Green", domain = fields_watersheds$volume_af, n = 5)
+  county_pal <- colorFactor(palette = "viridis", domain = fields_watersheds$county)
   ret_pal <- colorFactor(palette = c("orange", "turquoise"), domain = fields_returns$return_direct, na.color = "#808080")
   dist_pal <- colorNumeric(palette = "Blues", domain = fields_distances$totdist_mi)
 
@@ -17,9 +17,9 @@ function(input, output, session){
                 zoom = 10) |>
         addPolygons(
           data = fields_watersheds,
-          fillColor = ~vol_pal(volume_af),
+          fillColor = ~county_pal(county),
           # fillColor = "#28b62c",
-          fillOpacity = .8,
+          fillOpacity = 1,
           weight = 2,
           color = "#2e2e2e",
           # fillColor = "#28b62c",
@@ -35,20 +35,22 @@ function(input, output, session){
             color = "#FDD20E",
             dashArray = "",
             fillOpacity = 1,
+            fillColor = "#FDD20E",
             bringToFront = TRUE
           ),
           layerId = ~unique_id
         ) |>
       addPolylines(
           data = ff_canals_gcs,
-          weight = 1,
+          weight = 1.5,
           color = "orange",
           group = "canals",
           label = "Secondary canals"
+
         ) |>
       addPolylines(
         data = ff_streams_gcs,
-        weight = 1,
+        weight = 1.5,
         color = "turquoise",
         group = "streams",
         label = "Fish bearing streams"
@@ -171,7 +173,7 @@ function(input, output, session){
           fillOpacity = .8,
           weight = 2,
           color = "#2e2e2e",
-          fillColor = ~vol_pal(volume_af),
+          fillColor = ~county_pal(county),
           # fillColor = "#28b62c",
           opacity = 1,
           group = "default_fields",
