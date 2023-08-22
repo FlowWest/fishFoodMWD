@@ -95,7 +95,7 @@ ff_watersheds <- ff_watersheds |>
 ff_fields_joined <- ff_fields |>
   left_join(ff_watersheds |> st_drop_geometry(), by = join_by("group_id")) |>
   left_join(ff_returns |> st_drop_geometry() |> select(-return_direct), by = join_by("return_id")) |>
-  left_join(ff_distances, by = join_by("unique_id"))
+  left_join(ff_distances |> select(-return_id), by = join_by("unique_id"))
 
 # export tabular datasets
 usethis::use_data(ff_distances, overwrite = TRUE)
