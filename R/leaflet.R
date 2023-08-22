@@ -18,9 +18,15 @@
 #'
 ff_make_leaflet <- function(bbox) {
   m <- leaflet::leaflet() |>
+    leaflet::addMapPane("Basemap", zIndex = 400) |>
+    leaflet::addMapPane("Watersheds", zIndex = 450) |>
+    leaflet::addMapPane("Fields", zIndex = 460) |>
+    leaflet::addMapPane("Flowlines", zIndex = 470) |>
+    leaflet::addMapPane("Returns", zIndex = 480) |>
     leaflet::addProviderTiles(leaflet::providers$Stamen.Terrain,
-                     options = leaflet::providerTileOptions(noWrap = TRUE,
-                                                   opacity = 0.5)) |>
+                              options = leaflet::providerTileOptions(noWrap = TRUE,
+                                                                     opacity = 0.5,
+                                                                     pane = "Basemap")) |>
     leaflet::fitBounds(lng1 = bbox[["xmin"]],
                        lat1 = bbox[["ymin"]],
                        lng2 = bbox[["xmax"]],
@@ -58,6 +64,7 @@ ff_layer_streams <- function(m, show = TRUE) {
                       color = "#00688b",
                       opacity = 1,
                       weight = 2,
+                      options = leaflet::pathOptions(pane = "Flowlines")
     )
   } else {
     m |> leaflet::removeShape(object_ids)
@@ -94,6 +101,7 @@ ff_layer_canals <- function(m, show = TRUE) {
                       color = "#8b1a1a",
                       opacity = 1,
                       weight = 2,
+                      options = leaflet::pathOptions(pane = "Flowlines")
     )
   } else {
     m |> leaflet::removeShape(object_ids)
@@ -133,6 +141,7 @@ ff_layer_returns <- function(m, show = TRUE) {
                           radius = 4,
                           fillOpacity = 1,
                           stroke = FALSE,
+                          options = leaflet::pathOptions(pane = "Returns")
                           )
   } else {
     m |> leaflet::removeShape(object_ids)
@@ -175,6 +184,7 @@ ff_layer_watersheds <- function(m, show = TRUE) {
                               fillColor = ~pal(return_direct),
                               weight = 1,
                               fillOpacity = 0.5,
+                              options = leaflet::pathOptions(pane = "Watersheds")
                               )
   } else {
     m |> leaflet::removeShape(object_ids)
@@ -220,6 +230,7 @@ ff_layer_fields <- function(m, show = TRUE, measure="return") {
                        weight = 0,
                        fillColor = ~pal(return_direct),
                        fillOpacity = 1,
+                       options = leaflet::pathOptions(pane = "Fields")
       )
     } else if(measure=="distance"){
       pal <- leaflet::colorNumeric(palette = "Blues",
@@ -231,8 +242,9 @@ ff_layer_fields <- function(m, show = TRUE, measure="return") {
                        weight = 0,
                        fillColor = ~pal(totdist_mi),
                        fillOpacity = 1,
+                       options = leaflet::pathOptions(pane = "Fields")
       )
-    }
+}
   } else {
     m |> leaflet::removeShape(object_ids)
   }
