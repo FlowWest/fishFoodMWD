@@ -7,7 +7,7 @@ ff_watersheds <-
   janitor::clean_names() |>
   select(group_id,
          huc10,
-         watershed_name = name,
+         watershed_name = group_name,
          return_id
   ) |>
   mutate(return_id = replace_na(return_id, 0))
@@ -44,13 +44,21 @@ ff_distances <-
   )  |>
   st_drop_geometry()
 
+
 ff_fields <-
   read_sf(dsn = "data-raw/shp", layer = "ricefield_groups") |>
   janitor::clean_names() |>
   st_transform(project_crs) |>
-  select(unique_id, county) |>
-  st_join(select(ff_watersheds,
-                 group_id)) |>
+  select(unique_id, county)
+
+watershed_xw <- ff_fields |>
+  st_centroid() |>
+  st_join(ff_watersheds) |>
+  st_drop_geometry() |>
+  select(unique_id, group_id)
+
+ff_fields <- ff_fields |>
+  left_join(watershed_xw) |>
   mutate(area_ac = units::drop_units(units::set_units(st_area(geometry), "acre")),
          volume_af = area_ac * 5/12) |>
   st_zm()
@@ -85,9 +93,9 @@ ff_watersheds <- ff_watersheds |>
 # FULLY JOINED FIELDS DATASET TO USE IN LEAFLET
 
 ff_fields_joined <- ff_fields |>
-  left_join(ff_watersheds |> st_drop_geometry()) |>
-  left_join(ff_returns |> st_drop_geometry() |> select(-return_direct)) |>
-  left_join(ff_distances)
+  left_join(ff_watersheds |> st_drop_geometry(), by = join_by("group_id")) |>
+  left_join(ff_returns |> st_drop_geometry() |> select(-return_direct), by = join_by("return_id")) |>
+  left_join(ff_distances, by = join_by("unique_id"))
 
 # export tabular datasets
 usethis::use_data(ff_distances, overwrite = TRUE)
