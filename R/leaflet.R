@@ -174,7 +174,7 @@ ff_layer_returns <- function(m, show = TRUE, return) {
 #'
 ff_layer_watersheds <- function(m, show = TRUE, return, group) {
   if(show) {
-    pal <- leaflet::colorFactor(palette = c("lightblue", "lightpink", "moccasin"),
+    pal <- leaflet::colorFactor(palette = c("#ADD8E6", "#FFB6C1", "#FFE4B5"),
                                 levels = c("Direct", "Indirect", "Lateral"))
     if(!missing(group)) {
       df <- ff_watersheds_gcs |> dplyr::filter(group_id == {{group}})
@@ -234,7 +234,7 @@ ff_layer_fields <- function(m, show = TRUE, measure="return", return, group) {
       df <- ff_fields_joined_gcs
     }
     if(measure=="return"){
-      pal <- leaflet::colorFactor(palette = c("lightblue", "lightpink", "moccasin"),
+      pal <- leaflet::colorFactor(palette = c("#57A0B9", "#C5686E", "#D9B679"),
                                   levels = c("Direct", "Indirect", "Lateral"))
       m |> leaflet::removeShape(ff_fields_joined_gcs$object_id) |>
            leaflet::addPolygons(data = df,
