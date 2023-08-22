@@ -59,11 +59,14 @@ ff_layer_streams <- function(m, show = TRUE) {
   if(show) {
     m |> leaflet::addPolylines(data = ff_streams_gcs,
                       layerId = ~object_id,
-                      popup = ~stream_name,
+                      label = ~lapply(paste0("<strong>",stream_name,"</strong><br />Fish-bearing stream"), htmltools::HTML),
                       color = "#00688b",
                       opacity = 1,
                       weight = 2,
-                      options = leaflet::pathOptions(pane = "Flowlines")
+                      options = leaflet::pathOptions(pane = "Flowlines"),
+                      highlightOptions = leaflet::highlightOptions(color = "#FDD20E",
+                                                                   weight = 3,
+                                                                   bringToFront = TRUE)
     )
   } else {
     m |> leaflet::removeShape(ff_streams_gcs$object_id)
@@ -95,11 +98,14 @@ ff_layer_canals <- function(m, show = TRUE) {
   if(show) {
     m |> leaflet::addPolylines(data = ff_canals_gcs,
                       layerId = ~object_id,
-                      popup = ~canal_name,
+                      label = ~lapply(paste0("<strong>",canal_name,"</strong><br />Secondary canal"), htmltools::HTML),
                       color = "#8b1a1a",
                       opacity = 1,
                       weight = 2,
-                      options = leaflet::pathOptions(pane = "Flowlines")
+                      options = leaflet::pathOptions(pane = "Flowlines"),
+                      highlightOptions = leaflet::highlightOptions(color = "#FDD20E",
+                                                                   weight = 3,
+                                                                   bringToFront = TRUE)
     )
   } else {
     m |> leaflet::removeShape(ff_canals_gcs$object_id)
@@ -140,7 +146,7 @@ ff_layer_returns <- function(m, show = TRUE, selected_return=NULL) {
     m |> leaflet::removeShape(ff_returns_gcs$object_id) |>
       leaflet::addCircleMarkers(data = df,
                                 layerId = ~object_id,
-                                popup = ~paste0(return_id,"<br>",return_direct),
+                                label = ~lapply(paste0("<strong>Return point ",return_id,": ",return_name,"</strong><br />",return_direct," return to ",ds_fbs_name), htmltools::HTML),
                                 color = ~pal(return_direct),
                                 radius = 4,
                                 fillOpacity = 1,
@@ -189,12 +195,15 @@ ff_layer_watersheds <- function(m, show = TRUE, selected_return=NULL, selected_g
     m |> leaflet::removeShape(ff_watersheds_gcs$object_id) |>
       leaflet::addPolygons(data = df,
                            layerId = ~object_id,
-                           popup = ~watershed_name,
+                           label = ~lapply(paste0("<strong>",watershed_name," Watershed</strong><br />",return_category," return to fish-bearing stream"), htmltools::HTML),
                            color = "white",
                            fillColor = ~pal(return_category),
                            weight = 1,
                            fillOpacity = 0.5,
-                           options = leaflet::pathOptions(pane = "Watersheds")
+                           options = leaflet::pathOptions(pane = "Watersheds"),
+                           highlightOptions = leaflet::highlightOptions(color = "#FDD20E",
+                                                                        weight = 3,
+                                                                        bringToFront = FALSE)
                            )
   } else {
     m |> leaflet::removeShape(ff_watersheds_gcs$object_id)
@@ -247,23 +256,31 @@ ff_layer_fields <- function(m, show = TRUE, measure="return", selected_return=NU
       m |> leaflet::removeShape(ff_fields_joined_gcs$object_id) |>
            leaflet::addPolygons(data = df,
                        layerId = ~object_id,
-                       popup = ~paste0(return_category," return to ",fbs_name," = ",round(totdist_mi,1)," mi"),
+                       label = ~lapply(paste0("<strong>",round(area_ac,1),"-acre rice field</strong><br />",
+                                              return_category," return to ",fbs_name," = ",round(totdist_mi,1)," mi<br />"),
+                                       htmltools::HTML),
                        weight = 0,
+                       color = "white",
                        fillColor = ~pal(return_category),
                        fillOpacity = 1,
-                       options = leaflet::pathOptions(pane = "Fields")
-      )
+                       options = leaflet::pathOptions(pane = "Fields"),
+                       highlightOptions = leaflet::highlightOptions(fillColor = "#FDD20E",
+                                                                    bringToFront = TRUE)
+                       )
     } else if(measure=="distance"){
       pal <- leaflet::colorNumeric(palette = "Blues",
                                    domain = ff_fields_joined_gcs$totdist_mi)
       m |> leaflet::removeShape(ff_fields_joined_gcs$object_id) |>
            leaflet::addPolygons(data = df,
                        layerId = ~object_id,
-                       popup = ~paste0(return_category," return to ",fbs_name," = ",round(totdist_mi,1)," mi"),
+                       label = ~lapply(paste0(return_category," return to ",fbs_name," = ",round(totdist_mi,1)," mi"),
+                                       htmltools::HTML),
                        weight = 0,
                        fillColor = ~pal(totdist_mi),
                        fillOpacity = 1,
-                       options = leaflet::pathOptions(pane = "Fields")
+                       options = leaflet::pathOptions(pane = "Fields"),
+                       highlightOptions = leaflet::highlightOptions(fillColor = "#FDD20E",
+                                                                    bringToFront = TRUE)
       )
 }
   } else {
@@ -326,7 +343,7 @@ ff_map_distances <- function(selected_return) {
       ff_layer_streams() |>
       ff_layer_canals() |>
       ff_layer_returns() |>
-      ff_layer_fields(measure="distance", )
+      ff_layer_fields(measure="distance")
   }
   return(m)
 }
