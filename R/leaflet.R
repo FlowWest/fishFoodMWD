@@ -238,6 +238,6 @@ ff_layer_fields <- function(m, show = TRUE, measure="return") {
       )
 }
   } else {
-    m |> leaflet::removeShape(object_ids)
+    m |> leaflet::removeShape(ff_fields_joined_gcs$object_id)
   }
 }
