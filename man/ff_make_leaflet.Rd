@@ -4,7 +4,9 @@
 \alias{ff_make_leaflet}
 \title{Create leaflet map object}
 \usage{
-ff_make_leaflet(bbox)
+ff_make_leaflet(
+  bbox = c(xmin = -122.3, ymin = 38.5, xmax = -121.3, ymax = 39.7)
+)
 }
 \arguments{
 \item{bbox}{A named vector defining the initial map extent via minimum and maximum lat/lon coordinates in the format \verb{c(xmin=_, ymin=_, xmax=_, ymax=_)}}
@@ -15,12 +17,13 @@ Initialize a leaflet map object with the desired basemap and settings.
 \examples{
 # create and display leaflet object with a specified bounding box
 bbox <- sf::st_bbox(ff_fields_gcs)
-m <- ff_make_leaflet(bbox)
-m
+ff_make_leaflet(bbox)
 
 # create the leaflet map for a Shiny app
-output$mainMap <- leaflet::renderLeaflet({
-  ff_make_leaflet(bbox)
-})
+if(FALSE){
+  output$mainMap <- leaflet::renderLeaflet({
+    ff_make_leaflet(bbox)
+  })
+}
 
 }

@@ -16,15 +16,17 @@ Function to toggle the canals layer on an existing leaflet map.
 }
 \examples{
 # show the layer on a leaflet map object ("m")
+m <- ff_make_leaflet()
 m |> ff_layer_canals(show = TRUE)
 
 # hide the layer on a leaflet map object ("m")
 m |> ff_layer_canals(show = FALSE)
 
 # use as part of a Shiny app with map "mainMap" and a boolean selector "show_canals"
-observe({
-  proxy <- leaflet::leafletProxy("mainMap")
-  proxy |> ff_layer_canals(show = input$show_canals)
-})
-
+if(FALSE){
+  shiny::observe({
+    proxy <- leaflet::leafletProxy("mainMap")
+    proxy |> ff_layer_canals(show = input$show_canals)
+  })
+}
 }

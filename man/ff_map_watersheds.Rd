@@ -4,7 +4,7 @@
 \alias{ff_map_watersheds}
 \title{Interactive map of watersheds}
 \usage{
-ff_map_watersheds(return = NULL)
+ff_map_watersheds(selected_return)
 }
 \arguments{
 \item{return}{(optional) A specific \code{return_id} for a return point to map.}

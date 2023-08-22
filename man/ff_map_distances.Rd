@@ -4,15 +4,15 @@
 \alias{ff_map_distances}
 \title{Interactive map of watersheds}
 \usage{
-ff_map_distances(return = NULL)
+ff_map_distances(selected_return)
 }
 \arguments{
-\item{return}{(optional) A specific \code{return_id} for a return point to map.}
+\item{selected_return}{(optional) A specific \code{return_id} for a return point to map.}
 }
 \description{
 Creates an interactive leaflet map showing the rice fields with watersheds return types.
 }
 \examples{
 ff_map_distances()
-ff_map_distances(return = 9)
+ff_map_distances(selected_return = 9)
 }

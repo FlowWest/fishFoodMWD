@@ -16,15 +16,17 @@ Function to toggle the streams layer on an existing leaflet map.
 }
 \examples{
 # show the layer on a leaflet map object ("m")
+m <- ff_make_leaflet()
 m |> ff_layer_streams(show = TRUE)
 
 # hide the layer on a leaflet map object ("m")
 m |> ff_layer_streams(show = FALSE)
 
 # use as part of a Shiny app with map "mainMap" and a boolean selector "show_streams"
-observe({
-  proxy <- leaflet::leafletProxy("mainMap")
-  proxy |> ff_leaflet_streams(show = input$show_streams)
-})
-
+if(FALSE){
+  shiny::observe({
+    proxy <- leaflet::leafletProxy("mainMap")
+    proxy |> ff_layer_streams(show = input$show_streams)
+  })
+}
 }
