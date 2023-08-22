@@ -4,7 +4,7 @@
 \alias{ff_layer_returns}
 \title{Show or hide leaflet returns layer}
 \usage{
-ff_layer_returns(m, show = TRUE)
+ff_layer_returns(m, show = TRUE, return)
 }
 \arguments{
 \item{m}{An initialized \code{leaflet} map object or \code{leafletProxy} object.}

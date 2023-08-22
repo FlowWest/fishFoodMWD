@@ -4,7 +4,7 @@
 \alias{ff_layer_fields}
 \title{Show or hide leaflet fields layer}
 \usage{
-ff_layer_fields(m, show = TRUE, measure = "return")
+ff_layer_fields(m, show = TRUE, measure = "return", return, group)
 }
 \arguments{
 \item{m}{An initialized \code{leaflet} map object or \code{leafletProxy} object.}

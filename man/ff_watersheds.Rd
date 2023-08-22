@@ -5,7 +5,7 @@
 \alias{ff_watersheds}
 \title{Watersheds}
 \format{
-An object of class \code{sf} (inherits from \code{tbl_df}, \code{tbl}, \code{data.frame}) with 47 rows and 5 columns.
+An object of class \code{sf} (inherits from \code{tbl_df}, \code{tbl}, \code{data.frame}) with 47 rows and 6 columns.
 }
 \source{
 NHD; FlowWest

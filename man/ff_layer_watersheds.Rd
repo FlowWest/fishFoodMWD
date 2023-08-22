@@ -4,7 +4,7 @@
 \alias{ff_layer_watersheds}
 \title{Show or hide leaflet watersheds layer}
 \usage{
-ff_layer_watersheds(m, show = TRUE)
+ff_layer_watersheds(m, show = TRUE, return, group)
 }
 \arguments{
 \item{m}{An initialized \code{leaflet} map object or \code{leafletProxy} object.}
