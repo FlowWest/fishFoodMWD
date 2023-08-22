@@ -31,10 +31,19 @@ function(input, output, session){
         selected_point$group_id <- val$group_id
         selected_point$return_point_id <- val$return_id
 
-      } else if(click_type == 'R') { # Return points
+      }
+    }
+  })
+
+  observeEvent(input$field_map_marker_click, {
+    if (!is.null(input$field_map_marker_click$id)) {
+
+      click_type <- substr(input$field_map_marker_click$id, 1, 1)
+
+      if(click_type == 'R') { # Return points
 
         val <- ff_returns_gcs |>
-          filter(object_id == input$field_map_shape_click$id) |>
+          filter(object_id == input$field_map_marker_click$id) |>
           select(return_id)
 
         selected_point$object_id <- NULL
@@ -42,13 +51,9 @@ function(input, output, session){
         selected_point$return_point_id <- val$return_id
 
       }
-
-      cat(unlist(selected_point$return_point_id))
-      cat(unlist(selected_point$object_id))
-      cat(unlist(selected_point$group_id))
-
     }
   })
+
 
   # reset the map
   observeEvent(input$resetButton, {
