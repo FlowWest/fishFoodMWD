@@ -16,7 +16,7 @@
 #'   ff_make_leaflet(bbox)
 #' })
 #'
-ff_make_leaflet <- function(bbox) {
+ff_make_leaflet <- function(bbox=c(xmin=-122.3, ymin=38.5, xmax=-121.3, ymax=39.7)) {
   m <- leaflet::leaflet() |>
     leaflet::addMapPane("Basemap", zIndex = 400) |>
     leaflet::addMapPane("Watersheds", zIndex = 450) |>
@@ -112,6 +112,7 @@ ff_layer_canals <- function(m, show = TRUE) {
 #' Function to toggle the returns layer on an existing leaflet map.
 #' @param m An initialized `leaflet` map object or `leafletProxy` object.
 #' @param show A boolean value indicating whether the function call will be adding the layer to the map (`TRUE`) or removing the layer from the map (`FALSE`). Designed to be changed via `shiny` checkbox input by calling the function inside an observer.
+#' @param selected_return The `return_id` of a return point to filter to, if desired.
 #' @md
 #' @export
 #' @examples
@@ -127,12 +128,12 @@ ff_layer_canals <- function(m, show = TRUE) {
 #'   proxy |> ff_layer_returns(show = input$show_returns)
 #' })
 #'
-ff_layer_returns <- function(m, show = TRUE, return) {
+ff_layer_returns <- function(m, show = TRUE, selected_return=NULL) {
   if(show) {
     pal <- leaflet::colorFactor(palette = c("#00688b", "#8b1a1a"),
                                 levels = c("Direct", "Indirect"))
-    if(!missing(return)) {
-      df <- ff_returns_gcs |> dplyr::filter(return_id == {{return}})
+    if(!is.null(selected_return)) {
+      df <- ff_returns_gcs |> dplyr::filter(return_id == {{selected_return}})
     } else {
       df <- ff_returns_gcs
     }
@@ -157,6 +158,8 @@ ff_layer_returns <- function(m, show = TRUE, return) {
 #' Function to toggle the watersheds layer on an existing leaflet map.
 #' @param m An initialized `leaflet` map object or `leafletProxy` object.
 #' @param show A boolean value indicating whether the function call will be adding the layer to the map (`TRUE`) or removing the layer from the map (`FALSE`). Designed to be changed via `shiny` checkbox input by calling the function inside an observer.
+#' @param selected_return The `return_id` of a return point to filter to, if desired.
+#' @param selected_group The `group_id` of a watershed to filter to, if desired.
 #' @md
 #' @export
 #' @examples
@@ -172,14 +175,14 @@ ff_layer_returns <- function(m, show = TRUE, return) {
 #'   proxy |> ff_layer_watersheds(show = input$show_watersheds)
 #' })
 #'
-ff_layer_watersheds <- function(m, show = TRUE, return, group) {
+ff_layer_watersheds <- function(m, show = TRUE, selected_return=NULL, selected_group=NULL) {
   if(show) {
     pal <- leaflet::colorFactor(palette = c("#ADD8E6", "#FFB6C1", "#FFE4B5"),
                                 levels = c("Direct", "Indirect", "Lateral"))
-    if(!missing(group)) {
-      df <- ff_watersheds_gcs |> dplyr::filter(group_id == {{group}})
-    } else if(!missing(return)) {
-      df <- ff_watersheds_gcs |> dplyr::filter(return_id == {{return}})
+    if(!is.null(selected_group)) {
+      df <- ff_watersheds_gcs |> dplyr::filter(group_id == {{selected_group}})
+    } else if(!is.null(selected_return)) {
+      df <- ff_watersheds_gcs |> dplyr::filter(return_id == {{selected_return}})
     } else {
       df <- ff_watersheds_gcs
     }
@@ -205,6 +208,9 @@ ff_layer_watersheds <- function(m, show = TRUE, return, group) {
 #' @param m An initialized `leaflet` map object or `leafletProxy` object.
 #' @param show A boolean value indicating whether the function call will be adding the layer to the map (`TRUE`) or removing the layer from the map (`FALSE`). Designed to be changed via `shiny` checkbox input by calling the function inside an observer.
 #' @param measure A string indicating the measure to show. Choose from `return` to color by return type, or `distances` to color by distances. FUTURE EDITS: ADD OPTIONS TO COLOR BY VOLUME, INVERTEBRATE MASS PRODUCTION, WET/DRY, ETC.
+#' @param selected_return The `return_id` of a return point to filter to, if desired.
+#' @param selected_group The `group_id` of a watershed to filter to, if desired.
+#' @param selected_object The `object_id` of a single field to filter to, if desired. Used internally.
 #' @md
 #' @export
 #' @examples
@@ -224,12 +230,14 @@ ff_layer_watersheds <- function(m, show = TRUE, return, group) {
 #'                            measure = input$measure_fields)
 #' })
 #'
-ff_layer_fields <- function(m, show = TRUE, measure="return", return, group) {
+ff_layer_fields <- function(m, show = TRUE, measure="return", selected_return=NULL, selected_group=NULL, selected_object=NULL) {
   if(show) {
-    if(!missing(group)) {
-      df <- ff_fields_joined_gcs |> dplyr::filter(group_id == {{group}})
-    } else if(!missing(return)) {
-      df <- ff_fields_joined_gcs |> dplyr::filter(return_id == {{return}})
+    if(!is.null(selected_object)) {
+      df <- ff_fields_joined_gcs |> dplyr::filter(object_id == {{selected_object}})
+    } else if(!is.null(selected_group)) {
+      df <- ff_fields_joined_gcs |> dplyr::filter(group_id == {{selected_group}})
+    } else if(!is.null(selected_return)) {
+      df <- ff_fields_joined_gcs |> dplyr::filter(return_id == {{selected_return}})
     } else {
       df <- ff_fields_joined_gcs
     }
@@ -273,15 +281,15 @@ ff_layer_fields <- function(m, show = TRUE, measure="return", return, group) {
 #' @examples
 #' ff_map_watersheds()
 #' ff_map_watersheds(return = 9)
-ff_map_watersheds <- function(return=NULL) {
-  if (!missing(return)){
-    bbox <- sf::st_bbox(ff_fields_joined_gcs |> filter(return_id == {{return}}))
+ff_map_watersheds <- function(selected_return) {
+  if (!missing(selected_return)){
+    bbox <- sf::st_bbox(ff_fields_joined_gcs |> filter(return_id == {{selected_return}}))
     m <- ff_make_leaflet(bbox) |>
       ff_layer_streams() |>
       ff_layer_canals() |>
-      ff_layer_returns(return=return) |>
-      ff_layer_watersheds(return=return) |>
-      ff_layer_fields(measure="return", return=return)
+      ff_layer_returns(selected_return=selected_return) |>
+      ff_layer_watersheds(selected_return=selected_return) |>
+      ff_layer_fields(measure="return", selected_return=selected_return)
   } else {
     bbox <- sf::st_bbox(ff_fields_joined_gcs)
     m <- ff_make_leaflet(bbox) |>
@@ -298,20 +306,20 @@ ff_map_watersheds <- function(return=NULL) {
 #' @title Interactive map of watersheds
 #' @description
 #' Creates an interactive leaflet map showing the rice fields with watersheds return types.
-#' @param return (optional) A specific `return_id` for a return point to map.
+#' @param selected_return (optional) A specific `return_id` for a return point to map.
 #' @md
 #' @export
 #' @examples
 #' ff_map_distances()
-#' ff_map_distances(return = 9)
-ff_map_distances <- function(return=NULL) {
-  if (!missing(return)){
-    bbox <- sf::st_bbox(ff_fields_joined_gcs |> filter(return_id == {{return}}))
+#' ff_map_distances(selected_return = 9)
+ff_map_distances <- function(selected_return) {
+  if (!missing(selected_return)){
+    bbox <- sf::st_bbox(ff_fields_joined_gcs |> filter(return_id == {{selected_return}}))
     m <- ff_make_leaflet(bbox) |>
       ff_layer_streams() |>
       ff_layer_canals() |>
-      ff_layer_returns(return=return) |>
-      ff_layer_fields(measure="distance", return=return)
+      ff_layer_returns(return=selected_return) |>
+      ff_layer_fields(measure="distance", selected_return=selected_return)
   } else {
     bbox <- sf::st_bbox(ff_fields_joined_gcs)
     m <- ff_make_leaflet(bbox) |>
@@ -322,3 +330,4 @@ ff_map_distances <- function(return=NULL) {
   }
   return(m)
 }
+
