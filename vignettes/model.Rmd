@@ -1,0 +1,172 @@
+---
+title: "Modeling Approach and Methods"
+author: "FlowWest"
+date: "`r Sys.Date()`"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Modeling Approach and Methods}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  fig.width=680/72,
+  fig.height=680*(2/3)/72,
+  dpi=72
+)
+ggplot2::theme_set(ggplot2::theme_minimal())
+library(tidyverse)
+library(sf)
+library(fishFoodMWD)
+```
+
+This article describes the approach and methods used to calculate the distances from rice fields to fish-bearing streams.
+
+## Watershed delineation and classification
+
+First, we divided the Sacramento Valley into watersheds based on the National Hydrography Dataset (NHD) HUC-10 watersheds, and further split them as needed after inspection of drainage canal flow patterns.
+
+Each watershed's outlet is a return into either a major fish-bearing stream, or into a secondary canal that drains into a fish-bearing stream. We identified fish-bearing streams based on prior CVPIA modeling work and expert consultation.
+
+```{r model-watersheds, echo=FALSE}
+watersheds_returns <- ff_watersheds |> 
+  left_join(st_drop_geometry(ff_returns), by=join_by(return_id)) |>
+  mutate(return_direct = coalesce(return_direct, "Lateral"))
+
+scale_color_returns <- scale_color_manual(values=c("Direct"="mediumblue", "Indirect"="darkred"), 
+                     labels=c("Direct"="Direct (fish-bearing stream)", "Indirect"="Indirect (secondary canal)"),
+                     name="Returns (streams/canals)")
+scale_fill_watersheds <-  scale_fill_manual(values=c("Direct"="lightblue", "Indirect"="pink", "Lateral"="moccasin"), 
+                    name="Watershed flow type")
+scale_graticule_lat <- scale_y_continuous(breaks = seq(38, 40, by=0.5))
+scale_graticule_lon <- scale_x_continuous(breaks = seq(-122.5, -120.5, by=0.5))
+
+ggplot() + 
+  geom_sf(data=watersheds_returns, aes(fill=return_direct), color="white") +
+  geom_sf(data=ff_streams, aes(color="Direct")) + 
+  geom_sf(data=ff_canals, aes(color="Indirect")) + 
+  geom_sf(data=ff_returns, aes(color=return_direct)) + 
+  scale_color_returns + scale_fill_watersheds + scale_graticule_lat + scale_graticule_lon
+```
+
+Watersheds draining directly into fish-bearing streams are considered "direct" returns. 
+
+```{r model-watersheds-direct, echo=FALSE}
+ggplot() + 
+  geom_sf(data=filter(watersheds_returns, return_direct=="Direct"), aes(fill="Direct"), color="white") +
+  geom_sf(data=filter(ff_returns, return_direct=="Direct"), aes(color="Direct")) +
+  geom_sf(data=ff_streams, aes(color="Direct")) + 
+  scale_color_returns + scale_fill_watersheds + scale_graticule_lat + scale_graticule_lon
+```
+
+Watersheds draining into secondary canals are considered "indirect" returns. 
+
+```{r model-watersheds-indirect, echo=FALSE}
+ggplot() + 
+  geom_sf(data=filter(watersheds_returns, return_direct=="Indirect"), aes(fill="Indirect"), color="white") +
+  geom_sf(data=filter(ff_returns, return_direct=="Indirect"), aes(color="Indirect")) +
+  geom_sf(data=ff_canals, aes(color="Indirect")) +
+  geom_sf(data=ff_streams, aes(color="Direct")) +
+  scale_color_returns + scale_fill_watersheds + scale_graticule_lat + scale_graticule_lon
+```
+
+A third set of watersheds, without defined return points, assumed to drain laterally into the fish-bearing stream that they are fronting.
+
+```{r model-watersheds-lateral, echo=FALSE}
+ggplot() + 
+  geom_sf(data=filter(watersheds_returns, return_direct=="Lateral"), aes(fill="Lateral"), color="white") +
+  geom_sf(data=ff_streams, color="mediumblue") +
+  scale_fill_watersheds + scale_graticule_lat + scale_graticule_lon
+```
+
+## Distance calculation
+
+We used the center point (centroid) of each rice field to calculate distance to either its watershed's return point (for the direct and indirect watersheds) or to the nearest stream (for the lateral flow watersheds). In all cases, straight-line distances provided a simple distance approximation for this planning-level analysis. 
+
+For the lateral flow watersheds, straight-line distances were calculated from the field centroid to the nearest fish-bearing stream within the field's watershed. 
+
+```{r model-distances-lateral, echo=FALSE, message=FALSE, warning=FALSE}
+ff_fields |> 
+  left_join(ff_distances, by=join_by(unique_id)) |>
+  filter(!(return_id>0)) |>
+  ggplot() + 
+    geom_sf(aes(fill=return_dis/5280), color=NA) + 
+    scale_fill_gradient(low="moccasin", high="tomato", name="Lateral distance (mi)") + 
+    geom_sf(data=ff_streams) +
+    scale_graticule_lat + scale_graticule_lon
+```
+
+For all other watersheds, straight-line distances were calculated from the field centroid to its assigned watershed return point.
+
+```{r model-distances-returns, echo=FALSE, message=FALSE, warning=FALSE}
+ff_fields |> 
+  left_join(ff_distances, by=join_by(unique_id)) |>
+  filter(return_id>0) |>
+  ggplot() + 
+    geom_sf(aes(fill=return_dis/5280), color=NA) + 
+    scale_fill_gradient(low="moccasin", high="tomato", name="Return distance (mi)") + 
+    geom_sf(data=ff_returns) +
+    geom_sf(data=ff_canals) +
+    geom_sf(data=ff_streams) +
+    scale_graticule_lat + scale_graticule_lon
+```
+
+Each "indirect" return (the watersheds that flowed indirectly to fish-bearing streams via a seconary canal) also needed the flow distance along the secondary canal from the return point into the downstream fish-bearing stream. These distances were calculated using the actual flow lengths along the canal lines.
+
+
+```{r model-distances-canal, echo=FALSE, message=FALSE, warning=FALSE}
+watersheds_returns |> 
+  filter(return_direct=="Indirect") |>
+  group_by(return_id, ds_return_id, ds_fbs_dist) |> 
+  summarize() |> 
+  ggplot() + 
+    geom_sf(aes(fill=ds_fbs_dist/5280), color="white") +
+    scale_fill_gradient(low="moccasin", high="tomato", name="Flow distance (mi)") + 
+    geom_sf(data=ff_returns, aes(color=return_direct)) +
+    geom_sf(data=ff_canals, aes(color="Indirect")) +
+    geom_sf(data=ff_streams, aes(color="Direct")) +
+    scale_color_returns + scale_graticule_lat + scale_graticule_lon
+```
+
+Field-to-return point distances were added to the indirect canal flow distances, where applicable, and combined with the lateral flow dataset to produce a final mapping of distances from each rice field to its closest fish-bearing stream.
+
+```{r model-distances-total, echo=FALSE, message=FALSE, warning=FALSE}
+ff_fields |> 
+  left_join(ff_distances, by=join_by(unique_id)) |>
+  ggplot() + 
+    geom_sf(aes(fill=totdist_ft/5280), color=NA) + 
+    scale_fill_gradient(low="moccasin", high="tomato", name="Total distance (mi)") + 
+    geom_sf(data=ff_returns) +
+    geom_sf(data=ff_canals) +
+    geom_sf(data=ff_streams) +
+    scale_graticule_lat + scale_graticule_lon
+```
+
+An alternative "rectangular" distance calculation was also included, using grid distance (east-west plus north-south) rather than straight-line (hypotenuse) distance. At the scale of this analysis, the difference between the two versions is minimal.  
+
+```{r model-distances-total-rect, echo=FALSE, message=FALSE, warning=FALSE}
+ff_fields |> 
+  left_join(ff_distances, by=join_by(unique_id)) |>
+  ggplot() + 
+    geom_sf(aes(fill=totrect_ft/5280), color=NA) + 
+    scale_fill_gradient(low="moccasin", high="tomato", name="Total distance (mi) \n(grid distance)") + 
+    geom_sf(data=ff_returns) +
+    geom_sf(data=ff_canals) +
+    geom_sf(data=ff_streams) +
+    scale_graticule_lat + scale_graticule_lon
+```
+
+The straight-line and rectangular distance measures help to place a lower and upper bound, respectively, on the true flow distance from each rice field to its return point. Except for very circuitous flow paths, all distances should be between these two values. Rectangular distances are never greater than sqrt(2) times the straight-line flow distance, so true return flow distances will not be more than 1.41 times the straight-line approximation used in this study.
+
+```{r model-distances-comparison, echo=FALSE, message=FALSE, warning=FALSE}
+ff_distances |> ggplot(aes(x = return_dis/5280, y = return_rec/5280, color=return_dis/5280)) + 
+  geom_point(alpha=0.1) + coord_fixed() + 
+  geom_abline(aes(linetype="lower", slope=1, intercept = 0), linewidth=1) + 
+  geom_abline(aes(linetype="upper", slope=sqrt(2), intercept = 0), linewidth=1) + 
+  scale_color_gradient(low="moccasin", high="tomato", name="Straight-line distance \nto return point (mi)") + 
+  scale_linetype_manual(values=c("lower" = "solid", "upper" = "dashed"), labels=c("lower"="y=x","upper"="y=sqrt(2)*x"), name="Reference Line") +
+  xlab("Straight-line distance to return point (mi)") + ylab("Rectangular distance to return point (mi)") 
+```

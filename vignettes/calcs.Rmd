@@ -1,0 +1,111 @@
+---
+title: "Calculation Functions"
+author: "FlowWest"
+date: "`r Sys.Date()`"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Calculation Functions}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  fig.width=680/72,
+  fig.height=680*(2/3)/72,
+  dpi=72
+)
+ggplot2::theme_set(ggplot2::theme_minimal())
+library(tidyverse)
+library(sf)
+library(fishFoodMWD)
+```
+
+This vignette describes the included calculation functions.
+
+## Invertebrate mass
+
+The `ff_calc_inv_mass` and `ff_calc_inv_mass_ts` functions use the rice field geometries in the `ff_fields` dataset to predict invertebrate mass production over time based on field acreage. Moss et al. (2009)^[Moss, R.C., Blumenshine, S.C., Yee, J. & Fleskes, J.P. (2009). Emergent insect production in post-harvest flooded agricultural fields used by waterbirds. *Wetlands* 29(3) pp. 875-883. [doi:10.1672/07-169.1](http://doi.org/10.1672/07-169.1)] estimated that invertebrate biomass in flooded post-harvest agricultural fields increased at an average rate of  0.186 g/m² per day. This relationship between area and invertebrate mass production forms the basis for these functions.
+
+We begin with the `fields` dataset, which contains the rice field geometries and their areas. Techically, any `data.frame`, `tibble`, or `sf` object with an `area_ac` column containing area in acres can be used for this function.
+
+```
+ff_fields
+```
+```{r calc-fields, echo=FALSE}
+ff_fields |> head(5) |> knitr::kable()
+```
+
+Pass the fields to the `calc_inv_mass` function, along with the desired number of days (for example, 14 days) to add two new columns. 
+
+* `daily_prod_kg` calculates the production per day based on area
+* `total_prod_kg` multiplies this value by the number of days provided
+
+```
+ff_calc_inv_mass(ff_fields, 14)
+```
+```{r calc-inv-mass, echo=FALSE}
+ff_fields |> ff_calc_inv_mass(14) |> head(5) |> knitr::kable()
+```
+
+If no number of days is provided, then only the `daily_prod_kg` column is created.
+
+A plotting function shorthand is also provided to map the result:
+
+```{r plot-inv-mass}
+ff_plot_inv_mass(14)
+```
+
+These functions can be applied in combination with the other datasets to synthesize and ask additional questions. For example, which *watersheds* produce the most invertebrate biomass?
+
+```{r calc-mass-by-watershed, echo=TRUE, message=FALSE}
+inv_mass_14_days <- ff_calc_inv_mass(ff_fields, 14)
+
+total_prod_by_group <- inv_mass_14_days |>
+  group_by(group_id) |> 
+  summarize(sum_total_prod_kg = sum(total_prod_kg)) |>
+  st_drop_geometry()
+
+ff_watersheds |> 
+  left_join(total_prod_by_group) |>
+  ggplot() + 
+    geom_sf(aes(fill = sum_total_prod_kg, color = sum_total_prod_kg)) + 
+    geom_sf(data=ff_streams) + geom_sf(data=ff_canals) + geom_sf(data=ff_returns) +
+    scale_fill_viridis_c(aesthetics = c("colour", "fill"),
+                                  option="cividis",
+                                  direction=-1,
+                                  name="Total 14-day production (kg) \nby watershed") +
+    ggplot2::scale_y_continuous(breaks = seq(38, 40, by=0.5)) +
+    ggplot2::scale_x_continuous(breaks = seq(-122.5, -120.5, by=0.5))
+```
+
+These results will always be directly proportional to total rice field acreage, as this is the only input into the relationship. 
+
+The `ff_calc_inv_mass_ts` function returns the growth in biomass over time for a selected number of days. This returns a simple `tibble` in the following format...
+
+```
+ff_calc_inv_mass_ts(ff_fields, 14) 
+```
+```{r calc-field-ts, echo=FALSE, message=FALSE, warning=FALSE}
+ff_fields |> ff_calc_inv_mass_ts(14) |> head(10) |> knitr::kable()
+```
+...which can be pivoted as so if needed...
+```
+ff_calc_inv_mass_ts(ff_fields, 7) |> 
+  pivot_wider(names_from = day, values_from = total_prod_kg, names_prefix = "day_")
+```
+```{r calc-field-ts-pivot, echo=FALSE, message=FALSE, warning=FALSE}
+ff_fields |> ff_calc_inv_mass_ts(7) |> 
+  pivot_wider(names_from = day, values_from = total_prod_kg, names_prefix = "day_") |>
+  head(10) |> knitr::kable()
+```
+...or plotted to show growth in biomass over time:
+
+```{r calc-field-ts-plot, echo=TRUE, message=FALSE, warning=FALSE}
+ff_fields |> 
+  head(n = 20) |>
+  ff_calc_inv_mass_ts(10) |>
+  ggplot() + geom_line(aes(x=day, y=total_prod_kg, color=unique_id))
+```

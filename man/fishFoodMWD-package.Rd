@@ -4,7 +4,7 @@
 \name{fishFoodMWD-package}
 \alias{fishFoodMWD}
 \alias{fishFoodMWD-package}
-\title{fishFoodMWD: What the Package Does (Title Case)}
+\title{fishFoodMWD: Sacramento Valley Rice Field Prioritization for Salmonid Rearing}
 \description{
 More about what it does (maybe more than one line) Use four spaces when indenting paragraphs within the Description.
 }

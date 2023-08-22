@@ -1,0 +1,172 @@
+---
+title: "Data Structure and Joins"
+author: "FlowWest"
+date: "`r Sys.Date()`"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Data Structure and Joins}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  fig.width=680/72,
+  fig.height=680*(2/3)/72,
+  dpi=72
+)
+ggplot2::theme_set(ggplot2::theme_minimal())
+library(tidyverse)
+library(sf)
+library(fishFoodMWD)
+```
+
+This vignette describes the structure of provided datasets and the possibilities for joining these datasets for further analysis.
+
+## Introduction 
+
+Four core datasets are provided: `ff_returns`, `ff_watersheds`, `ff_fields`, and `ff_distances`. The first three are spatial `sf` data frames while `ff_distances` is an ordinary `tibble` data frame.
+
+| dataset      | type         | unique id field | description |
+| ------------ | ------------ | --------------- | ----------- |
+| `ff_returns`    | `sf` Point   | `return_id`     | Return point geometries, flow types, indirect flow distances, and downstream `return_id`s |
+| `ff_watersheds` | `sf` Polygon | `group_id`      | Watershed geometries and return point `return_id`s |
+| `ff_fields`     | `sf` Polygon | `unique_id`     | Rice field geometries, areas, and watershed `group_id`s |
+| `ff_distances`  | `tbl_df`     | `unique_id`     | Rice field distance calculation results |
+
+These four datasets are heirarchically nested and can be joined to each other using the indicated `*_id` fields in order to access all required data. 
+
+![](../man/figures/join_diagram.png){width=100%}
+
+Finally, additional `sf` geometry layers are provided for basemap and context purposes. These are:
+
+| dataset      | type         | description |
+| ------------ | ------------ | ----------- |
+| `ff_streams`    | `sf` Line    | Fish-bearing streams |
+| `ff_canals`     | `sf` Line    | Selected secondary canals that connect indirect return points to their downstream returns to fish-bearing streams |
+| `ff_wetdry`     | `sf` Polygon | Polygons indicating the "wet" and "dry" areas of the Sacramento Valley based on levee locations |
+
+
+## Core datasets
+
+Following are previews of the four core datasets
+
+```
+ff_watersheds
+```
+```{r dataset-watersheds, echo=FALSE}
+ff_watersheds |> head(5) |> knitr::kable()
+```
+
+```
+ff_returns
+```
+```{r dataset-returns, echo=FALSE}
+ff_returns |> head(5) |> knitr::kable()
+```
+
+```
+ff_fields
+```
+```{r dataset-fields, echo=FALSE}
+ff_fields |> head(5) |> knitr::kable()
+```
+
+```
+ff_distances
+```
+```{r dataset-distances, echo=FALSE}
+ff_distances |> head(5) |> knitr::kable()
+```
+
+# Example joins
+
+Following are example procedures used to join the different datasets.
+
+These example assume that the `tidyverse` stack and `sf` spatial library have been imported.
+```
+library(tidyverse)
+library(sf)
+```
+
+To access information about a watershed's return flow, join the `ff_watersheds` dataset to the `ff_returns` dataset using `return_id`. Note that running `dplyr::left_join` on an `sf` object requires first converting it to an ordinary tibble using `sf::st_drop_geometry()`.
+
+```{r join-watersheds-returns, message=FALSE, warning=FALSE}
+watersheds_returns <- ff_watersheds |> 
+  left_join(st_drop_geometry(ff_returns), by=join_by(return_id)) 
+
+ggplot() + 
+  geom_sf(data=watersheds_returns, aes(fill=return_direct)) + 
+  geom_sf_text(data=st_centroid(watersheds_returns), aes(label=return_id))
+```
+
+To access information about a rice field's watershed, join the `fields` dataset to the `watersheds` dataset using `group_id`.
+```{r join-fields-watersheds, message=FALSE, warning=FALSE}
+fields_watersheds <- ff_fields |> 
+  left_join(st_drop_geometry(ff_watersheds), by=join_by(group_id))
+
+ggplot() + geom_sf(data=fields_watersheds, aes(fill=watershed_name), color=NA)
+```
+
+To access information about a rice field's return flow, first join the `fields` dataset to the `watersheds` dataset using `group_id`. Now that watershed information is joined, join to the `returns` dataset using `return_id`.
+```{r join-fields-returns, message=FALSE, warning=FALSE}
+fields_returns <- ff_fields |> 
+  left_join(st_drop_geometry(ff_watersheds), by=join_by(group_id)) |> 
+  left_join(st_drop_geometry(ff_returns), by=join_by(return_id))
+
+ggplot() + 
+  geom_sf(data=fields_returns, aes(fill=return_direct), color=NA)
+
+```
+
+To access the fields distance calculation results, simply join `fields` to `distances` on `unique_id`.
+```{r join-fields-distances, message=FALSE, warning=FALSE}
+fields_distances <- ff_fields |> 
+  left_join(ff_distances, by=join_by(unique_id))
+
+ggplot() + 
+  geom_sf(data=fields_distances, aes(fill=totdist_mi), color=NA)
+
+```
+
+## Basemap layers
+
+The `ff_streams` and `ff_canals` layers display the geometries of the fish-bearing streams and secondary canals.
+
+```
+ff_streams
+```
+```{r dataset-streams, echo=FALSE}
+ff_streams |> head(5) |> knitr::kable()
+```
+
+```
+ff_canals
+```
+```{r dataset-canals, echo=FALSE}
+ff_canals |> head(5) |> knitr::kable()
+```
+
+These are recommended to be plotted along with the return points, with corresponding coloration by `Direct` flow to fish-bearing `ff_streams` and `Indirect` flow to secondary `ff_canals`.
+```{r dataset-streams-canals-returns, message=FALSE, warning=FALSE}
+ggplot() + 
+  geom_sf(data=ff_streams, aes(color="Direct")) + 
+  geom_sf(data=ff_canals, aes(color="Indirect")) + 
+  geom_sf(data=ff_returns, aes(color=return_direct))
+```
+
+The `ff_wetdry` layer simply provides polygons outlining "wet" (river/floodway-exposed) and "dry" (levee-protected) areas of the Sacramento Valley.
+
+```
+ff_wetdry
+```
+```{r dataset-wetdry, echo=FALSE}
+ff_wetdry |> head(5) |> knitr::kable()
+```
+
+```{r dataset-wetdry-plot, message=FALSE, warning=FALSE}
+ggplot() + 
+  geom_sf(data=ff_wetdry, aes(fill=wet_dry, color=wet_dry)) 
+```
