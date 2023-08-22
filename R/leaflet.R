@@ -8,13 +8,14 @@
 #' @examples
 #' # create and display leaflet object with a specified bounding box
 #' bbox <- sf::st_bbox(ff_fields_gcs)
-#' m <- ff_make_leaflet(bbox)
-#' m
+#' ff_make_leaflet(bbox)
 #'
 #' # create the leaflet map for a Shiny app
-#' output$mainMap <- leaflet::renderLeaflet({
-#'   ff_make_leaflet(bbox)
-#' })
+#' if(FALSE){
+#'   output$mainMap <- leaflet::renderLeaflet({
+#'     ff_make_leaflet(bbox)
+#'   })
+#' }
 #'
 ff_make_leaflet <- function(bbox=c(xmin=-122.3, ymin=38.5, xmax=-121.3, ymax=39.7)) {
   m <- leaflet::leaflet() |>
@@ -44,17 +45,19 @@ ff_make_leaflet <- function(bbox=c(xmin=-122.3, ymin=38.5, xmax=-121.3, ymax=39.
 #' @export
 #' @examples
 #' # show the layer on a leaflet map object ("m")
+#' m <- ff_make_leaflet()
 #' m |> ff_layer_streams(show = TRUE)
 #'
 #' # hide the layer on a leaflet map object ("m")
 #' m |> ff_layer_streams(show = FALSE)
 #'
 #' # use as part of a Shiny app with map "mainMap" and a boolean selector "show_streams"
-#' observe({
-#'   proxy <- leaflet::leafletProxy("mainMap")
-#'   proxy |> ff_leaflet_streams(show = input$show_streams)
-#' })
-#'
+#' if(FALSE){
+#'   shiny::observe({
+#'     proxy <- leaflet::leafletProxy("mainMap")
+#'     proxy |> ff_layer_streams(show = input$show_streams)
+#'   })
+#' }
 ff_layer_streams <- function(m, show = TRUE) {
   if(show) {
     m |> leaflet::addPolylines(data = ff_streams_gcs,
@@ -83,17 +86,19 @@ ff_layer_streams <- function(m, show = TRUE) {
 #' @export
 #' @examples
 #' # show the layer on a leaflet map object ("m")
+#' m <- ff_make_leaflet()
 #' m |> ff_layer_canals(show = TRUE)
 #'
 #' # hide the layer on a leaflet map object ("m")
 #' m |> ff_layer_canals(show = FALSE)
 #'
 #' # use as part of a Shiny app with map "mainMap" and a boolean selector "show_canals"
-#' observe({
-#'   proxy <- leaflet::leafletProxy("mainMap")
-#'   proxy |> ff_layer_canals(show = input$show_canals)
-#' })
-#'
+#' if(FALSE){
+#'   shiny::observe({
+#'     proxy <- leaflet::leafletProxy("mainMap")
+#'     proxy |> ff_layer_canals(show = input$show_canals)
+#'   })
+#' }
 ff_layer_canals <- function(m, show = TRUE) {
   if(show) {
     m |> leaflet::addPolylines(data = ff_canals_gcs,
@@ -123,16 +128,19 @@ ff_layer_canals <- function(m, show = TRUE) {
 #' @export
 #' @examples
 #' # show the layer on a leaflet map object ("m")
+#' m <- ff_make_leaflet()
 #' m |> ff_layer_returns(show = TRUE)
 #'
 #' # hide the layer on a leaflet map object ("m")
 #' m |> ff_layer_returns(show = FALSE)
 #'
 #' # use as part of a Shiny app with map "mainMap" and a boolean selector "show_returns"
-#' observe({
-#'   proxy <- leaflet::leafletProxy("mainMap")
-#'   proxy |> ff_layer_returns(show = input$show_returns)
-#' })
+#' if(FALSE){
+#'   shiny::observe({
+#'     proxy <- leaflet::leafletProxy("mainMap")
+#'     proxy |> ff_layer_returns(show = input$show_returns)
+#'   })
+#' }
 #'
 ff_layer_returns <- function(m, show = TRUE, selected_return=NULL) {
   if(show) {
@@ -170,16 +178,19 @@ ff_layer_returns <- function(m, show = TRUE, selected_return=NULL) {
 #' @export
 #' @examples
 #' # show the layer on a leaflet map object ("m")
+#' m <- ff_make_leaflet()
 #' m |> ff_layer_watersheds(show = TRUE)
 #'
 #' # hide the layer on a leaflet map object ("m")
 #' m |> ff_layer_watersheds(show = FALSE)
 #'
 #' # use as part of a Shiny app with map "mainMap" and a boolean selector "show_canals"
-#' observe({
-#'   proxy <- leaflet::leafletProxy("mainMap")
-#'   proxy |> ff_layer_watersheds(show = input$show_watersheds)
-#' })
+#' if(FALSE){
+#'   shiny::observe({
+#'     proxy <- leaflet::leafletProxy("mainMap")
+#'     proxy |> ff_layer_watersheds(show = input$show_watersheds)
+#'   })
+#' }
 #'
 ff_layer_watersheds <- function(m, show = TRUE, selected_return=NULL, selected_group=NULL) {
   if(show) {
@@ -224,6 +235,7 @@ ff_layer_watersheds <- function(m, show = TRUE, selected_return=NULL, selected_g
 #' @export
 #' @examples
 #' # show the layer on a leaflet map object ("m")
+#' m <- ff_make_leaflet()
 #' m |> ff_layer_fields(show = TRUE)
 #'
 #' # show the layer on a leaflet map object ("m") specifying the distances measure
@@ -233,11 +245,13 @@ ff_layer_watersheds <- function(m, show = TRUE, selected_return=NULL, selected_g
 #' m |> ff_layer_fields(show = FALSE)
 #'
 #' # use as part of a Shiny app with a boolean selector "show_fields" and dropdown selector "measure_fields"
-#' observe({
-#'   proxy <- leaflet::leafletProxy("mainMap")
-#'   proxy |> ff_layer_fields(show = input$show_fields,
-#'                            measure = input$measure_fields)
-#' })
+#' if(FALSE){
+#'   shiny::observe({
+#'     proxy <- leaflet::leafletProxy("mainMap")
+#'     proxy |> ff_layer_fields(show = input$show_fields,
+#'                              measure = input$measure_fields)
+#'   })
+#' }
 #'
 ff_layer_fields <- function(m, show = TRUE, measure="return", selected_return=NULL, selected_group=NULL, selected_object=NULL) {
   if(show) {
@@ -257,7 +271,7 @@ ff_layer_fields <- function(m, show = TRUE, measure="return", selected_return=NU
            leaflet::addPolygons(data = df,
                        layerId = ~object_id,
                        label = ~lapply(paste0("<strong>",round(area_ac,1),"-acre rice field</strong><br />",
-                                              return_category," return to ",fbs_name," = ",round(totdist_mi,1)," mi<br />"),
+                                              return_category," return to ",fbs_name," = ",round(totdist_mi,1)," mi"),
                                        htmltools::HTML),
                        weight = 0,
                        color = "white",
@@ -335,7 +349,7 @@ ff_map_distances <- function(selected_return) {
     m <- ff_make_leaflet(bbox) |>
       ff_layer_streams() |>
       ff_layer_canals() |>
-      ff_layer_returns(return=selected_return) |>
+      ff_layer_returns(selected_return=selected_return) |>
       ff_layer_fields(measure="distance", selected_return=selected_return)
   } else {
     bbox <- sf::st_bbox(ff_fields_joined_gcs)
