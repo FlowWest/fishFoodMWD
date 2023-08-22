@@ -127,18 +127,24 @@ ff_layer_canals <- function(m, show = TRUE) {
 #'   proxy |> ff_layer_returns(show = input$show_returns)
 #' })
 #'
-ff_layer_returns <- function(m, show = TRUE) {
+ff_layer_returns <- function(m, show = TRUE, return) {
   if(show) {
     pal <- leaflet::colorFactor(palette = c("#00688b", "#8b1a1a"),
                                 levels = c("Direct", "Indirect"))
-    m |> leaflet::addCircleMarkers(data = ff_returns_gcs,
-                          layerId = ~object_id,
-                          popup = ~paste0(return_id,"<br>",return_direct),
-                          color = ~pal(return_direct),
-                          radius = 4,
-                          fillOpacity = 1,
-                          stroke = FALSE,
-                          options = leaflet::pathOptions(pane = "Returns")
+    if(!missing(return)) {
+      df <- ff_returns_gcs |> dplyr::filter(return_id == {{return}})
+    } else {
+      df <- ff_returns_gcs
+    }
+    m |> leaflet::removeShape(ff_returns_gcs$object_id) |>
+      leaflet::addCircleMarkers(data = df,
+                                layerId = ~object_id,
+                                popup = ~paste0(return_id,"<br>",return_direct),
+                                color = ~pal(return_direct),
+                                radius = 4,
+                                fillOpacity = 1,
+                                stroke = FALSE,
+                                options = leaflet::pathOptions(pane = "Returns")
                           )
   } else {
     m |> leaflet::removeShape(ff_returns_gcs$object_id)
@@ -166,19 +172,27 @@ ff_layer_returns <- function(m, show = TRUE) {
 #'   proxy |> ff_layer_watersheds(show = input$show_watersheds)
 #' })
 #'
-ff_layer_watersheds <- function(m, show = TRUE) {
-  pal <- leaflet::colorFactor(palette = c("lightblue", "lightpink", "moccasin"),
-                              levels = c("Direct", "Indirect", "Lateral"))
+ff_layer_watersheds <- function(m, show = TRUE, return, group) {
   if(show) {
-    m |> leaflet::addPolygons(data = ff_watersheds_gcs,
-                              layerId = ~object_id,
-                              popup = ~watershed_name,
-                              color = "white",
-                              fillColor = ~pal(return_category),
-                              weight = 1,
-                              fillOpacity = 0.5,
-                              options = leaflet::pathOptions(pane = "Watersheds")
-                              )
+    pal <- leaflet::colorFactor(palette = c("lightblue", "lightpink", "moccasin"),
+                                levels = c("Direct", "Indirect", "Lateral"))
+    if(!missing(group)) {
+      df <- ff_watersheds_gcs |> dplyr::filter(group_id == {{group}})
+    } else if(!missing(return)) {
+      df <- ff_watersheds_gcs |> dplyr::filter(return_id == {{return}})
+    } else {
+      df <- ff_watersheds_gcs
+    }
+    m |> leaflet::removeShape(ff_watersheds_gcs$object_id) |>
+      leaflet::addPolygons(data = df,
+                           layerId = ~object_id,
+                           popup = ~watershed_name,
+                           color = "white",
+                           fillColor = ~pal(return_category),
+                           weight = 1,
+                           fillOpacity = 0.5,
+                           options = leaflet::pathOptions(pane = "Watersheds")
+                           )
   } else {
     m |> leaflet::removeShape(ff_watersheds_gcs$object_id)
   }
@@ -210,13 +224,20 @@ ff_layer_watersheds <- function(m, show = TRUE) {
 #'                            measure = input$measure_fields)
 #' })
 #'
-ff_layer_fields <- function(m, show = TRUE, measure="return") {
+ff_layer_fields <- function(m, show = TRUE, measure="return", return, group) {
   if(show) {
+    if(!missing(group)) {
+      df <- ff_fields_joined_gcs |> dplyr::filter(group_id == {{group}})
+    } else if(!missing(return)) {
+      df <- ff_fields_joined_gcs |> dplyr::filter(return_id == {{return}})
+    } else {
+      df <- ff_fields_joined_gcs
+    }
     if(measure=="return"){
       pal <- leaflet::colorFactor(palette = c("lightblue", "lightpink", "moccasin"),
                                   levels = c("Direct", "Indirect", "Lateral"))
       m |> leaflet::removeShape(ff_fields_joined_gcs$object_id) |>
-           leaflet::addPolygons(data = ff_fields_joined_gcs,
+           leaflet::addPolygons(data = df,
                        layerId = ~object_id,
                        popup = ~paste0(return_category," return to ",fbs_name," = ",round(totdist_mi,1)," mi"),
                        weight = 0,
@@ -228,9 +249,9 @@ ff_layer_fields <- function(m, show = TRUE, measure="return") {
       pal <- leaflet::colorNumeric(palette = "Blues",
                                    domain = ff_fields_joined_gcs$totdist_mi)
       m |> leaflet::removeShape(ff_fields_joined_gcs$object_id) |>
-           leaflet::addPolygons(data = ff_fields_joined_gcs,
+           leaflet::addPolygons(data = df,
                        layerId = ~object_id,
-                       popup = ~paste0(return_direct," return to ",fbs_name," = ",round(totdist_mi,1)," mi"),
+                       popup = ~paste0(return_category," return to ",fbs_name," = ",round(totdist_mi,1)," mi"),
                        weight = 0,
                        fillColor = ~pal(totdist_mi),
                        fillOpacity = 1,
@@ -241,3 +262,41 @@ ff_layer_fields <- function(m, show = TRUE, measure="return") {
     m |> leaflet::removeShape(ff_fields_joined_gcs$object_id)
   }
 }
+
+#' @name ff_map_watersheds
+#' @title Interactive map of watersheds
+#' @description
+#' Creates an interactive leaflet map showing the rice fields with watersheds return types.
+#' @md
+#' @export
+#' @examples
+#' ff_map_watersheds()
+#'
+ff_map_watersheds <- function() {
+  bbox <- sf::st_bbox(ff_fields_joined_gcs)
+  m <- ff_make_leaflet(bbox) |>
+       ff_layer_streams() |>
+       ff_layer_canals() |>
+       ff_layer_returns() |>
+       ff_layer_watersheds() |>
+       ff_layer_fields(measure="return")
+  return(m)
+  }
+
+#' @name ff_map_distances
+#' @title Interactive map of watersheds
+#' @description
+#' Creates an interactive leaflet map showing the rice fields with watersheds return types.
+#' @md
+#' @export
+#' @examples
+#' ff_map_distances()
+ff_map_distances <- function() {
+  bbox <- sf::st_bbox(ff_fields_joined_gcs)
+  m <- ff_make_leaflet(bbox) |>
+       ff_layer_streams() |>
+       ff_layer_canals() |>
+       ff_layer_returns() |>
+       ff_layer_fields(measure="distance")
+  return(m)
+  }
