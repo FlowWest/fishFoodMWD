@@ -4,27 +4,32 @@
 \alias{ff_layer_returns}
 \title{Show or hide leaflet returns layer}
 \usage{
-ff_layer_returns(m, show = TRUE)
+ff_layer_returns(m, show = TRUE, selected_return = NULL)
 }
 \arguments{
 \item{m}{An initialized \code{leaflet} map object or \code{leafletProxy} object.}
 
 \item{show}{A boolean value indicating whether the function call will be adding the layer to the map (\code{TRUE}) or removing the layer from the map (\code{FALSE}). Designed to be changed via \code{shiny} checkbox input by calling the function inside an observer.}
+
+\item{selected_return}{The \code{return_id} of a return point to filter to, if desired.}
 }
 \description{
 Function to toggle the returns layer on an existing leaflet map.
 }
 \examples{
 # show the layer on a leaflet map object ("m")
+m <- ff_make_leaflet()
 m |> ff_layer_returns(show = TRUE)
 
 # hide the layer on a leaflet map object ("m")
 m |> ff_layer_returns(show = FALSE)
 
 # use as part of a Shiny app with map "mainMap" and a boolean selector "show_returns"
-observe({
-  proxy <- leaflet::leafletProxy("mainMap")
-  proxy |> ff_layer_returns(show = input$show_returns)
-})
+if(FALSE){
+  shiny::observe({
+    proxy <- leaflet::leafletProxy("mainMap")
+    proxy |> ff_layer_returns(show = input$show_returns)
+  })
+}
 
 }
