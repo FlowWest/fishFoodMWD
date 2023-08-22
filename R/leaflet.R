@@ -267,19 +267,30 @@ ff_layer_fields <- function(m, show = TRUE, measure="return", return, group) {
 #' @title Interactive map of watersheds
 #' @description
 #' Creates an interactive leaflet map showing the rice fields with watersheds return types.
+#' @param return (optional) A specific `return_id` for a return point to map.
 #' @md
 #' @export
 #' @examples
 #' ff_map_watersheds()
-#'
-ff_map_watersheds <- function() {
-  bbox <- sf::st_bbox(ff_fields_joined_gcs)
-  m <- ff_make_leaflet(bbox) |>
-       ff_layer_streams() |>
-       ff_layer_canals() |>
-       ff_layer_returns() |>
-       ff_layer_watersheds() |>
-       ff_layer_fields(measure="return")
+#' ff_map_watersheds(return = 9)
+ff_map_watersheds <- function(return=NULL) {
+  if (!missing(return)){
+    bbox <- sf::st_bbox(ff_fields_joined_gcs |> filter(return_id == {{return}}))
+    m <- ff_make_leaflet(bbox) |>
+      ff_layer_streams() |>
+      ff_layer_canals() |>
+      ff_layer_returns(return=return) |>
+      ff_layer_watersheds(return=return) |>
+      ff_layer_fields(measure="return", return=return)
+  } else {
+    bbox <- sf::st_bbox(ff_fields_joined_gcs)
+    m <- ff_make_leaflet(bbox) |>
+      ff_layer_streams() |>
+      ff_layer_canals() |>
+      ff_layer_returns() |>
+      ff_layer_watersheds() |>
+      ff_layer_fields(measure="return")
+  }
   return(m)
   }
 
@@ -287,16 +298,27 @@ ff_map_watersheds <- function() {
 #' @title Interactive map of watersheds
 #' @description
 #' Creates an interactive leaflet map showing the rice fields with watersheds return types.
+#' @param return (optional) A specific `return_id` for a return point to map.
 #' @md
 #' @export
 #' @examples
 #' ff_map_distances()
-ff_map_distances <- function() {
-  bbox <- sf::st_bbox(ff_fields_joined_gcs)
-  m <- ff_make_leaflet(bbox) |>
-       ff_layer_streams() |>
-       ff_layer_canals() |>
-       ff_layer_returns() |>
-       ff_layer_fields(measure="distance")
-  return(m)
+#' ff_map_distances(return = 9)
+ff_map_distances <- function(return=NULL) {
+  if (!missing(return)){
+    bbox <- sf::st_bbox(ff_fields_joined_gcs |> filter(return_id == {{return}}))
+    m <- ff_make_leaflet(bbox) |>
+      ff_layer_streams() |>
+      ff_layer_canals() |>
+      ff_layer_returns(return=return) |>
+      ff_layer_fields(measure="distance", return=return)
+  } else {
+    bbox <- sf::st_bbox(ff_fields_joined_gcs)
+    m <- ff_make_leaflet(bbox) |>
+      ff_layer_streams() |>
+      ff_layer_canals() |>
+      ff_layer_returns() |>
+      ff_layer_fields(measure="distance", )
   }
+  return(m)
+}
