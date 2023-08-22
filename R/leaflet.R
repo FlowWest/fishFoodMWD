@@ -151,7 +151,7 @@ ff_layer_returns <- function(m, show = TRUE, selected_return=NULL) {
     } else {
       df <- ff_returns_gcs
     }
-    m |> leaflet::removeMarkers(ff_returns_gcs$object_id) |>
+    m |> leaflet::removeMarker(ff_returns_gcs$object_id) |>
       leaflet::addCircleMarkers(data = df,
                                 layerId = ~object_id,
                                 label = ~lapply(paste0("<strong>Return point ",return_id,": ",return_name,"</strong><br />",return_direct," return to ",ds_fbs_name), htmltools::HTML),
@@ -162,7 +162,7 @@ ff_layer_returns <- function(m, show = TRUE, selected_return=NULL) {
                                 options = leaflet::pathOptions(pane = "Returns")
                           )
   } else {
-    m |> leaflet::removeMarkers(ff_returns_gcs$object_id)
+    m |> leaflet::removeMarker(ff_returns_gcs$object_id)
   }
 }
 
