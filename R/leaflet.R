@@ -151,7 +151,7 @@ ff_layer_returns <- function(m, show = TRUE, selected_return=NULL) {
     } else {
       df <- ff_returns_gcs
     }
-    m |> leaflet::removeShape(ff_returns_gcs$object_id) |>
+    m |> leaflet::removeMarkers(ff_returns_gcs$object_id) |>
       leaflet::addCircleMarkers(data = df,
                                 layerId = ~object_id,
                                 label = ~lapply(paste0("<strong>Return point ",return_id,": ",return_name,"</strong><br />",return_direct," return to ",ds_fbs_name), htmltools::HTML),
@@ -162,7 +162,7 @@ ff_layer_returns <- function(m, show = TRUE, selected_return=NULL) {
                                 options = leaflet::pathOptions(pane = "Returns")
                           )
   } else {
-    m |> leaflet::removeShape(ff_returns_gcs$object_id)
+    m |> leaflet::removeMarkers(ff_returns_gcs$object_id)
   }
 }
 
@@ -311,6 +311,7 @@ ff_layer_fields <- function(m, show = TRUE, measure="return", selected_return=NU
 #' @export
 #' @examples
 #' ff_map_watersheds()
+#'
 #' ff_map_watersheds(return = 9)
 ff_map_watersheds <- function(selected_return) {
   if (!missing(selected_return)){
@@ -322,8 +323,7 @@ ff_map_watersheds <- function(selected_return) {
       ff_layer_watersheds(selected_return=selected_return) |>
       ff_layer_fields(measure="return", selected_return=selected_return)
   } else {
-    bbox <- sf::st_bbox(ff_fields_joined_gcs)
-    m <- ff_make_leaflet(bbox) |>
+    m <- ff_make_leaflet() |>
       ff_layer_streams() |>
       ff_layer_canals() |>
       ff_layer_returns() |>
@@ -352,8 +352,7 @@ ff_map_distances <- function(selected_return) {
       ff_layer_returns(selected_return=selected_return) |>
       ff_layer_fields(measure="distance", selected_return=selected_return)
   } else {
-    bbox <- sf::st_bbox(ff_fields_joined_gcs)
-    m <- ff_make_leaflet(bbox) |>
+    m <- ff_make_leaflet() |>
       ff_layer_streams() |>
       ff_layer_canals() |>
       ff_layer_returns() |>
