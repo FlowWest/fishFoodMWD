@@ -56,10 +56,9 @@ ff_make_leaflet <- function(bbox) {
 #' })
 #'
 ff_layer_streams <- function(m, show = TRUE) {
-  object_ids <- paste0("stream_",seq(1,nrow(ff_streams_gcs)))
   if(show) {
     m |> leaflet::addPolylines(data = ff_streams_gcs,
-                      layerId = object_ids,
+                      layerId = ~object_id,
                       popup = ~stream_name,
                       color = "#00688b",
                       opacity = 1,
@@ -67,7 +66,7 @@ ff_layer_streams <- function(m, show = TRUE) {
                       options = leaflet::pathOptions(pane = "Flowlines")
     )
   } else {
-    m |> leaflet::removeShape(object_ids)
+    m |> leaflet::removeShape(ff_streams_gcs$object_id)
   }
   }
 
@@ -93,10 +92,9 @@ ff_layer_streams <- function(m, show = TRUE) {
 #' })
 #'
 ff_layer_canals <- function(m, show = TRUE) {
-  object_ids <- paste0("canal_",seq(1,nrow(ff_canals_gcs)))
   if(show) {
     m |> leaflet::addPolylines(data = ff_canals_gcs,
-                      layerId = object_ids,
+                      layerId = ~object_id,
                       popup = ~canal_name,
                       color = "#8b1a1a",
                       opacity = 1,
@@ -104,7 +102,7 @@ ff_layer_canals <- function(m, show = TRUE) {
                       options = leaflet::pathOptions(pane = "Flowlines")
     )
   } else {
-    m |> leaflet::removeShape(object_ids)
+    m |> leaflet::removeShape(ff_canals_gcs$object_id)
   }
 }
 
@@ -130,12 +128,11 @@ ff_layer_canals <- function(m, show = TRUE) {
 #' })
 #'
 ff_layer_returns <- function(m, show = TRUE) {
-  object_ids <- paste0("return_",seq(1,nrow(ff_returns_gcs)))
   if(show) {
     pal <- leaflet::colorFactor(palette = c("#00688b", "#8b1a1a"),
                                 levels = c("Direct", "Indirect"))
     m |> leaflet::addCircleMarkers(data = ff_returns_gcs,
-                          layerId = object_ids,
+                          layerId = ~object_id,
                           popup = ~paste0(return_id,"<br>",return_direct),
                           color = ~pal(return_direct),
                           radius = 4,
@@ -144,7 +141,7 @@ ff_layer_returns <- function(m, show = TRUE) {
                           options = leaflet::pathOptions(pane = "Returns")
                           )
   } else {
-    m |> leaflet::removeShape(object_ids)
+    m |> leaflet::removeShape(ff_returns_gcs$object_id)
   }
 }
 
@@ -170,24 +167,20 @@ ff_layer_returns <- function(m, show = TRUE) {
 #' })
 #'
 ff_layer_watersheds <- function(m, show = TRUE) {
-  df <- ff_watersheds_gcs |>
-    dplyr::left_join(sf::st_drop_geometry(ff_returns)) |>
-    dplyr::mutate(return_direct = dplyr::case_when(return_direct %in% c("Direct", "Indirect") ~ return_direct, TRUE ~ "Lateral"))
   pal <- leaflet::colorFactor(palette = c("lightblue", "lightpink", "moccasin"),
                               levels = c("Direct", "Indirect", "Lateral"))
-  object_ids <- paste0("watershed_",seq(1,nrow(df)))
   if(show) {
-    m |> leaflet::addPolygons(data = df,
-                              layerId = object_ids,
+    m |> leaflet::addPolygons(data = ff_watersheds_gcs,
+                              layerId = ~object_id,
                               popup = ~watershed_name,
                               color = "white",
-                              fillColor = ~pal(return_direct),
+                              fillColor = ~pal(return_category),
                               weight = 1,
                               fillOpacity = 0.5,
                               options = leaflet::pathOptions(pane = "Watersheds")
                               )
   } else {
-    m |> leaflet::removeShape(object_ids)
+    m |> leaflet::removeShape(ff_watersheds_gcs$object_id)
   }
 }
 
@@ -218,26 +211,25 @@ ff_layer_watersheds <- function(m, show = TRUE) {
 #' })
 #'
 ff_layer_fields <- function(m, show = TRUE, measure="return") {
-  object_ids <- paste0("field_",seq(1,nrow(ff_fields_joined_gcs)))
   if(show) {
     if(measure=="return"){
       pal <- leaflet::colorFactor(palette = c("lightblue", "lightpink", "moccasin"),
                                   levels = c("Direct", "Indirect", "Lateral"))
-      m |> leaflet::removeShape(object_ids) |>
+      m |> leaflet::removeShape(ff_fields_joined_gcs$object_id) |>
            leaflet::addPolygons(data = ff_fields_joined_gcs,
-                       layerId = object_ids,
-                       popup = ~paste0(return_direct," return to ",fbs_name," = ",round(totdist_mi,1)," mi"),
+                       layerId = ~object_id,
+                       popup = ~paste0(return_category," return to ",fbs_name," = ",round(totdist_mi,1)," mi"),
                        weight = 0,
-                       fillColor = ~pal(return_direct),
+                       fillColor = ~pal(return_category),
                        fillOpacity = 1,
                        options = leaflet::pathOptions(pane = "Fields")
       )
     } else if(measure=="distance"){
       pal <- leaflet::colorNumeric(palette = "Blues",
                                    domain = ff_fields_joined_gcs$totdist_mi)
-      m |> leaflet::removeShape(object_ids) |>
+      m |> leaflet::removeShape(ff_fields_joined_gcs$object_id) |>
            leaflet::addPolygons(data = ff_fields_joined_gcs,
-                       layerId = object_ids,
+                       layerId = ~object_id,
                        popup = ~paste0(return_direct," return to ",fbs_name," = ",round(totdist_mi,1)," mi"),
                        weight = 0,
                        fillColor = ~pal(totdist_mi),

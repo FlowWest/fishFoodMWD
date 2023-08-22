@@ -76,13 +76,18 @@ ff_wetdry <-
   select(wet_dry = hydro) |>
   st_zm()
 
+# Go back and add the return type to the watersheds layer
+ff_watersheds <- ff_watersheds |>
+  left_join(ff_returns |> st_drop_geometry() |> select(return_id, return_direct)) |>
+  mutate(return_direct = dplyr::case_when(return_direct %in% c("Direct", "Indirect") ~ return_direct, TRUE ~ "Lateral")) |>
+  rename(return_category = return_direct)
+
 # FULLY JOINED FIELDS DATASET TO USE IN LEAFLET
 
 ff_fields_joined <- ff_fields |>
-  left_join(sf::st_drop_geometry(ff_watersheds)) |>
-  left_join(sf::st_drop_geometry(ff_returns)) |>
-  left_join(ff_distances) |>
-  mutate(return_direct = case_when(return_direct %in% c("Direct", "Indirect") ~ return_direct, TRUE ~ "Lateral"))
+  left_join(ff_watersheds |> st_drop_geometry()) |>
+  left_join(ff_returns |> st_drop_geometry() |> select(-return_direct)) |>
+  left_join(ff_distances)
 
 # export tabular datasets
 usethis::use_data(ff_distances, overwrite = TRUE)
@@ -99,13 +104,13 @@ usethis::use_data(ff_fields_joined, overwrite = TRUE)
 # reproject spatial datasets to WGS84 GCS to use for Leaflet maps
 leaflet_crs <- "+proj=longlat +datum=WGS84"
 
-ff_watersheds_gcs <- ff_watersheds |> st_transform(leaflet_crs)
-ff_returns_gcs <- ff_returns |> st_transform(leaflet_crs)
-ff_fields_gcs <- ff_fields |> st_transform(leaflet_crs)
-ff_streams_gcs <- ff_streams |> st_transform(leaflet_crs)
-ff_canals_gcs <- ff_canals |> st_transform(leaflet_crs)
-ff_wetdry_gcs <- ff_wetdry |> st_transform(leaflet_crs)
-ff_fields_joined_gcs <- ff_fields_joined |> st_transform(leaflet_crs)
+ff_watersheds_gcs <- ff_watersheds |> st_transform(leaflet_crs) |> mutate(object_id = paste0("W",row_number()))
+ff_returns_gcs <- ff_returns |> st_transform(leaflet_crs) |> mutate(object_id = paste0("R",row_number()))
+ff_fields_gcs <- ff_fields |> st_transform(leaflet_crs) |> mutate(object_id = paste0("F",row_number()))
+ff_streams_gcs <- ff_streams |> st_transform(leaflet_crs) |> mutate(object_id = paste0("S",row_number()))
+ff_canals_gcs <- ff_canals |> st_transform(leaflet_crs) |> mutate(object_id = paste0("C",row_number()))
+ff_wetdry_gcs <- ff_wetdry |> st_transform(leaflet_crs) |> mutate(object_id = paste0("D",row_number()))
+ff_fields_joined_gcs <- ff_fields_joined |> st_transform(leaflet_crs) |> mutate(object_id = paste0("F",row_number()))
 
 ff_watersheds_gcs |> usethis::use_data(overwrite = TRUE)
 ff_returns_gcs |> usethis::use_data(overwrite = TRUE)
