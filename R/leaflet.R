@@ -247,10 +247,11 @@ ff_layer_watersheds <- function(m, show = TRUE, selected_return=NULL, selected_g
 #' Function to toggle the rice fields layer on an existing leaflet map, and to select which attributes to use to define the symbology of the fields.
 #' @param m An initialized `leaflet` map object or `leafletProxy` object.
 #' @param show A boolean value indicating whether the function call will be adding the layer to the map (`TRUE`) or removing the layer from the map (`FALSE`). Designed to be changed via `shiny` checkbox input by calling the function inside an observer.
-#' @param measure A string indicating the measure to show. Choose from `return` to color by return type, or `distances` to color by distances. FUTURE EDITS: ADD OPTIONS TO COLOR BY VOLUME, INVERTEBRATE MASS PRODUCTION, WET/DRY, ETC.
+#' @param measure A string indicating the measure to show. Choose from `return` to color by return type, `distance` to color by distance to nearest fish-bearing stream, `invmass` to color by modeled invertebrate mass production, or `wetdry` to color by wet versus dry sides.
 #' @param selected_return The `return_id` of a return point to filter to, if desired.
 #' @param selected_group The `group_id` of a watershed to filter to, if desired.
 #' @param selected_object The `object_id` of a single field to filter to, if desired. Used internally.
+#' @param inv_mass_days For `measure = "invmass"`, select the number of days to calculate the invertebrate mass production.
 #' @md
 #' @export
 #' @examples
