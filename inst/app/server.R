@@ -63,7 +63,7 @@ function(input, output, session){
   })
 
   output$field_map <- renderLeaflet({
-    ff_make_leaflet(sf::st_bbox(ff_fields_gcs)) |>
+    ff_make_leaflet() |>
       ff_layer_streams() |>
       ff_layer_canals()
   })
@@ -75,8 +75,11 @@ function(input, output, session){
       ff_layer_returns(selected_return = selected_point$return_point_id) |>
       ff_layer_watersheds(selected_group = selected_point$group_id,
                           selected_return = selected_point$return_point_id) |>
+      leaflet.extras2::addSpinner() |>
+      leaflet.extras2::startSpinner() |>
       ff_layer_fields(selected_object = selected_point$object_id,
                       selected_group = selected_point$group_id,
-                      selected_return = selected_point$return_point_id)
+                      selected_return = selected_point$return_point_id) |>
+    leaflet.extras2::stopSpinner()
   })
 }
