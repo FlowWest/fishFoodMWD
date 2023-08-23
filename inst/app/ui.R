@@ -16,7 +16,13 @@ shinyUI(
     ),
     mainPanel(
       width = 10, # main width plus sidebar width should add to 12
-      leafletOutput("field_map")
+      leafletOutput("field_map"),
+      shinyjs::useShinyjs(),  # Initialize shinyjs
+      div(id = 'loading', p("Loading data, please wait..."), style = "display: none;")  # Hidden by default
+    ),
+    mainPanel(
+      width = 10, # main width plus sidebar width should add to 12
+      shinycssloaders::withSpinner(leafletOutput("field_map"))
     )
   )
 )
