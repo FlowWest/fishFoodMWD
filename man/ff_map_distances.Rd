@@ -10,7 +10,7 @@ ff_map_distances(selected_return)
 \item{selected_return}{(optional) A specific \code{return_id} for a return point to map.}
 }
 \description{
-Creates an interactive leaflet map showing the rice fields with watersheds return types.
+Creates an interactive leaflet map showing the rice fields with calculated return distance.
 }
 \examples{
 ff_map_distances()
