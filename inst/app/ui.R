@@ -13,6 +13,8 @@ shinyUI(
         "resetButton",
         "Reset",
       ),
+      shinyjs::useShinyjs(),  # Initialize shinyjs
+      div(id = 'loading', p("Loading data, please wait..."), style = "display: none;")  # Hidden by default
     ),
     mainPanel(
       shinycssloaders::withSpinner(leafletOutput("field_map", width = "155vh", height = "100vh"))
