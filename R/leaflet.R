@@ -20,7 +20,8 @@
 ff_make_leaflet <- function(bbox=c(xmin=-122.3, ymin=38.5, xmax=-121.3, ymax=39.7)) {
   m <- leaflet::leaflet() |>
     leaflet::addMapPane("Basemap", zIndex = 400) |>
-    leaflet::addMapPane("Watersheds", zIndex = 450) |>
+    leaflet::addMapPane("Watersheds", zIndex = 440) |>
+    leaflet::addMapPane("WetDry", zIndex = 450) |>
     leaflet::addMapPane("Fields", zIndex = 460) |>
     leaflet::addMapPane("Flowlines", zIndex = 470) |>
     leaflet::addMapPane("Returns", zIndex = 480) |>
@@ -356,9 +357,93 @@ ff_layer_fields <- function(m, show = TRUE, measure="return",
                            layerId = "legend_fields",
                            group = "fields",
         )
+    } else if(measure=="wetdry"){
+      pal <- leaflet::colorFactor(palette = c("#D9B679", "#52A488"),
+                                   levels = c("Dry", "Wet"))
+      m |> leaflet::removeShape(ff_fields_joined_gcs$object_id) |>
+        leaflet::removeControl("legend_fields") |>
+        leaflet::addPolygons(data = df,
+                             layerId = ~object_id,
+                             label = ~lapply(paste0("<strong>",round(area_ac,1),"-acre rice field</strong><br />",
+                                                    return_category," return to ",fbs_name," = ",round(totdist_mi,1)," mi",
+                                                    "<br />",round(inv_mass_days),"-day invertebrate mass production = ",round(total_prod_kg,1)," kg"),
+                                             htmltools::HTML),
+                             weight = 0,
+                             fillColor = ~pal(wet_dry),
+                             fillOpacity = 1,
+                             options = leaflet::pathOptions(pane = "Fields"),
+                             group = "fields",
+                             highlightOptions = leaflet::highlightOptions(fillColor = "#FDD20E",
+                                                                          bringToFront = TRUE)) |>
+        leaflet::addLegend("bottomright",
+                           colors = c("#D9B679", "#52A488"),
+                           labels = c("Dry (behind levee)","Wet (active floodplain)"),
+                           title = "Rice fields by<br />wet vs. dry sides",
+                           opacity = 1,
+                           layerId = "legend_fields",
+                           group = "fields",
+        )
     }
 } else {
     m |> leaflet::removeShape(ff_fields_joined_gcs$object_id) |> leaflet::removeControl("legend_fields")
+  }
+}
+
+#' @name ff_layer_wetdry
+#' @title Show or hide leaflet wet/dry layer
+#' @description
+#' Function to toggle the wet/dry layer on an existing leaflet map.
+#' @param m An initialized `leaflet` map object or `leafletProxy` object.
+#' @param show A boolean value indicating whether the function call will be adding the layer to the map (`TRUE`) or removing the layer from the map (`FALSE`). Designed to be changed via `shiny` checkbox input by calling the function inside an observer.
+#' @md
+#' @export
+#' @examples
+#' # show the layer on a leaflet map object ("m")
+#' m <- ff_make_leaflet()
+#' m |> ff_layer_wetdry(show = TRUE)
+#'
+#' # hide the layer on a leaflet map object ("m")
+#' m |> ff_layer_wetdry(show = FALSE)
+#'
+#' # use as part of a Shiny app with map "mainMap" and a boolean selector "show_wetdry"
+#' if(FALSE){
+#'   shiny::observe({
+#'     proxy <- leaflet::leafletProxy("mainMap")
+#'     proxy |> ff_layer_wetdry(show = input$show_wetdry)
+#'   })
+#' }
+#'
+ff_layer_wetdry <- function(m, show = TRUE) {
+  if(show) {
+    pal <- leaflet::colorFactor(palette = c("#FFE4B5", "#66CDAA"),
+                                levels = c("Dry","Wet"))
+    m |> leaflet::removeShape(ff_wetdry_gcs$object_id) |>
+      leaflet::removeControl("legend_wetdry") |>
+      leaflet::addPolygons(data = ff_wetdry_gcs,
+                           layerId = ~object_id,
+                           label = ~lapply(dplyr::case_when(wet_dry=="Wet" ~ "<strong>Wet side</strong> (active floodplain)",
+                                                            wet_dry=="Dry" ~ "<strong>Dry side</strong> (behind levee)"),
+                                           htmltools::HTML),
+                           color = ~pal(wet_dry),
+                           fillColor = ~pal(wet_dry),
+                           weight = 1,
+                           fillOpacity = 0.5,
+                           options = leaflet::pathOptions(pane = "WetDry"),
+                           group = "wetdry",
+                           highlightOptions = leaflet::highlightOptions(color = "#FDD20E",
+                                                                        weight = 3,
+                                                                        bringToFront = FALSE)
+      ) |>
+      leaflet::addLegend("topright",
+                         colors = c("#FFE4B5", "#66CDAA"),
+                         labels = c("Dry (behind levee)","Wet (active floodplain)"),
+                         title = "Production area<br />wet vs. dry sides",
+                         opacity = 1,
+                         layerId = "legend_wetdry",
+                         group = "wetdry",
+      )
+  } else {
+    m |> leaflet::removeShape(ff_wetdry_gcs$object_id) |> leaflet::removeControl("legend_wetdry")
   }
 }
 
@@ -446,6 +531,35 @@ ff_map_invmass <- function(day=1, selected_return) {
       ff_layer_canals() |>
       ff_layer_returns() |>
       ff_layer_fields(measure="invmass", inv_mass_days=day)
+  }
+  return(m)
+}
+
+#' @name ff_map_wetdry
+#' @title Interactive map of wet/dry sides
+#' @description
+#' Creates an interactive leaflet map showing the rice fields identified by wet vs dry side.
+#' @param selected_return (optional) A specific `return_id` for a return point to map.
+#' @md
+#' @export
+#' @examples
+#' ff_map_wetdry()
+#' ff_map_wetdry(selected_return = 9)
+ff_map_wetdry <- function(selected_return) {
+  if (!missing(selected_return)){
+    bbox <- sf::st_bbox(ff_fields_joined_gcs |> filter(return_id == {{selected_return}}))
+    m <- ff_make_leaflet(bbox) |>
+      ff_layer_streams() |>
+      ff_layer_canals() |>
+      ff_layer_returns(selected_return=selected_return) |>
+      ff_layer_wetdry() |>
+      ff_layer_fields(measure="wetdry", selected_return=selected_return)
+  } else {
+    m <- ff_make_leaflet() |>
+      ff_layer_streams() |>
+      ff_layer_canals() |>
+      ff_layer_wetdry() |>
+      ff_layer_fields(measure="wetdry")
   }
   return(m)
 }
