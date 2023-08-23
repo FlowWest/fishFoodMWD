@@ -6,6 +6,10 @@ reference:
   desc: "Functions for quickly viewing the spatial results"
   contents:
   - starts_with("ff_plot_")
+- title: "Interactive maps"
+  desc: "Functions for viewing the spatial results on an interactive map"
+  contents:
+  - starts_with("ff_map_")
 - title: "Calculations"
   desc: "Functions for calculating additional attributes on the datasets"
   contents:
@@ -15,3 +19,11 @@ reference:
   contents:
   - -starts_with("ff_plot_")
   - -starts_with("ff_calc_")
+  - -starts_with("ff_map_")
+  - -starts_with("ff_make_")
+  - -starts_with("ff_layer_")
+- title: "Leaflet"
+  desc: "Behind-the-scenes functions for the interactive leaflet map"
+  contents:
+  - starts_with("ff_make_")
+  - starts_with("ff_layer_")
