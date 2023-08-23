@@ -31,7 +31,15 @@ ff_make_leaflet <- function(bbox=c(xmin=-122.3, ymin=38.5, xmax=-121.3, ymax=39.
     leaflet::fitBounds(lng1 = bbox[["xmin"]],
                        lat1 = bbox[["ymin"]],
                        lng2 = bbox[["xmax"]],
-                       lat2 = bbox[["ymax"]])
+                       lat2 = bbox[["ymax"]]) |>
+    leaflet::addLegend("topright",
+                       colors = c("#00688b", "#8b1a1a"),
+                       labels = c("Direct (fish-bearing stream)", "Indirect (secondary canal)"),
+                       title = "Return types",
+                       opacity = 1,
+                       layerId = "legend_return_type",
+                       group = "returns-canals-streams",
+    )
   return(m)
 }
 
@@ -67,6 +75,7 @@ ff_layer_streams <- function(m, show = TRUE) {
                       opacity = 1,
                       weight = 2,
                       options = leaflet::pathOptions(pane = "Flowlines"),
+                      group = "returns-canals-streams",
                       highlightOptions = leaflet::highlightOptions(color = "#FDD20E",
                                                                    weight = 3,
                                                                    bringToFront = TRUE)
@@ -108,6 +117,7 @@ ff_layer_canals <- function(m, show = TRUE) {
                       opacity = 1,
                       weight = 2,
                       options = leaflet::pathOptions(pane = "Flowlines"),
+                      group = "returns-canals-streams",
                       highlightOptions = leaflet::highlightOptions(color = "#FDD20E",
                                                                    weight = 3,
                                                                    bringToFront = TRUE)
@@ -159,7 +169,8 @@ ff_layer_returns <- function(m, show = TRUE, selected_return=NULL) {
                                 radius = 4,
                                 fillOpacity = 1,
                                 stroke = FALSE,
-                                options = leaflet::pathOptions(pane = "Returns")
+                                options = leaflet::pathOptions(pane = "Returns"),
+                                group = "returns-canals-streams",
                           )
   } else {
     m |> leaflet::removeMarker(ff_returns_gcs$object_id)
@@ -204,6 +215,7 @@ ff_layer_watersheds <- function(m, show = TRUE, selected_return=NULL, selected_g
       df <- ff_watersheds_gcs
     }
     m |> leaflet::removeShape(ff_watersheds_gcs$object_id) |>
+      leaflet::removeControl("legend_watersheds") |>
       leaflet::addPolygons(data = df,
                            layerId = ~object_id,
                            label = ~lapply(paste0("<strong>",watershed_name," Watershed</strong><br />",return_category," return to fish-bearing stream"), htmltools::HTML),
@@ -212,12 +224,19 @@ ff_layer_watersheds <- function(m, show = TRUE, selected_return=NULL, selected_g
                            weight = 1,
                            fillOpacity = 0.5,
                            options = leaflet::pathOptions(pane = "Watersheds"),
+                           group = "watersheds",
                            highlightOptions = leaflet::highlightOptions(color = "#FDD20E",
                                                                         weight = 3,
                                                                         bringToFront = FALSE)
-                           )
+                           ) |>
+      leaflet::addLegend("topright", pal = pal, values=ff_watersheds_gcs$return_category,
+                         title = "Watersheds<br />by return type",
+                         opacity = 1,
+                         layerId = "legend_watersheds",
+                         group = "watersheds",
+      )
   } else {
-    m |> leaflet::removeShape(ff_watersheds_gcs$object_id)
+    m |> leaflet::removeShape(ff_watersheds_gcs$object_id) |> leaflet::removeControl("legend_watersheds")
   }
 }
 
@@ -256,18 +275,19 @@ ff_layer_watersheds <- function(m, show = TRUE, selected_return=NULL, selected_g
 ff_layer_fields <- function(m, show = TRUE, measure="return", selected_return=NULL, selected_group=NULL, selected_object=NULL) {
   if(show) {
     if(!is.null(selected_object)) {
-      df <- ff_fields_joined_gcs |> dplyr::filter(object_id == {{selected_object}})
+      df <- ff_fields_joined_gcs |> dplyr::filter(object_id == {{selected_object}}) |> ff_calc_inv_mass()
     } else if(!is.null(selected_group)) {
-      df <- ff_fields_joined_gcs |> dplyr::filter(group_id == {{selected_group}})
+      df <- ff_fields_joined_gcs |> dplyr::filter(group_id == {{selected_group}}) |> ff_calc_inv_mass()
     } else if(!is.null(selected_return)) {
-      df <- ff_fields_joined_gcs |> dplyr::filter(return_id == {{selected_return}})
+      df <- ff_fields_joined_gcs |> dplyr::filter(return_id == {{selected_return}}) |> ff_calc_inv_mass()
     } else {
-      df <- ff_fields_joined_gcs
+      df <- ff_fields_joined_gcs |> ff_calc_inv_mass()
     }
     if(measure=="return"){
       pal <- leaflet::colorFactor(palette = c("#57A0B9", "#C5686E", "#D9B679"),
                                   levels = c("Direct", "Indirect", "Lateral"))
       m |> leaflet::removeShape(ff_fields_joined_gcs$object_id) |>
+           leaflet::removeControl("legend_fields") |>
            leaflet::addPolygons(data = df,
                        layerId = ~object_id,
                        label = ~lapply(paste0("<strong>",round(area_ac,1),"-acre rice field</strong><br />",
@@ -278,13 +298,20 @@ ff_layer_fields <- function(m, show = TRUE, measure="return", selected_return=NU
                        fillColor = ~pal(return_category),
                        fillOpacity = 1,
                        options = leaflet::pathOptions(pane = "Fields"),
+                       group = "fields",
                        highlightOptions = leaflet::highlightOptions(fillColor = "#FDD20E",
-                                                                    bringToFront = TRUE)
-                       )
+                                                                    bringToFront = TRUE)) |>
+            leaflet::addLegend("bottomright", pal = pal, values=ff_fields_joined_gcs$return_category,
+                               title = "Rice fields<br />by return type",
+                               opacity = 1,
+                               layerId = "legend_fields",
+                               group = "fields",
+                               )
     } else if(measure=="distance"){
-      pal <- leaflet::colorNumeric(palette = "Blues",
+      pal <- leaflet::colorNumeric(palette = c("#57A0B9", "#D9B679", "#C5686E"),
                                    domain = ff_fields_joined_gcs$totdist_mi)
       m |> leaflet::removeShape(ff_fields_joined_gcs$object_id) |>
+           leaflet::removeControl("legend_fields") |>
            leaflet::addPolygons(data = df,
                        layerId = ~object_id,
                        label = ~lapply(paste0(return_category," return to ",fbs_name," = ",round(totdist_mi,1)," mi"),
@@ -293,12 +320,18 @@ ff_layer_fields <- function(m, show = TRUE, measure="return", selected_return=NU
                        fillColor = ~pal(totdist_mi),
                        fillOpacity = 1,
                        options = leaflet::pathOptions(pane = "Fields"),
+                       group = "fields",
                        highlightOptions = leaflet::highlightOptions(fillColor = "#FDD20E",
-                                                                    bringToFront = TRUE)
-      )
-}
-  } else {
-    m |> leaflet::removeShape(ff_fields_joined_gcs$object_id)
+                                                                    bringToFront = TRUE)) |>
+            leaflet::addLegend("bottomright", pal = pal, values = ff_fields_joined_gcs$totdist_mi,
+                               title = "Distance to<br />fish-bearing stream<br />(mi)",
+                               opacity = 1,
+                               layerId = "legend_fields",
+                               group = "fields",
+                               )
+  }
+} else {
+    m |> leaflet::removeShape(ff_fields_joined_gcs$object_id) |> leaflet::removeControl("legend_fields")
   }
 }
 
@@ -360,4 +393,5 @@ ff_map_distances <- function(selected_return) {
   }
   return(m)
 }
+
 
