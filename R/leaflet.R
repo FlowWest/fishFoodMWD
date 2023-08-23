@@ -396,7 +396,7 @@ ff_map_watersheds <- function(selected_return) {
 #' @name ff_map_distances
 #' @title Interactive map of watersheds
 #' @description
-#' Creates an interactive leaflet map showing the rice fields with watersheds return types.
+#' Creates an interactive leaflet map showing the rice fields with calculated return distance.
 #' @param selected_return (optional) A specific `return_id` for a return point to map.
 #' @md
 #' @export
@@ -417,6 +417,35 @@ ff_map_distances <- function(selected_return) {
       ff_layer_canals() |>
       ff_layer_returns() |>
       ff_layer_fields(measure="distance")
+  }
+  return(m)
+}
+
+#' @name ff_map_invmass
+#' @title Interactive map of invertebrate mass production
+#' @description
+#' Creates an interactive leaflet map showing the rice fields with calculated invertebrate mass production.
+#' @param day (optional) The number of days to pass to the invertebrate mass calculation. Defaults to one day if not provided.
+#' @param selected_return (optional) A specific `return_id` for a return point to map.
+#' @md
+#' @export
+#' @examples
+#' ff_map_invmass(inv_mass_days = 14)
+#' ff_map_invmass(selected_return = 9)
+ff_map_invmass <- function(day=1, selected_return) {
+  if (!missing(selected_return)){
+    bbox <- sf::st_bbox(ff_fields_joined_gcs |> filter(return_id == {{selected_return}}))
+    m <- ff_make_leaflet(bbox) |>
+      ff_layer_streams() |>
+      ff_layer_canals() |>
+      ff_layer_returns(selected_return=selected_return) |>
+      ff_layer_fields(measure="invmass", selected_return=selected_return, inv_mass_days=inv_mass_days)
+  } else {
+    m <- ff_make_leaflet() |>
+      ff_layer_streams() |>
+      ff_layer_canals() |>
+      ff_layer_returns() |>
+      ff_layer_fields(measure="invmass", inv_mass_days=day)
   }
   return(m)
 }
