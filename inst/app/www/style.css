@@ -14,3 +14,6 @@ div.leaflet-Returns-pane path.leaflet-interactive:hover {
   fill: #FDD20E;
 }
 
+div.leaflet-Watersheds-pane, div.leaflet-WetDry-pane {
+  mix-blend-mode: multiply;
+}
