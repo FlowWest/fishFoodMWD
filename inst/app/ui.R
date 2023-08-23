@@ -13,6 +13,8 @@ shinyUI(
         "resetButton",
         "Reset",
       ),
+      shinyjs::useShinyjs(),  # Initialize shinyjs
+      div(id = 'loading', p("Loading data, please wait..."), style = "display: none;")  # Hidden by default
     ),
     mainPanel(
       width = 10, # main width plus sidebar width should add to 12

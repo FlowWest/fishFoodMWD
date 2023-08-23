@@ -57,12 +57,15 @@ function(input, output, session){
 
   # reset the map
   observeEvent(input$resetButton, {
+    shinyjs::showElement(id = 'loading')
     selected_point$object_id <- NULL
     selected_point$group_id <- NULL
     selected_point$return_point_id <- NULL
+
   })
 
   output$field_map <- renderLeaflet({
+    shinyjs::showElement(id = 'loading')
     ff_make_leaflet() |>
       ff_layer_streams() |>
       ff_layer_canals()
@@ -81,5 +84,6 @@ function(input, output, session){
                       selected_group = selected_point$group_id,
                       selected_return = selected_point$return_point_id) |>
     leaflet.extras2::stopSpinner()
+    shinyjs::hideElement(id = 'loading')
   })
 }
