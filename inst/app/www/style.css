@@ -1,0 +1,19 @@
+body {
+  font-family: Inter;
+}
+
+#field_map {
+  height: calc(100vh - 80px) !important;
+}
+
+div[role=main] {
+  padding: 0 0 0 0;
+}
+
+div.leaflet-Returns-pane path.leaflet-interactive:hover {
+  fill: #FDD20E;
+}
+
+div.leaflet-Watersheds-pane, div.leaflet-WetDry-pane {
+  mix-blend-mode: multiply;
+}
