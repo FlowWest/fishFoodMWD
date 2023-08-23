@@ -14,5 +14,6 @@ Creates an interactive leaflet map showing the rice fields with watersheds retur
 }
 \examples{
 ff_map_watersheds()
+
 ff_map_watersheds(return = 9)
 }
