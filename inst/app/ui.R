@@ -16,7 +16,7 @@ shinyUI(
     ),
     mainPanel(
       width = 10, # main width plus sidebar width should add to 12
-      leafletOutput("field_map")
+      shinycssloaders::withSpinner(leafletOutput("field_map"))
     )
   )
 )
