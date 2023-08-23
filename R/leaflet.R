@@ -460,7 +460,7 @@ ff_layer_wetdry <- function(m, show = TRUE) {
 #' ff_map_watersheds(return = 9)
 ff_map_watersheds <- function(selected_return) {
   if (!missing(selected_return)){
-    bbox <- sf::st_bbox(ff_fields_joined_gcs |> filter(return_id == {{selected_return}}))
+    bbox <- sf::st_bbox(ff_fields_joined_gcs |> dplyr::filter(return_id == selected_return))
     m <- ff_make_leaflet(bbox) |>
       ff_layer_streams() |>
       ff_layer_canals() |>
@@ -490,7 +490,7 @@ ff_map_watersheds <- function(selected_return) {
 #' ff_map_distances(selected_return = 9)
 ff_map_distances <- function(selected_return) {
   if (!missing(selected_return)){
-    bbox <- sf::st_bbox(ff_fields_joined_gcs |> filter(return_id == {{selected_return}}))
+    bbox <- sf::st_bbox(ff_fields_joined_gcs |> dplyr::filter(return_id == selected_return))
     m <- ff_make_leaflet(bbox) |>
       ff_layer_streams() |>
       ff_layer_canals() |>
@@ -519,7 +519,7 @@ ff_map_distances <- function(selected_return) {
 #' ff_map_invmass(selected_return = 9)
 ff_map_invmass <- function(day=1, selected_return) {
   if (!missing(selected_return)){
-    bbox <- sf::st_bbox(ff_fields_joined_gcs |> filter(return_id == {{selected_return}}))
+    bbox <- sf::st_bbox(ff_fields_joined_gcs |> dplyr::filter(return_id == selected_return))
     m <- ff_make_leaflet(bbox) |>
       ff_layer_streams() |>
       ff_layer_canals() |>
@@ -547,7 +547,7 @@ ff_map_invmass <- function(day=1, selected_return) {
 #' ff_map_wetdry(selected_return = 9)
 ff_map_wetdry <- function(selected_return) {
   if (!missing(selected_return)){
-    bbox <- sf::st_bbox(ff_fields_joined_gcs |> filter(return_id == {{selected_return}}))
+    bbox <- sf::st_bbox(ff_fields_joined_gcs |> dplyr::filter(return_id == selected_return))
     m <- ff_make_leaflet(bbox) |>
       ff_layer_streams() |>
       ff_layer_canals() |>
