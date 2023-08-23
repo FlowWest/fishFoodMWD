@@ -272,16 +272,18 @@ ff_layer_watersheds <- function(m, show = TRUE, selected_return=NULL, selected_g
 #'   })
 #' }
 #'
-ff_layer_fields <- function(m, show = TRUE, measure="return", selected_return=NULL, selected_group=NULL, selected_object=NULL) {
+ff_layer_fields <- function(m, show = TRUE, measure="return",
+                            selected_return=NULL, selected_group=NULL, selected_object=NULL,
+                            inv_mass_days=1) {
   if(show) {
     if(!is.null(selected_object)) {
-      df <- ff_fields_joined_gcs |> dplyr::filter(object_id == {{selected_object}}) |> ff_calc_inv_mass()
+      df <- ff_fields_joined_gcs |> dplyr::filter(object_id == {{selected_object}}) |> ff_calc_inv_mass(inv_mass_days)
     } else if(!is.null(selected_group)) {
-      df <- ff_fields_joined_gcs |> dplyr::filter(group_id == {{selected_group}}) |> ff_calc_inv_mass()
+      df <- ff_fields_joined_gcs |> dplyr::filter(group_id == {{selected_group}}) |> ff_calc_inv_mass(inv_mass_days)
     } else if(!is.null(selected_return)) {
-      df <- ff_fields_joined_gcs |> dplyr::filter(return_id == {{selected_return}}) |> ff_calc_inv_mass()
+      df <- ff_fields_joined_gcs |> dplyr::filter(return_id == {{selected_return}}) |> ff_calc_inv_mass(inv_mass_days)
     } else {
-      df <- ff_fields_joined_gcs |> ff_calc_inv_mass()
+      df <- ff_fields_joined_gcs |> ff_calc_inv_mass(inv_mass_days)
     }
     if(measure=="return"){
       pal <- leaflet::colorFactor(palette = c("#57A0B9", "#C5686E", "#D9B679"),
@@ -314,7 +316,8 @@ ff_layer_fields <- function(m, show = TRUE, measure="return", selected_return=NU
            leaflet::removeControl("legend_fields") |>
            leaflet::addPolygons(data = df,
                        layerId = ~object_id,
-                       label = ~lapply(paste0(return_category," return to ",fbs_name," = ",round(totdist_mi,1)," mi"),
+                       label = ~lapply(paste0("<strong>",round(area_ac,1),"-acre rice field</strong><br />",
+                                              return_category," return to ",fbs_name," = ",round(totdist_mi,1)," mi"),
                                        htmltools::HTML),
                        weight = 0,
                        fillColor = ~pal(totdist_mi),
@@ -329,7 +332,31 @@ ff_layer_fields <- function(m, show = TRUE, measure="return", selected_return=NU
                                layerId = "legend_fields",
                                group = "fields",
                                )
-  }
+    } else if(measure=="invmass"){
+      pal <- leaflet::colorNumeric(palette = c("#ECCD97", "#8B1A1A"),
+                                   domain = ff_calc_inv_mass(ff_fields_joined_gcs, inv_mass_days)$total_prod_kg)
+      m |> leaflet::removeShape(ff_fields_joined_gcs$object_id) |>
+        leaflet::removeControl("legend_fields") |>
+        leaflet::addPolygons(data = df,
+                             layerId = ~object_id,
+                             label = ~lapply(paste0("<strong>",round(area_ac,1),"-acre rice field</strong><br />",
+                                                    return_category," return to ",fbs_name," = ",round(totdist_mi,1)," mi",
+                                                    "<br />",round(inv_mass_days),"-day invertebrate mass production = ",round(total_prod_kg,1)," kg"),
+                                             htmltools::HTML),
+                             weight = 0,
+                             fillColor = ~pal(total_prod_kg),
+                             fillOpacity = 1,
+                             options = leaflet::pathOptions(pane = "Fields"),
+                             group = "fields",
+                             highlightOptions = leaflet::highlightOptions(fillColor = "#FDD20E",
+                                                                          bringToFront = TRUE)) |>
+        leaflet::addLegend("bottomright", pal = pal, values = ff_calc_inv_mass(ff_fields_joined_gcs, inv_mass_days)$total_prod_kg,
+                           title = paste0(round(inv_mass_days),"-day invertebrate<br />mass production<br />(kg)"),
+                           opacity = 1,
+                           layerId = "legend_fields",
+                           group = "fields",
+        )
+    }
 } else {
     m |> leaflet::removeShape(ff_fields_joined_gcs$object_id) |> leaflet::removeControl("legend_fields")
   }
@@ -393,5 +420,3 @@ ff_map_distances <- function(selected_return) {
   }
   return(m)
 }
-
-
