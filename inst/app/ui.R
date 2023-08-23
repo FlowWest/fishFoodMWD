@@ -15,7 +15,7 @@ shinyUI(
       ),
     ),
     mainPanel(
-      leafletOutput("field_map", width = "155vh", height = "100vh")
+      shinycssloaders::withSpinner(leafletOutput("field_map", width = "155vh", height = "100vh"))
     )
   )
 )
