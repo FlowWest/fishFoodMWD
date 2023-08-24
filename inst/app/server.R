@@ -66,8 +66,17 @@ function(input, output, session){
       ff_layer_canals()
   })
 
-  observe({
+  measure_data <- eventReactive(input$runButton, {
+
     shinyjs::showElement(id = 'loading_radio')
+    switch(input$calculationButton,
+           "return" = "return",
+           "distance" = "distance",
+           "invmass" = input$inv_mass)
+
+    })
+
+  observe({
     if(input$calculationButton == "return" | input$calculationButton == "distance"){
       proxy <- leaflet::leafletProxy("field_map")
       proxy |>
@@ -79,7 +88,7 @@ function(input, output, session){
         ff_layer_fields(selected_object = selected_point$object_id,
                         selected_group = selected_point$group_id,
                         selected_return = selected_point$return_point_id,
-                        measure = input$calculationButton) |>
+                        measure = measure_data()) |>
         leaflet::addLayersControl(overlayGroups = c("Fields", "Watersheds"), position = "topleft") |>
         leaflet.extras2::stopSpinner()
       shinyjs::hideElement(id = 'loading_radio')
@@ -95,7 +104,7 @@ function(input, output, session){
                         selected_group = selected_point$group_id,
                         selected_return = selected_point$return_point_id,
                         measure = "invmass",
-                        inv_mass_days = input$invmass) |>
+                        inv_mass_days = measure_data()) |>
         leaflet::addLayersControl(overlayGroups = c("Fields", "Watersheds"), position = "topleft") |>
         leaflet.extras2::stopSpinner()
       shinyjs::hideElement(id = 'loading_radio')

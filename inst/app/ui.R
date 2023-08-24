@@ -23,7 +23,7 @@ shinyUI(
       conditionalPanel(
         condition = "input.calculationButton == 'invmass'",
         numericInput(
-          "invmass",
+          "inv_mass",
           "Input the number of days to calculate the invertebrate mass production:",
           1,
           min = 1,
