@@ -14,8 +14,8 @@ shinyUI(
       br(),
       radioButtons(
         "calculationButton",
-        "Check calculation of interest:",
-        c("Return" = "return",
+        "Select rice field attribute to display:",
+        c("Return Type" = "return",
           "Distance" = "distance",
           "Wet/Dry" = "wetdry",
           "Invertebrate Mass Days" = "invmass"
@@ -30,7 +30,7 @@ shinyUI(
           min = 1,
           max = 100),
       br(),
-      actionButton('runButton' ,'Submit Calculation'),
+      actionButton('runButton' ,'Update Map'),
       ),
       br(),
       br(),
