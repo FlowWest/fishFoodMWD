@@ -59,6 +59,7 @@ function(input, output, session){
 
   })
 
+
   output$field_map <- renderLeaflet({
     # shinyjs::showElement(id = 'loading_action')
     ff_make_leaflet() |>
@@ -67,17 +68,21 @@ function(input, output, session){
   })
 
   measure_data <- eventReactive(input$runButton, {
-
+    # req(input$runButton)
     shinyjs::showElement(id = 'loading_radio')
-    switch(input$calculationButton,
-           "return" = "return",
-           "distance" = "distance",
-           "invmass" = input$inv_mass)
+    # switch(input$calculationButton,
+           # "return" = "return",
+           # "distance" = "distance",
+           # "wetdry" = "wetdry",
+      input$inv_mass
 
     })
 
   observe({
-    if(input$calculationButton == "return" | input$calculationButton == "distance"){
+    # req(input$runButton)
+    if(input$calculationButton == "return" |
+       input$calculationButton == "distance"){
+      shinyjs::showElement(id = 'loading_radio')
       proxy <- leaflet::leafletProxy("field_map")
       proxy |>
         ff_layer_returns(selected_return = selected_point$return_point_id) |>
@@ -88,11 +93,14 @@ function(input, output, session){
         ff_layer_fields(selected_object = selected_point$object_id,
                         selected_group = selected_point$group_id,
                         selected_return = selected_point$return_point_id,
-                        measure = measure_data()) |>
+                        measure = input$calculationButton) |>
         leaflet::addLayersControl(overlayGroups = c("Fields", "Watersheds"), position = "topleft") |>
         leaflet.extras2::stopSpinner()
       shinyjs::hideElement(id = 'loading_radio')
-    }else if (input$calculationButton == "invmass"){
+    }else if (is.null(measure_data()) == FALSE){
+
+      req(input$runButton)
+
       proxy <- leaflet::leafletProxy("field_map")
       proxy |>
         ff_layer_returns(selected_return = selected_point$return_point_id) |>

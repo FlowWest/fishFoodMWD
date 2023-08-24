@@ -17,6 +17,7 @@ shinyUI(
         "Check calculation of interest:",
         c("Return" = "return",
           "Distance" = "distance",
+          "Wet/Dry" = "wetdry",
           "Invertebrate Mass Days" = "invmass"
           )
       ),
@@ -27,10 +28,10 @@ shinyUI(
           "Input the number of days to calculate the invertebrate mass production:",
           1,
           min = 1,
-          max = 100)
-      ),
+          max = 100),
       br(),
       actionButton('runButton' ,'Submit Calculation'),
+      ),
       br(),
       br(),
       actionButton(
