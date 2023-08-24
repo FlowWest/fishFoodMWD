@@ -39,7 +39,6 @@ shinyUI(
         "Reset Map",
       ),
       div(id = 'loading_radio', p("Loading data, please wait..."), style = "display: none;"),
-      # div(id = 'loading_action', p("Loading data, please wait..."), style = "display: none;"),  # Hidden by default
     ),
     mainPanel(
       width = 10, # main width plus sidebar width should add to 12
