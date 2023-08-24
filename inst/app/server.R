@@ -84,18 +84,11 @@ function(input, output, session){
   })
 
   measure_data <- eventReactive(input$runButton, {
-    # req(input$runButton)
     shinyjs::showElement(id = 'loading_radio')
-    # switch(input$calculationButton,
-           # "return" = "return",
-           # "distance" = "distance",
-           # "wetdry" = "wetdry",
-      input$inv_mass
+    input$inv_mass
 
     })
-
   observe({
-    # req(input$runButton)
     if(input$calculationButton == "return" |
        input$calculationButton == "distance" |
        input$calculationButton == "wetdry"){
@@ -111,7 +104,7 @@ function(input, output, session){
                         selected_group = selected_point$group_id,
                         selected_return = selected_point$return_point_id,
                         measure = input$calculationButton) |>
-        leaflet::addLayersControl(overlayGroups = c("Fields", "Watersheds"), position = "topleft") |>
+        leaflet::addLayersControl(overlayGroups = c("watersheds", "fields"), position = "topleft") |>
         leaflet::setView(lng = selected_point$long, lat = selected_point$lat, zoom = 11) |>
         leaflet.extras2::stopSpinner()
       shinyjs::hideElement(id = 'loading_radio')
@@ -131,13 +124,11 @@ function(input, output, session){
                         selected_return = selected_point$return_point_id,
                         measure = "invmass",
                         inv_mass_days = measure_data()) |>
-        leaflet::addLayersControl(overlayGroups = c("Fields", "Watersheds"), position = "topleft") |>
+        # leaflet::addLayersControl(overlayGroups = c("Fields", "Watersheds"), position = "topleft") |>
         leaflet::setView(lng = selected_point$long, lat = selected_point$lat, zoom = 11) |>
         leaflet.extras2::stopSpinner()
       shinyjs::hideElement(id = 'loading_radio')
     }
-
-    # shinyjs::hideElement(id = 'loading_action')
 
   })
 }
