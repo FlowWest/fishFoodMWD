@@ -17,3 +17,32 @@ div.leaflet-Returns-pane path.leaflet-interactive:hover {
 div.leaflet-Watersheds-pane, div.leaflet-WetDry-pane {
   mix-blend-mode: multiply;
 }
+
+#invmassControlPanel {
+  background: white;
+  padding: 1em;
+}
+
+#mapControls {
+  margin-top: 1em;
+  margin-bottom: 1em;
+}
+
+#resetButton {
+  margin-top: 1em;
+  margin-bottom: 1em;
+}
+
+#messages {
+  margin-top: 1em;
+  margin-bottom: 1em;
+}
+
+#messages > div {
+  margin-top: 1em;
+  margin-bottom: 1em;
+}
+
+#messages > #loading_radio {
+  font-style: italic;
+}
