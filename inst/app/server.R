@@ -10,6 +10,8 @@ function(input, output, session){
   observeEvent(input$field_map_shape_click, {
     if (!is.null(input$field_map_shape_click$id)) {
 
+      shinyjs::showElement(id = 'reset_guidance')
+
       click_type <- substr(input$field_map_shape_click$id, 1, 1)
 
       if(click_type == 'F') { # Fields
@@ -43,6 +45,8 @@ function(input, output, session){
   observeEvent(input$field_map_marker_click, {
     if (!is.null(input$field_map_marker_click$id)) {
 
+      shinyjs::showElement(id = 'reset_guidance')
+
       click_type <- substr(input$field_map_marker_click$id, 1, 1)
 
       if(click_type == 'R') { # Return points
@@ -68,19 +72,10 @@ function(input, output, session){
     selected_point$return_point_id <- NULL
     selected_point$long <- NULL
     selected_point$lat <- NULL
+    shinyjs::hideElement(id = 'reset_guidance')
   }
 
   observeEvent(input$field_map_click, {
-
-    if (!is.null(selected_point)) {
-      shinyjs::showElement(id = 'reset_guidance')
-      cat("show element")
-    }
-
-    if (is.null(selected_point)) {
-      shinyjs::hideElement(id = 'reset_guidance')
-      cat("hide element")
-    }
 
     if (!is.null(selected_point)) {
       field_map_shape_click_info <- input$field_map_shape_click
@@ -110,6 +105,7 @@ function(input, output, session){
         reset_filters()
       }
     }
+
   })
 
   # reset the map
