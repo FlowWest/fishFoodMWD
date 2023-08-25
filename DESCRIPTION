@@ -16,5 +16,8 @@ Imports:
     tidyr,
     ggplot2,
     sf,
-    shiny
+    shiny,
+    leaflet.extras2,
+    shinyjs,
+    shinycssloaders
 RoxygenNote: 7.2.3

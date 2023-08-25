@@ -9,11 +9,36 @@ shinyUI(
     tabPanel("Map"),
     sidebarPanel(
       width = 2,
+      tags$h2("Map Controls"),
+      br(),
+      br(),
+      radioButtons(
+        "calculationButton",
+        "Select rice field attribute to display:",
+        c("Return Type" = "return",
+          "Distance" = "distance",
+          "Wet/Dry" = "wetdry",
+          "Invertebrate Mass Days" = "invmass"
+          )
+      ),
+      conditionalPanel(
+        condition = "input.calculationButton == 'invmass'",
+        numericInput(
+          "inv_mass",
+          "Input the number of days to calculate the invertebrate mass production:",
+          1,
+          min = 1,
+          max = 100),
+      br(),
+      actionButton('runButton' ,'Update Map'),
+      ),
+      br(),
+      br(),
       actionButton(
         "resetButton",
-        "Reset",
+        "Reset Map",
       ),
-      div(id = 'loading', p("Loading data, please wait..."), style = "display: none;"),  # Hidden by default
+      div(id = 'loading_radio', p("Loading data, please wait..."), style = "display: none;"),
     ),
     mainPanel(
       width = 10, # main width plus sidebar width should add to 12
