@@ -38,6 +38,8 @@ shinyUI(
         "resetButton",
         "Reset Map",
       ),
+      div(id = 'filter_guidance', p("Click a watershed, return point, or rice field to filter.")),
+      div(id = 'reset_guidance', p("Click the map background to reset all filters."), style = "display: none;"),
       div(id = 'loading_radio', p("Loading data, please wait..."), style = "display: none;"),
     ),
     mainPanel(

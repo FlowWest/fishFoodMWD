@@ -1,10 +1,5 @@
 function(input, output, session){
 
-  bbox <- c(lng1 = -122.3,
-            lat1 = 38.5,
-            lng2 = -121.3,
-            lat2 = 39.7)
-
   # using a reactive ID option
   selected_point <- reactiveValues(object_id = NULL,
                                    return_point_id = NULL,
@@ -76,6 +71,17 @@ function(input, output, session){
   }
 
   observeEvent(input$field_map_click, {
+
+    if (!is.null(selected_point)) {
+      shinyjs::showElement(id = 'reset_guidance')
+      cat("show element")
+    }
+
+    if (is.null(selected_point)) {
+      shinyjs::hideElement(id = 'reset_guidance')
+      cat("hide element")
+    }
+
     if (!is.null(selected_point)) {
       field_map_shape_click_info <- input$field_map_shape_click
       field_map_marker_click_info <- input$field_map_marker_click
@@ -111,13 +117,16 @@ function(input, output, session){
     reset_filters()
     proxy <- leaflet::leafletProxy("field_map")
     proxy |>
-      leaflet::fitBounds(bbox)
+      leaflet::fitBounds(lng1 = -122.3,
+                         lat1 = 38.5,
+                         lng2 = -121.3,
+                         lat2 = 39.7)
 
   })
 
   output$field_map <- renderLeaflet({
     # shinyjs::showElement(id = 'loading_action')
-    ff_make_leaflet(bbox) |>
+    ff_make_leaflet() |>
       ff_layer_streams() |>
       ff_layer_canals()
   })
