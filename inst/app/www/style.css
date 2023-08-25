@@ -33,16 +33,15 @@ div.leaflet-Watersheds-pane, div.leaflet-WetDry-pane {
   margin-bottom: 1em;
 }
 
-#messages {
+.sidebar-message {
   margin-top: 1em;
   margin-bottom: 1em;
 }
 
-#messages > div {
-  margin-top: 1em;
-  margin-bottom: 1em;
+#filter_guidance {
+  font-weight: bold;
 }
 
-#messages > #loading_radio {
+#loading_radio, #reset_guidance {
   font-style: italic;
 }

@@ -30,12 +30,10 @@ shinyUI(
               max = 100),
             actionButton('runButton' ,'Update Map')),
       ),
+      div(id = 'filter_guidance', "Click a watershed, return point, or rice field to filter.", class="sidebar-message"),
       actionButton("resetButton", "Reset Map"),
-      div(id = 'messages',
-          div(id = 'filter_guidance', "Click a watershed, return point, or rice field to filter."),
-          div(id = 'reset_guidance', "Click the map background to reset all filters.", style = "display: none;"),
-          div(id = 'loading_radio', "Loading data, please wait...", style = "display: none;"),
-      )
+      div(id = 'reset_guidance', "Click the map background to reset all filters.", style = "display: none;", class="sidebar-message"),
+      div(id = 'loading_radio', "Loading data, please wait...", style = "display: none;", class="sidebar-message"),
     ),
     mainPanel(
       width = 9, # main width plus sidebar width should add to 12
