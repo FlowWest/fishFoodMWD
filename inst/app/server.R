@@ -1,4 +1,10 @@
 function(input, output, session){
+
+  bbox <- c(lng1 = -122.3,
+            lat1 = 38.5,
+            lng2 = -121.3,
+            lat2 = 39.7)
+
   # using a reactive ID option
   selected_point <- reactiveValues(object_id = NULL,
                                    return_point_id = NULL,
@@ -10,8 +16,6 @@ function(input, output, session){
     if (!is.null(input$field_map_shape_click$id)) {
 
       click_type <- substr(input$field_map_shape_click$id, 1, 1)
-      selected_point$long = input$field_map_shape_click$lng
-      selected_point$lat = input$field_map_shape_click$lat
 
       if(click_type == 'F') { # Fields
 
@@ -22,6 +26,8 @@ function(input, output, session){
         selected_point$object_id <- input$field_map_shape_click$id
         selected_point$group_id <- val$group_id
         selected_point$return_point_id <- val$return_id
+        selected_point$long = input$field_map_shape_click$lng
+        selected_point$lat = input$field_map_shape_click$lat
 
       } else if(click_type == 'W') { # Watersheds
 
@@ -32,6 +38,8 @@ function(input, output, session){
         selected_point$object_id <- NULL
         selected_point$group_id <- val$group_id
         selected_point$return_point_id <- val$return_id
+        selected_point$long = input$field_map_shape_click$lng
+        selected_point$lat = input$field_map_shape_click$lat
 
       }
     }
@@ -41,8 +49,6 @@ function(input, output, session){
     if (!is.null(input$field_map_marker_click$id)) {
 
       click_type <- substr(input$field_map_marker_click$id, 1, 1)
-      selected_point$long = input$field_map_marker_click$lng
-      selected_point$lat = input$field_map_marker_click$lat
 
       if(click_type == 'R') { # Return points
 
@@ -53,32 +59,65 @@ function(input, output, session){
         selected_point$object_id <- NULL
         selected_point$group_id <- NULL
         selected_point$return_point_id <- val$return_id
+        selected_point$long = input$field_map_marker_click$lng
+        selected_point$lat = input$field_map_marker_click$lat
 
       }
     }
   })
 
-  # reset the map
-  observeEvent(input$resetButton, {
+  reset_filters <- function() {
     shinyjs::showElement(id = 'loading')
     selected_point$object_id <- NULL
     selected_point$group_id <- NULL
     selected_point$return_point_id <- NULL
     selected_point$long <- NULL
     selected_point$lat <- NULL
+  }
+
+  observeEvent(input$field_map_click, {
+    if (!is.null(selected_point)) {
+      field_map_shape_click_info <- input$field_map_shape_click
+      field_map_marker_click_info <- input$field_map_marker_click
+      field_map_click_info <- input$field_map_click
+      if (is.null(field_map_shape_click_info) & is.null(field_map_marker_click_info)) {
+        #cat("shape is null and marker is null")
+        reset_filters()
+      } else if ( is.null(field_map_marker_click_info) &
+                  (!all(unlist(field_map_shape_click_info[c('lat','lng')]) ==
+                       unlist(field_map_click_info[c('lat','lng')])))
+                  ) {
+        #cat("marker is null and click doesn't match last shape")
+        reset_filters()
+      } else if ( is.null(field_map_shape_click_info) &
+                  (!all(unlist(field_map_marker_click_info[c('lat','lng')]) ==
+                       unlist(field_map_click_info[c('lat','lng')])))
+                  ) {
+        #cat("shape is null and click doesn't match last marker")
+        reset_filters()
+      } else if ((!all(unlist(field_map_shape_click_info[c('lat','lng')]) ==
+                      unlist(field_map_click_info[c('lat','lng')]))) &
+                 (!all(unlist(field_map_marker_click_info[c('lat','lng')]) ==
+                      unlist(field_map_click_info[c('lat','lng')])))
+        ) {
+        #cat("click doesn't match last marker or shape")
+        reset_filters()
+      }
+    }
+  })
+
+  # reset the map
+  observeEvent(input$resetButton, {
+    reset_filters()
     proxy <- leaflet::leafletProxy("field_map")
     proxy |>
-      leaflet::fitBounds(lng1 = -122.3,
-                         lat1 = 38.5,
-                         lng2 = -121.3,
-                         lat2 = 39.7)
+      leaflet::fitBounds(bbox)
 
   })
 
-
   output$field_map <- renderLeaflet({
     # shinyjs::showElement(id = 'loading_action')
-    ff_make_leaflet() |>
+    ff_make_leaflet(bbox) |>
       ff_layer_streams() |>
       ff_layer_canals()
   })
