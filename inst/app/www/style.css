@@ -45,3 +45,18 @@ div.leaflet-Watersheds-pane, div.leaflet-WetDry-pane {
 #loading_radio, #reset_guidance {
   font-style: italic;
 }
+
+#download_buttons {
+  background: white;
+  padding: 1em;
+}
+.download_button {
+  display: list-item;
+  background-color: none;
+  border: none;
+  text-align: left;
+  list-style-type: none;
+
+
+
+}

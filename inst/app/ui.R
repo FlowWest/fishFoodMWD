@@ -34,6 +34,17 @@ shinyUI(
       actionButton("resetButton", "Reset Map"),
       div(id = 'reset_guidance', "Click the map background to reset all filters.", style = "display: none;", class="sidebar-message"),
       div(id = 'loading_radio', "Loading data, please wait...", style = "display: none;", class="sidebar-message"),
+      hr(),
+      actionButton("showDownloads", "Download Data"),
+      div(id = "download_buttons", style="display: none",
+          downloadButton("download_fields", "Rice Field Geometries", class="download_button"),
+          downloadButton("download_distances", "Rice Field Flow Distances", class="download_button"),
+          downloadButton("download_watersheds", "Watersheds", class="download_button"),
+          downloadButton("download_returns", "Return Points", class="download_button"),
+          downloadButton("download_streams", "Fish-bearing Streams", class="download_button"),
+          downloadButton("download_canals", "Secondary Canals", class="download_button"),
+          downloadButton("download_wetdry", "Wet/Dry Sides", class="download_button")
+          ),
     ),
     mainPanel(
       width = 9, # main width plus sidebar width should add to 12

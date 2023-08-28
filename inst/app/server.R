@@ -175,4 +175,40 @@ function(input, output, session){
     }
 
   })
+
+  downloader <- function(dataset, basename) {
+    dh <- downloadHandler(
+      filename = paste0(basename,".zip"),
+      content = function(file) {
+        if (length(Sys.glob(paste0(basename,".*"))>0)){
+          file.remove(Sys.glob(paste0(basename,".*")))
+        }
+        if ("sf" %in% class(dataset)){
+          sf::st_write(dataset, dsn=paste0(basename,".shp"), layer=basename, driver="ESRI Shapefile", overwrite_layer = T)
+          readr::write_excel_csv(dataset |> sf::st_drop_geometry(), paste0(basename,".csv"))
+        } else if ("data.frame" %in% class(dataset)) {
+          readr::write_excel_csv(dataset, paste0(basename,".csv"))
+        }
+        zip::zip(zipfile=paste0(basename,".zip"),
+                 files=Sys.glob(paste0(basename,".*")))
+        file.copy(paste0(basename,".zip"), file)
+        if (length(Sys.glob(paste0(basename,".*")))>0){
+          file.remove(Sys.glob(paste0(basename,".*")))
+        }}
+    )
+    return(dh)
+  }
+
+  output$download_streams <- downloader(ff_streams, "fishFoodMWD_streams")
+  output$download_fields <- downloader(ff_fields, "fishFoodMWD_fields")
+  output$download_watersheds <- downloader(ff_watersheds, "fishFoodMWD_watersheds")
+  output$download_canals <- downloader(ff_canals, "fishFoodMWD_canals")
+  output$download_returns <- downloader(ff_returns, "fishFoodMWD_returns")
+  output$download_distances <- downloader(ff_distances, "fishFoodMWD_distances")
+  output$download_wetdry <- downloader(ff_wetdry, "fishFoodMWD_wetdry")
+
+  observeEvent(input$showDownloads, {
+    shinyjs::toggle(id = "download_buttons")
+  })
+
 }
