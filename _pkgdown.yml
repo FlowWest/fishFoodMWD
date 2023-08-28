@@ -27,3 +27,10 @@ reference:
   contents:
   - starts_with("ff_make_")
   - starts_with("ff_layer_")
+navbar:
+  structure:
+    left:  [reference, articles, maplink]
+  components:
+    maplink:
+      href: https://flowwest.shinyapps.io/fishFoodMWD/
+      text: "Interactive Map and Data Download"
