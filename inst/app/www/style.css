@@ -1,5 +1,5 @@
 body {
-  font-family: Inter;
+  font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
 }
 
 #field_map {
@@ -16,4 +16,32 @@ div.leaflet-Returns-pane path.leaflet-interactive:hover {
 
 div.leaflet-Watersheds-pane, div.leaflet-WetDry-pane {
   mix-blend-mode: multiply;
+}
+
+#invmassControlPanel {
+  background: white;
+  padding: 1em;
+}
+
+#mapControls {
+  margin-top: 1em;
+  margin-bottom: 1em;
+}
+
+#resetButton {
+  margin-top: 1em;
+  margin-bottom: 1em;
+}
+
+.sidebar-message {
+  margin-top: 1em;
+  margin-bottom: 1em;
+}
+
+#filter_guidance {
+  font-weight: bold;
+}
+
+#loading_radio, #reset_guidance {
+  font-style: italic;
 }
