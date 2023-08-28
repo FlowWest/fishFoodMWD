@@ -124,8 +124,7 @@ function(input, output, session){
     # shinyjs::showElement(id = 'loading_action')
     ff_make_leaflet() |>
       ff_layer_streams() |>
-      ff_layer_canals() |>
-      ff_layer_wetdry()
+      ff_layer_canals()
   })
 
   measure_data <- eventReactive(input$runButton, {
@@ -149,11 +148,7 @@ function(input, output, session){
                         selected_group = selected_point$group_id,
                         selected_return = selected_point$return_point_id,
                         measure = input$calculationButton) |>
-        leaflet::addLayersControl(baseGroups = c("watersheds", "wetdry"),
-                                  overlayGroups = c("fields", "returns-canals-streams"),
-                                  position = "bottomleft",
-                                  options = leaflet::layersControlOptions(collapsed = FALSE)) |>
-        leaflet::hideGroup("wetdry") |>
+        leaflet::addLayersControl(overlayGroups = c("watersheds", "fields"), position = "topleft") |>
         leaflet::setView(lng = selected_point$long, lat = selected_point$lat, zoom = 11) |>
         leaflet.extras2::stopSpinner()
       shinyjs::hideElement(id = 'loading_radio')
