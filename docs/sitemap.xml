@@ -52,6 +52,39 @@
     <loc>/reference/ff_fields.html</loc>
   </url>
   <url>
+    <loc>/reference/ff_layer_canals.html</loc>
+  </url>
+  <url>
+    <loc>/reference/ff_layer_fields.html</loc>
+  </url>
+  <url>
+    <loc>/reference/ff_layer_returns.html</loc>
+  </url>
+  <url>
+    <loc>/reference/ff_layer_streams.html</loc>
+  </url>
+  <url>
+    <loc>/reference/ff_layer_watersheds.html</loc>
+  </url>
+  <url>
+    <loc>/reference/ff_layer_wetdry.html</loc>
+  </url>
+  <url>
+    <loc>/reference/ff_make_leaflet.html</loc>
+  </url>
+  <url>
+    <loc>/reference/ff_map_distances.html</loc>
+  </url>
+  <url>
+    <loc>/reference/ff_map_invmass.html</loc>
+  </url>
+  <url>
+    <loc>/reference/ff_map_watersheds.html</loc>
+  </url>
+  <url>
+    <loc>/reference/ff_map_wetdry.html</loc>
+  </url>
+  <url>
     <loc>/reference/ff_plot_distances.html</loc>
   </url>
   <url>
@@ -107,6 +140,9 @@
   </url>
   <url>
     <loc>/reference/returns.html</loc>
+  </url>
+  <url>
+    <loc>/reference/runApp.html</loc>
   </url>
   <url>
     <loc>/reference/streams.html</loc>

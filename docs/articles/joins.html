@@ -6,6 +6,12 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Data Structure and Joins • fishFoodMWD</title>
+<!-- favicons --><link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="../favicon-32x32.png">
+<link rel="apple-touch-icon" type="image/png" sizes="180x180" href="../apple-touch-icon.png">
+<link rel="apple-touch-icon" type="image/png" sizes="120x120" href="../apple-touch-icon-120x120.png">
+<link rel="apple-touch-icon" type="image/png" sizes="76x76" href="../apple-touch-icon-76x76.png">
+<link rel="apple-touch-icon" type="image/png" sizes="60x60" href="../apple-touch-icon-60x60.png">
 <!-- jquery --><script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script><!-- Bootstrap --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/css/bootstrap.min.css" integrity="sha256-bZLfwXAP04zRMK2BjiO8iu9pf4FbLqX6zitd+tIvLhE=" crossorigin="anonymous">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/js/bootstrap.min.js" integrity="sha256-nuL8/2cJ5NDSSwnKD8VqreErSWHtnEP9E7AySL+1ev4=" crossorigin="anonymous"></script><!-- bootstrap-toc --><link rel="stylesheet" href="../bootstrap-toc.css">
 <script src="../bootstrap-toc.js"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous">
@@ -13,6 +19,7 @@
 <!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- pkgdown --><link href="../pkgdown.css" rel="stylesheet">
 <script src="../pkgdown.js"></script><meta property="og:title" content="Data Structure and Joins">
 <meta property="og:description" content="fishFoodMWD">
+<meta property="og:image" content="/logo.png">
 <!-- mathjax --><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script><!--[if lt IE 9]>
 <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
 <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
@@ -80,7 +87,7 @@
       <h1 data-toc-skip>Data Structure and Joins</h1>
                         <h4 data-toc-skip class="author">FlowWest</h4>
             
-            <h4 data-toc-skip class="date">2023-08-17</h4>
+            <h4 data-toc-skip class="date">2023-08-28</h4>
       
       
       <div class="hidden name"><code>joins.Rmd</code></div>
@@ -192,11 +199,12 @@ Valley based on levee locations</td>
 <pre><code><span><span class="va">ff_watersheds</span></span></code></pre>
 <table class="table">
 <colgroup>
-<col width="13%">
 <col width="11%">
+<col width="9%">
 <col width="30%">
-<col width="10%">
-<col width="32%">
+<col width="8%">
+<col width="26%">
+<col width="13%">
 </colgroup>
 <thead><tr class="header">
 <th align="left">group_id</th>
@@ -204,6 +212,7 @@ Valley based on levee locations</td>
 <th align="left">watershed_name</th>
 <th align="right">return_id</th>
 <th align="left">geometry</th>
+<th align="left">return_category</th>
 </tr></thead>
 <tbody>
 <tr class="odd">
@@ -212,6 +221,7 @@ Valley based on levee locations</td>
 <td align="left">Honcut Creek</td>
 <td align="right">0</td>
 <td align="left">POLYGON ((6723475 2313975, …</td>
+<td align="left">Lateral</td>
 </tr>
 <tr class="even">
 <td align="left">1802015902</td>
@@ -219,6 +229,7 @@ Valley based on levee locations</td>
 <td align="left">Upper Feather River</td>
 <td align="right">14</td>
 <td align="left">POLYGON ((6693728 2351561, …</td>
+<td align="left">Lateral</td>
 </tr>
 <tr class="odd">
 <td align="left">1802015903</td>
@@ -226,13 +237,15 @@ Valley based on levee locations</td>
 <td align="left">Hutchinson Creek-Reeds Creek</td>
 <td align="right">51</td>
 <td align="left">POLYGON ((6753204 2200420, …</td>
+<td align="left">Direct</td>
 </tr>
 <tr class="even">
 <td align="left">1802015904-N</td>
 <td align="left">1802015904</td>
-<td align="left">Gilsizer Slough-Snake River</td>
+<td align="left">Gilsizer Slough-Snake River - Upper</td>
 <td align="right">58</td>
 <td align="left">POLYGON ((6668665 2188306, …</td>
+<td align="left">Indirect</td>
 </tr>
 <tr class="odd">
 <td align="left">1802015905</td>
@@ -240,6 +253,7 @@ Valley based on levee locations</td>
 <td align="left">Lower Feather River</td>
 <td align="right">0</td>
 <td align="left">POLYGON ((6676057 2172657, …</td>
+<td align="left">Lateral</td>
 </tr>
 </tbody>
 </table>
@@ -333,7 +347,7 @@ Valley based on levee locations</td>
 <tr class="odd">
 <td align="left">1103539</td>
 <td align="left">Glenn</td>
-<td align="left">POLYGON Z ((6526707 2289953…</td>
+<td align="left">POLYGON ((6526707 2289953, …</td>
 <td align="left">1802010405</td>
 <td align="right">23.428379</td>
 <td align="right">9.7618244</td>
@@ -341,7 +355,7 @@ Valley based on levee locations</td>
 <tr class="even">
 <td align="left">1102849</td>
 <td align="left">Glenn</td>
-<td align="left">POLYGON Z ((6517766 2307611…</td>
+<td align="left">POLYGON ((6517766 2307611, …</td>
 <td align="left">1802010405</td>
 <td align="right">23.476331</td>
 <td align="right">9.7818048</td>
@@ -349,7 +363,7 @@ Valley based on levee locations</td>
 <tr class="odd">
 <td align="left">1103353</td>
 <td align="left">Glenn</td>
-<td align="left">POLYGON Z ((6501679 2309168…</td>
+<td align="left">POLYGON ((6501679 2309168, …</td>
 <td align="left">1802010405</td>
 <td align="right">1.055052</td>
 <td align="right">0.4396049</td>
@@ -357,7 +371,7 @@ Valley based on levee locations</td>
 <tr class="even">
 <td align="left">1103425</td>
 <td align="left">Glenn</td>
-<td align="left">POLYGON Z ((6525986 2324730…</td>
+<td align="left">POLYGON ((6525986 2324730, …</td>
 <td align="left">1802010403</td>
 <td align="right">1.339829</td>
 <td align="right">0.5582621</td>
@@ -365,7 +379,7 @@ Valley based on levee locations</td>
 <tr class="odd">
 <td align="left">1103546</td>
 <td align="left">Glenn</td>
-<td align="left">POLYGON Z ((6535820 2277869…</td>
+<td align="left">POLYGON ((6535820 2277869, …</td>
 <td align="left">1802010403</td>
 <td align="right">48.900074</td>
 <td align="right">20.3750307</td>
@@ -626,23 +640,23 @@ Sacramento Valley.</p>
 <tbody>
 <tr class="odd">
 <td align="left">Dry</td>
-<td align="left">POLYGON Z ((6623854 2379216…</td>
+<td align="left">POLYGON ((6623854 2379216, …</td>
 </tr>
 <tr class="even">
 <td align="left">Dry</td>
-<td align="left">POLYGON Z ((6735708 2143171…</td>
+<td align="left">POLYGON ((6735708 2143171, …</td>
 </tr>
 <tr class="odd">
 <td align="left">Dry</td>
-<td align="left">POLYGON Z ((6645812 2284995…</td>
+<td align="left">POLYGON ((6645812 2284995, …</td>
 </tr>
 <tr class="even">
 <td align="left">Dry</td>
-<td align="left">POLYGON Z ((6674774 2180693…</td>
+<td align="left">POLYGON ((6674774 2180693, …</td>
 </tr>
 <tr class="odd">
 <td align="left">Dry</td>
-<td align="left">POLYGON Z ((6482270 2236010…</td>
+<td align="left">POLYGON ((6482270 2236010, …</td>
 </tr>
 </tbody>
 </table>
