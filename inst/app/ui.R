@@ -41,8 +41,8 @@ shinyUI(
           downloadButton("download_distances", "Rice Field Flow Distances", class="download_button"),
           downloadButton("download_watersheds", "Watersheds", class="download_button"),
           downloadButton("download_returns", "Return Points", class="download_button"),
-          downloadButton("download_streams", "Streams", class="download_button"),
-          downloadButton("download_canals", "Canals", class="download_button"),
+          downloadButton("download_streams", "Fish-bearing Streams", class="download_button"),
+          downloadButton("download_canals", "Secondary Canals", class="download_button"),
           downloadButton("download_wetdry", "Wet/Dry Sides", class="download_button")
           ),
     ),
