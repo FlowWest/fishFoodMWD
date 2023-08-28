@@ -46,6 +46,7 @@ div.leaflet-Watersheds-pane, div.leaflet-WetDry-pane {
   font-style: italic;
 }
 
+/*
 #download_buttons {
   background: white;
   padding: 1em;
@@ -56,7 +57,7 @@ div.leaflet-Watersheds-pane, div.leaflet-WetDry-pane {
   border: none;
   text-align: left;
   list-style-type: none;
-
+*/
 
 
 }

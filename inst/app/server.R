@@ -207,8 +207,4 @@ function(input, output, session){
   output$download_distances <- downloader(ff_distances, "fishFoodMWD_distances")
   output$download_wetdry <- downloader(ff_wetdry, "fishFoodMWD_wetdry")
 
-  observeEvent(input$showDownloads, {
-    shinyjs::toggle(id = "download_buttons")
-  })
-
 }
