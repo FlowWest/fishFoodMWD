@@ -6,7 +6,7 @@
 #' fishFoodMWD::run_app()
 #' @md
 #' @export
-runApp <- function() {
+run_app <- function() {
   appDir <- system.file("app", package = "fishFoodMWD")
   if (appDir == "") {
     stop("Could not find example directory. Try re-installing `fishFoodMWD`.", call. = FALSE)
