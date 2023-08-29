@@ -138,53 +138,30 @@ function(input, output, session){
   })
   observeEvent(input$field_map_groups, {
     proxy <- leaflet::leafletProxy("field_map") |>
-      clearControls() |>
-      # leaflet::addLegend("topright", pal = pal, values=ff_watersheds_gcs$return_category,
-      #                    title = "Watersheds<br />by return type",
-      #                    opacity = 1,
-      #                    layerId = "legend_watersheds",
-      #                    group = "watersheds") |>
-      leaflet::addLegend("topright",
-                         colors = c("#00688b", "#8b1a1a"),
-                         labels = c("Direct (fish-bearing stream)", "Indirect (secondary canal)"),
-                         title = "Return types",
-                         opacity = 1,
-                         layerId = "legend_return_type",
-                         group = "returns-canals-streams") |>
-      leaflet::addLegend("bottomright",
-                         pal = leaflet::colorFactor(palette = c("#57A0B9", "#C5686E", "#D9B679"),
-                                                    levels = c("Direct", "Indirect", "Lateral")),
-                         values=ff_fields_joined_gcs$return_category,
-                         title = "Rice fields<br />by return type",
-                         opacity = 1,
-                         layerId = "legend_return_fields",
-                         group = "fields",
-      )
-
+      leaflet::removeControl(layerId=c("legend_watersheds", "legend_wetdry"))
     if ("wetdry" %in% input$field_map_groups){
       proxy <- proxy |>
-        addLegend(
-          "bottomright",
-          colors = c("#D9B679", "#52A488"),
-          labels = c("Dry (behind levee)","Wet (active floodplain)"),
-          title = "Rice fields by<br />wet vs. dry sides",
-          opacity = 1,
-          layerId = "legend_fields",
-          group = "fields"
+        leaflet::removeControl(layerId="legend_watersheds") |>
+        addLegend("topright",
+                  colors = c("#FFE4B5", "#66CDAA"),
+                  labels = c("Dry (behind levee)","Wet (active floodplain)"),
+                  title = "Production area<br />wet vs. dry sides",
+                  opacity = 1,
+                  layerId = "legend_wetdry",
+                  group = "wetdry",
         )
-    }else(
+    } else if ("watersheds" %in% input$field_map_groups){
       proxy <- proxy |>
-        addLegend(
-          "topright",
-          pal = leaflet::colorFactor(palette = c("#ADD8E6", "#FFB6C1", "#FFE4B5"),
-                                                 levels = c("Direct", "Indirect", "Lateral")),
-          values=ff_watersheds_gcs$return_category,
-          title = "Watersheds<br />by return type",
-          opacity = 1,
-          layerId = "legend_watersheds",
-          group = "watersheds"
-
+        leaflet::removeControl(layerId="legend_wetdry") |>
+        addLegend("topright",
+                  pal = leaflet::colorFactor(palette = c("#ADD8E6", "#FFB6C1", "#FFE4B5"),
+                                             levels = c("Direct", "Indirect", "Lateral")),
+                  values=ff_watersheds_gcs$return_category,
+                  title = "Watersheds<br />by return type",
+                  opacity = 1,
+                  layerId = "legend_watersheds",
+                  group = "watersheds"
         )
-    )
+    }
   })
 }
