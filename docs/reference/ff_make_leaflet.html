@@ -44,6 +44,9 @@
       <a href="../articles/plot.html">Static Maps and Plots</a>
     </li>
   </ul></li>
+<li>
+  <a href="https://flowwest.shinyapps.io/fishFoodMWD/" class="external-link">Interactive Map and Data Download</a>
+</li>
       </ul><ul class="nav navbar-nav navbar-right"></ul></div><!--/.nav-collapse -->
   </div><!--/.container -->
 </div><!--/.navbar -->
@@ -80,8 +83,8 @@
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="co"># create and display leaflet object with a specified bounding box</span></span></span>
 <span class="r-in"><span><span class="va">bbox</span> <span class="op">&lt;-</span> <span class="fu">sf</span><span class="fu">::</span><span class="fu"><a href="https://r-spatial.github.io/sf/reference/st_bbox.html" class="external-link">st_bbox</a></span><span class="op">(</span><span class="va">ff_fields_gcs</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="fu">ff_make_leaflet</span><span class="op">(</span><span class="va">bbox</span><span class="op">)</span></span></span>
-<div id="htmlwidget-77f4aad177f6c19aea35" style="width:700px;height:432.632880098888px;" class="leaflet html-widget "></div>
-<script type="application/json" data-for="htmlwidget-77f4aad177f6c19aea35">{"x":{"options":{"crs":{"crsClass":"L.CRS.EPSG3857","code":null,"proj4def":null,"projectedBounds":null,"options":{}}},"calls":[{"method":"createMapPane","args":["Basemap",400]},{"method":"createMapPane","args":["Watersheds",440]},{"method":"createMapPane","args":["WetDry",450]},{"method":"createMapPane","args":["Fields",460]},{"method":"createMapPane","args":["Flowlines",470]},{"method":"createMapPane","args":["Returns",480]},{"method":"addProviderTiles","args":["Stamen.Terrain",null,null,{"errorTileUrl":"","noWrap":true,"opacity":0.5,"detectRetina":false,"pane":"Basemap"}]},{"method":"addLegend","args":[{"colors":["#00688b","#8b1a1a"],"labels":["Direct (fish-bearing stream)","Indirect (secondary canal)"],"na_color":null,"na_label":"NA","opacity":1,"position":"topright","type":"unknown","title":"Return types","extra":null,"layerId":"legend_return_type","className":"info legend","group":"returns-canals-streams"}]}],"fitBounds":[38.48705706493934,-122.2948292723069,39.70571539558571,-121.2950906223232,[]]},"evals":[],"jsHooks":[]}</script><span class="r-in"><span></span></span>
+<div id="htmlwidget-69b05bef4a9749a97cb8" style="width:700px;height:432.632880098888px;" class="leaflet html-widget "></div>
+<script type="application/json" data-for="htmlwidget-69b05bef4a9749a97cb8">{"x":{"options":{"crs":{"crsClass":"L.CRS.EPSG3857","code":null,"proj4def":null,"projectedBounds":null,"options":{}}},"calls":[{"method":"createMapPane","args":["Basemap",400]},{"method":"createMapPane","args":["Watersheds",440]},{"method":"createMapPane","args":["WetDry",450]},{"method":"createMapPane","args":["Fields",460]},{"method":"createMapPane","args":["Flowlines",470]},{"method":"createMapPane","args":["Returns",480]},{"method":"addProviderTiles","args":["Stamen.Terrain",null,null,{"errorTileUrl":"","noWrap":true,"opacity":0.5,"detectRetina":false,"pane":"Basemap"}]},{"method":"addLegend","args":[{"colors":["#00688b","#8b1a1a"],"labels":["Direct (fish-bearing stream)","Indirect (secondary canal)"],"na_color":null,"na_label":"NA","opacity":1,"position":"topright","type":"unknown","title":"Return types","extra":null,"layerId":"legend_return_type","className":"info legend","group":"returns-canals-streams"}]}],"fitBounds":[38.48705706493934,-122.2948292723069,39.70571539558571,-121.2950906223232,[]]},"evals":[],"jsHooks":[]}</script><span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># create the leaflet map for a Shiny app</span></span></span>
 <span class="r-in"><span><span class="kw">if</span><span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span><span class="op">{</span></span></span>
 <span class="r-in"><span>  <span class="va">output</span><span class="op">$</span><span class="va">mainMap</span> <span class="op">&lt;-</span> <span class="fu">leaflet</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/leaflet/man/map-shiny.html" class="external-link">renderLeaflet</a></span><span class="op">(</span><span class="op">{</span></span></span>
@@ -99,7 +102,7 @@
 
 
       <footer><div class="copyright">
-  <p></p><p>Developed by Contact Info.</p>
+  <p></p><p>Developed by Lewis Skyler, Peng Inigo.</p>
 </div>
 
 <div class="pkgdown">
