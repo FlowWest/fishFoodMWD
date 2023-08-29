@@ -1,4 +1,5 @@
 function(input, output, session){
+
   # using a reactive ID option
   selected_point <- reactiveValues(object_id = NULL,
                                    return_point_id = NULL,
@@ -9,9 +10,9 @@ function(input, output, session){
   observeEvent(input$field_map_shape_click, {
     if (!is.null(input$field_map_shape_click$id)) {
 
+      shinyjs::showElement(id = 'reset_guidance')
+
       click_type <- substr(input$field_map_shape_click$id, 1, 1)
-      selected_point$long = input$field_map_shape_click$lng
-      selected_point$lat = input$field_map_shape_click$lat
 
       if(click_type == 'F') { # Fields
 
@@ -22,6 +23,8 @@ function(input, output, session){
         selected_point$object_id <- input$field_map_shape_click$id
         selected_point$group_id <- val$group_id
         selected_point$return_point_id <- val$return_id
+        selected_point$long = input$field_map_shape_click$lng
+        selected_point$lat = input$field_map_shape_click$lat
 
       } else if(click_type == 'W') { # Watersheds
 
@@ -32,6 +35,8 @@ function(input, output, session){
         selected_point$object_id <- NULL
         selected_point$group_id <- val$group_id
         selected_point$return_point_id <- val$return_id
+        selected_point$long = input$field_map_shape_click$lng
+        selected_point$lat = input$field_map_shape_click$lat
 
       }
     }
@@ -40,9 +45,9 @@ function(input, output, session){
   observeEvent(input$field_map_marker_click, {
     if (!is.null(input$field_map_marker_click$id)) {
 
+      shinyjs::showElement(id = 'reset_guidance')
+
       click_type <- substr(input$field_map_marker_click$id, 1, 1)
-      selected_point$long = input$field_map_marker_click$lng
-      selected_point$lat = input$field_map_marker_click$lat
 
       if(click_type == 'R') { # Return points
 
@@ -53,19 +58,59 @@ function(input, output, session){
         selected_point$object_id <- NULL
         selected_point$group_id <- NULL
         selected_point$return_point_id <- val$return_id
+        selected_point$long = input$field_map_marker_click$lng
+        selected_point$lat = input$field_map_marker_click$lat
 
       }
     }
   })
 
-  # reset the map
-  observeEvent(input$resetButton, {
+  reset_filters <- function() {
     shinyjs::showElement(id = 'loading')
     selected_point$object_id <- NULL
     selected_point$group_id <- NULL
     selected_point$return_point_id <- NULL
     selected_point$long <- NULL
     selected_point$lat <- NULL
+    shinyjs::hideElement(id = 'reset_guidance')
+  }
+
+  observeEvent(input$field_map_click, {
+
+    if (!is.null(selected_point)) {
+      field_map_shape_click_info <- input$field_map_shape_click
+      field_map_marker_click_info <- input$field_map_marker_click
+      field_map_click_info <- input$field_map_click
+      if (is.null(field_map_shape_click_info) & is.null(field_map_marker_click_info)) {
+        #cat("shape is null and marker is null")
+        reset_filters()
+      } else if ( is.null(field_map_marker_click_info) &
+                  (!all(unlist(field_map_shape_click_info[c('lat','lng')]) ==
+                       unlist(field_map_click_info[c('lat','lng')])))
+                  ) {
+        #cat("marker is null and click doesn't match last shape")
+        reset_filters()
+      } else if ( is.null(field_map_shape_click_info) &
+                  (!all(unlist(field_map_marker_click_info[c('lat','lng')]) ==
+                       unlist(field_map_click_info[c('lat','lng')])))
+                  ) {
+        #cat("shape is null and click doesn't match last marker")
+        reset_filters()
+      } else if ((!all(unlist(field_map_shape_click_info[c('lat','lng')]) ==
+                      unlist(field_map_click_info[c('lat','lng')]))) &
+                 (!all(unlist(field_map_marker_click_info[c('lat','lng')]) ==
+                      unlist(field_map_click_info[c('lat','lng')])))
+        ) {
+        #cat("click doesn't match last marker or shape")
+        reset_filters()
+      }
+    }
+
+  })
+
+  # reset the map
+  observeEvent(input$resetButton, {
+    reset_filters()
     proxy <- leaflet::leafletProxy("field_map")
     proxy |>
       leaflet::fitBounds(lng1 = -122.3,
@@ -74,7 +119,6 @@ function(input, output, session){
                          lat2 = 39.7)
 
   })
-
 
   output$field_map <- renderLeaflet({
     # shinyjs::showElement(id = 'loading_action')
@@ -136,6 +180,7 @@ function(input, output, session){
     }
 
   })
+
   observeEvent(input$field_map_groups, {
     proxy <- leaflet::leafletProxy("field_map") |>
       leaflet::removeControl(layerId=c("legend_watersheds", "legend_wetdry"))
@@ -164,4 +209,36 @@ function(input, output, session){
         )
     }
   })
+
+  downloader <- function(dataset, basename) {
+    dh <- downloadHandler(
+      filename = paste0(basename,".zip"),
+      content = function(file) {
+        if (length(Sys.glob(paste0(basename,".*"))>0)){
+          file.remove(Sys.glob(paste0(basename,".*")))
+        }
+        if ("sf" %in% class(dataset)){
+          sf::st_write(dataset, dsn=paste0(basename,".shp"), layer=basename, driver="ESRI Shapefile", overwrite_layer = T)
+          readr::write_excel_csv(dataset |> sf::st_drop_geometry(), paste0(basename,".csv"))
+        } else if ("data.frame" %in% class(dataset)) {
+          readr::write_excel_csv(dataset, paste0(basename,".csv"))
+        }
+        zip::zip(zipfile=paste0(basename,".zip"),
+                 files=Sys.glob(paste0(basename,".*")))
+        file.copy(paste0(basename,".zip"), file)
+        if (length(Sys.glob(paste0(basename,".*")))>0){
+          file.remove(Sys.glob(paste0(basename,".*")))
+        }}
+    )
+    return(dh)
+  }
+
+  output$download_streams <- downloader(ff_streams, "fishFoodMWD_streams")
+  output$download_fields <- downloader(ff_fields, "fishFoodMWD_fields")
+  output$download_watersheds <- downloader(ff_watersheds, "fishFoodMWD_watersheds")
+  output$download_canals <- downloader(ff_canals, "fishFoodMWD_canals")
+  output$download_returns <- downloader(ff_returns, "fishFoodMWD_returns")
+  output$download_distances <- downloader(ff_distances, "fishFoodMWD_distances")
+  output$download_wetdry <- downloader(ff_wetdry, "fishFoodMWD_wetdry")
+
 }
