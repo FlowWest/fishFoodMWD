@@ -5,7 +5,7 @@
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Sacramento Valley Rice Field Prioritization for Salmonid Rearing • fishFoodMWD</title>
+<title>Fish Food: Sacramento Valley Rice Field Prioritization for Salmonid Rearing • fishFoodMWD</title>
 <!-- favicons --><link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
 <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
 <link rel="apple-touch-icon" type="image/png" sizes="180x180" href="apple-touch-icon.png">
@@ -17,9 +17,12 @@
 <script src="bootstrap-toc.js"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous">
 <!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- pkgdown --><link href="pkgdown.css" rel="stylesheet">
-<script src="pkgdown.js"></script><meta property="og:title" content="Sacramento Valley Rice Field Prioritization for Salmonid Rearing">
-<meta property="og:description" content="More about what it does (maybe more than one line)
-    Use four spaces when indenting paragraphs within the Description.">
+<script src="pkgdown.js"></script><meta property="og:title" content="Fish Food: Sacramento Valley Rice Field Prioritization for Salmonid Rearing">
+<meta property="og:description" content="Provides access to a spatial dataset describing the Sacramento Valley 
+    rice field drainage system and potential for salmonid rearing on rice fields. 
+    Datasets include calculated drainage system characteristics influencing suitability 
+    for fish food production and/or delivery. The package also provides calculation 
+    and plotting functions and an interactive map. ">
 <meta property="og:image" content="/logo.png">
 <!-- mathjax --><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script><!--[if lt IE 9]>
 <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
@@ -71,6 +74,9 @@
     </li>
   </ul>
 </li>
+<li>
+  <a href="https://flowwest.shinyapps.io/fishFoodMWD/" class="external-link">Interactive Map and Data Download</a>
+</li>
       </ul>
 <ul class="nav navbar-nav navbar-right"></ul>
 </div>
@@ -99,7 +105,7 @@
 <li>distance from rice fields to their flow delivery site and the nearest fish-bearing stream</li>
 <li>estimated invertebrate food mass production based on rice field acreage</li>
 </ul>
-<p>The R package <strong>fishFoodMWD</strong>, and this accompanying website, provides access to the resulting spatial database. Results, including the distances and relationships between rice fields and their connected canals and rivers, can be explored and filtered using the <a href="link-to-map"><strong>interactive map</strong></a> on this website. The datasets and accompanying plotting and calculation functions can be accessed directly by installing the R package. Datasets are also available in standard GIS (shapefile) format.</p>
+<p>The R package <strong>fishFoodMWD</strong>, and this accompanying website, provides access to the resulting spatial database. Results, including the distances and relationships between rice fields and their connected canals and rivers, can be explored and filtered using the <a href="https://flowwest.shinyapps.io/fishFoodMWD" class="external-link"><strong>interactive map</strong></a> on this website. The datasets and accompanying plotting and calculation functions can be accessed directly by installing the R package. Datasets are also available in standard GIS (shapefile) format.</p>
 </div>
 <div class="section level1">
 <h1 id="installation">Installation<a class="anchor" aria-label="anchor" href="#installation"></a>
@@ -133,7 +139,8 @@
     <div class="license">
 <h2 data-toc-skip>License</h2>
 <ul class="list-unstyled">
-<li>What license is it under?</li>
+<li><a href="LICENSE.html">Full license</a></li>
+<li><small><a href="https://opensource.org/licenses/mit-license.php" class="external-link">MIT</a> + file <a href="LICENSE-text.html">LICENSE</a></small></li>
 </ul>
 </div>
 
@@ -148,7 +155,8 @@
 <div class="developers">
 <h2 data-toc-skip>Developers</h2>
 <ul class="list-unstyled">
-<li>Contact Info <br><small class="roles"> Maintainer </small>  </li>
+<li>Lewis Skyler <br><small class="roles"> Author, maintainer </small>  </li>
+<li>Peng Inigo <br><small class="roles"> Author </small>  </li>
 </ul>
 </div>
 
@@ -160,7 +168,7 @@
 
       <footer><div class="copyright">
   <p></p>
-<p>Developed by Contact Info.</p>
+<p>Developed by Lewis Skyler, Peng Inigo.</p>
 </div>
 
 <div class="pkgdown">

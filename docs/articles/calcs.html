@@ -6,6 +6,12 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Calculation Functions • fishFoodMWD</title>
+<!-- favicons --><link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="../favicon-32x32.png">
+<link rel="apple-touch-icon" type="image/png" sizes="180x180" href="../apple-touch-icon.png">
+<link rel="apple-touch-icon" type="image/png" sizes="120x120" href="../apple-touch-icon-120x120.png">
+<link rel="apple-touch-icon" type="image/png" sizes="76x76" href="../apple-touch-icon-76x76.png">
+<link rel="apple-touch-icon" type="image/png" sizes="60x60" href="../apple-touch-icon-60x60.png">
 <!-- jquery --><script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script><!-- Bootstrap --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/css/bootstrap.min.css" integrity="sha256-bZLfwXAP04zRMK2BjiO8iu9pf4FbLqX6zitd+tIvLhE=" crossorigin="anonymous">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/js/bootstrap.min.js" integrity="sha256-nuL8/2cJ5NDSSwnKD8VqreErSWHtnEP9E7AySL+1ev4=" crossorigin="anonymous"></script><!-- bootstrap-toc --><link rel="stylesheet" href="../bootstrap-toc.css">
 <script src="../bootstrap-toc.js"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous">
@@ -13,6 +19,7 @@
 <!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- pkgdown --><link href="../pkgdown.css" rel="stylesheet">
 <script src="../pkgdown.js"></script><meta property="og:title" content="Calculation Functions">
 <meta property="og:description" content="fishFoodMWD">
+<meta property="og:image" content="/logo.png">
 <!-- mathjax --><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script><!--[if lt IE 9]>
 <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
 <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
@@ -63,6 +70,9 @@
     </li>
   </ul>
 </li>
+<li>
+  <a href="https://flowwest.shinyapps.io/fishFoodMWD/" class="external-link">Interactive Map and Data Download</a>
+</li>
       </ul>
 <ul class="nav navbar-nav navbar-right"></ul>
 </div>
@@ -80,7 +90,7 @@
       <h1 data-toc-skip>Calculation Functions</h1>
                         <h4 data-toc-skip class="author">FlowWest</h4>
             
-            <h4 data-toc-skip class="date">2023-08-17</h4>
+            <h4 data-toc-skip class="date">2023-08-29</h4>
       
       
       <div class="hidden name"><code>calcs.Rmd</code></div>
@@ -128,7 +138,7 @@ for this function.</p>
 <tr class="odd">
 <td align="left">1103539</td>
 <td align="left">Glenn</td>
-<td align="left">POLYGON Z ((6526707 2289953…</td>
+<td align="left">POLYGON ((6526707 2289953, …</td>
 <td align="left">1802010405</td>
 <td align="right">23.428379</td>
 <td align="right">9.7618244</td>
@@ -136,7 +146,7 @@ for this function.</p>
 <tr class="even">
 <td align="left">1102849</td>
 <td align="left">Glenn</td>
-<td align="left">POLYGON Z ((6517766 2307611…</td>
+<td align="left">POLYGON ((6517766 2307611, …</td>
 <td align="left">1802010405</td>
 <td align="right">23.476331</td>
 <td align="right">9.7818048</td>
@@ -144,7 +154,7 @@ for this function.</p>
 <tr class="odd">
 <td align="left">1103353</td>
 <td align="left">Glenn</td>
-<td align="left">POLYGON Z ((6501679 2309168…</td>
+<td align="left">POLYGON ((6501679 2309168, …</td>
 <td align="left">1802010405</td>
 <td align="right">1.055052</td>
 <td align="right">0.4396049</td>
@@ -152,7 +162,7 @@ for this function.</p>
 <tr class="even">
 <td align="left">1103425</td>
 <td align="left">Glenn</td>
-<td align="left">POLYGON Z ((6525986 2324730…</td>
+<td align="left">POLYGON ((6525986 2324730, …</td>
 <td align="left">1802010403</td>
 <td align="right">1.339829</td>
 <td align="right">0.5582621</td>
@@ -160,7 +170,7 @@ for this function.</p>
 <tr class="odd">
 <td align="left">1103546</td>
 <td align="left">Glenn</td>
-<td align="left">POLYGON Z ((6535820 2277869…</td>
+<td align="left">POLYGON ((6535820 2277869, …</td>
 <td align="left">1802010403</td>
 <td align="right">48.900074</td>
 <td align="right">20.3750307</td>
@@ -206,7 +216,7 @@ days provided</li>
 <tr class="odd">
 <td align="left">1103539</td>
 <td align="left">Glenn</td>
-<td align="left">POLYGON Z ((6526707 2289953…</td>
+<td align="left">POLYGON ((6526707 2289953, …</td>
 <td align="left">1802010405</td>
 <td align="right">23.428379</td>
 <td align="right">9.7618244</td>
@@ -217,7 +227,7 @@ days provided</li>
 <tr class="even">
 <td align="left">1102849</td>
 <td align="left">Glenn</td>
-<td align="left">POLYGON Z ((6517766 2307611…</td>
+<td align="left">POLYGON ((6517766 2307611, …</td>
 <td align="left">1802010405</td>
 <td align="right">23.476331</td>
 <td align="right">9.7818048</td>
@@ -228,7 +238,7 @@ days provided</li>
 <tr class="odd">
 <td align="left">1103353</td>
 <td align="left">Glenn</td>
-<td align="left">POLYGON Z ((6501679 2309168…</td>
+<td align="left">POLYGON ((6501679 2309168, …</td>
 <td align="left">1802010405</td>
 <td align="right">1.055052</td>
 <td align="right">0.4396049</td>
@@ -239,7 +249,7 @@ days provided</li>
 <tr class="even">
 <td align="left">1103425</td>
 <td align="left">Glenn</td>
-<td align="left">POLYGON Z ((6525986 2324730…</td>
+<td align="left">POLYGON ((6525986 2324730, …</td>
 <td align="left">1802010403</td>
 <td align="right">1.339829</td>
 <td align="right">0.5582621</td>
@@ -250,7 +260,7 @@ days provided</li>
 <tr class="odd">
 <td align="left">1103546</td>
 <td align="left">Glenn</td>
-<td align="left">POLYGON Z ((6535820 2277869…</td>
+<td align="left">POLYGON ((6535820 2277869, …</td>
 <td align="left">1802010403</td>
 <td align="right">48.900074</td>
 <td align="right">20.3750307</td>
@@ -357,10 +367,10 @@ biomass over time for a selected number of days. This returns a simple
 <p>…which can be pivoted as so if needed…</p>
 <pre><code><span><span class="fu"><a href="../reference/ff_calc_inv_mass_ts.html">ff_calc_inv_mass_ts</a></span><span class="op">(</span><span class="va">ff_fields</span>, <span class="fl">7</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
 <span>  <span class="fu">pivot_wider</span><span class="op">(</span>names_from <span class="op">=</span> <span class="va">day</span>, values_from <span class="op">=</span> <span class="va">total_prod_kg</span>, names_prefix <span class="op">=</span> <span class="st">"day_"</span><span class="op">)</span></span></code></pre>
-<table style="width:100%;" class="table">
+<table class="table">
 <colgroup>
-<col width="13%">
-<col width="13%">
+<col width="11%">
+<col width="12%">
 <col width="12%">
 <col width="12%">
 <col width="12%">
@@ -370,114 +380,114 @@ biomass over time for a selected number of days. This returns a simple
 </colgroup>
 <thead><tr class="header">
 <th align="left">unique_id</th>
-<th align="left">day_1</th>
-<th align="left">day_2</th>
-<th align="left">day_3</th>
-<th align="left">day_4</th>
-<th align="left">day_5</th>
-<th align="left">day_6</th>
-<th align="left">day_7</th>
+<th align="right">day_1</th>
+<th align="right">day_2</th>
+<th align="right">day_3</th>
+<th align="right">day_4</th>
+<th align="right">day_5</th>
+<th align="right">day_6</th>
+<th align="right">day_7</th>
 </tr></thead>
 <tbody>
 <tr class="odd">
 <td align="left">1103539</td>
-<td align="left">17.63552</td>
-<td align="left">35.27105</td>
-<td align="left">52.90657</td>
-<td align="left">70.5421</td>
-<td align="left">88.17762</td>
-<td align="left">105.8131</td>
-<td align="left">123.4487</td>
+<td align="right">17.6355246</td>
+<td align="right">35.271049</td>
+<td align="right">52.906574</td>
+<td align="right">70.542098</td>
+<td align="right">88.177623</td>
+<td align="right">105.813148</td>
+<td align="right">123.448672</td>
 </tr>
 <tr class="even">
 <td align="left">1102849</td>
-<td align="left">17.67162</td>
-<td align="left">35.34324</td>
-<td align="left">53.01486</td>
-<td align="left">70.68648</td>
-<td align="left">88.3581</td>
-<td align="left">106.0297</td>
-<td align="left">123.7013</td>
+<td align="right">17.6716207</td>
+<td align="right">35.343241</td>
+<td align="right">53.014862</td>
+<td align="right">70.686483</td>
+<td align="right">88.358103</td>
+<td align="right">106.029724</td>
+<td align="right">123.701345</td>
 </tr>
 <tr class="odd">
 <td align="left">1103353</td>
-<td align="left">0.7941817</td>
-<td align="left">1.588363</td>
-<td align="left">2.382545</td>
-<td align="left">3.176727</td>
-<td align="left">3.970908</td>
-<td align="left">4.76509</td>
-<td align="left">5.559272</td>
+<td align="right">0.7941817</td>
+<td align="right">1.588363</td>
+<td align="right">2.382545</td>
+<td align="right">3.176727</td>
+<td align="right">3.970909</td>
+<td align="right">4.765090</td>
+<td align="right">5.559272</td>
 </tr>
 <tr class="even">
 <td align="left">1103425</td>
-<td align="left">1.008546</td>
-<td align="left">2.017091</td>
-<td align="left">3.025637</td>
-<td align="left">4.034182</td>
-<td align="left">5.042728</td>
-<td align="left">6.051273</td>
-<td align="left">7.059819</td>
+<td align="right">1.0085455</td>
+<td align="right">2.017091</td>
+<td align="right">3.025637</td>
+<td align="right">4.034182</td>
+<td align="right">5.042727</td>
+<td align="right">6.051273</td>
+<td align="right">7.059819</td>
 </tr>
 <tr class="odd">
 <td align="left">1103546</td>
-<td align="left">36.80914</td>
-<td align="left">73.61828</td>
-<td align="left">110.4274</td>
-<td align="left">147.2366</td>
-<td align="left">184.0457</td>
-<td align="left">220.8548</td>
-<td align="left">257.664</td>
+<td align="right">36.8091393</td>
+<td align="right">73.618279</td>
+<td align="right">110.427418</td>
+<td align="right">147.236557</td>
+<td align="right">184.045696</td>
+<td align="right">220.854836</td>
+<td align="right">257.663975</td>
 </tr>
 <tr class="even">
 <td align="left">1103560</td>
-<td align="left">11.33543</td>
-<td align="left">22.67086</td>
-<td align="left">34.0063</td>
-<td align="left">45.34173</td>
-<td align="left">56.67716</td>
-<td align="left">68.01259</td>
-<td align="left">79.34803</td>
+<td align="right">11.3354323</td>
+<td align="right">22.670865</td>
+<td align="right">34.006297</td>
+<td align="right">45.341729</td>
+<td align="right">56.677162</td>
+<td align="right">68.012594</td>
+<td align="right">79.348026</td>
 </tr>
 <tr class="odd">
 <td align="left">1103561</td>
-<td align="left">26.14119</td>
-<td align="left">52.28237</td>
-<td align="left">78.42356</td>
-<td align="left">104.5647</td>
-<td align="left">130.7059</td>
-<td align="left">156.8471</td>
-<td align="left">182.9883</td>
+<td align="right">26.1411859</td>
+<td align="right">52.282372</td>
+<td align="right">78.423558</td>
+<td align="right">104.564743</td>
+<td align="right">130.705929</td>
+<td align="right">156.847115</td>
+<td align="right">182.988301</td>
 </tr>
 <tr class="even">
 <td align="left">1103563</td>
-<td align="left">18.70691</td>
-<td align="left">37.41383</td>
-<td align="left">56.12074</td>
-<td align="left">74.82766</td>
-<td align="left">93.53457</td>
-<td align="left">112.2415</td>
-<td align="left">130.9484</td>
+<td align="right">18.7069138</td>
+<td align="right">37.413828</td>
+<td align="right">56.120742</td>
+<td align="right">74.827655</td>
+<td align="right">93.534569</td>
+<td align="right">112.241483</td>
+<td align="right">130.948397</td>
 </tr>
 <tr class="odd">
 <td align="left">1103564</td>
-<td align="left">56.21662</td>
-<td align="left">112.4332</td>
-<td align="left">168.6498</td>
-<td align="left">224.8665</td>
-<td align="left">281.0831</td>
-<td align="left">337.2997</td>
-<td align="left">393.5163</td>
+<td align="right">56.2166164</td>
+<td align="right">112.433233</td>
+<td align="right">168.649849</td>
+<td align="right">224.866466</td>
+<td align="right">281.083082</td>
+<td align="right">337.299698</td>
+<td align="right">393.516315</td>
 </tr>
 <tr class="even">
 <td align="left">1103566</td>
-<td align="left">42.17843</td>
-<td align="left">84.35685</td>
-<td align="left">126.5353</td>
-<td align="left">168.7137</td>
-<td align="left">210.8921</td>
-<td align="left">253.0706</td>
-<td align="left">295.249</td>
+<td align="right">42.1784267</td>
+<td align="right">84.356853</td>
+<td align="right">126.535280</td>
+<td align="right">168.713707</td>
+<td align="right">210.892133</td>
+<td align="right">253.070560</td>
+<td align="right">295.248987</td>
 </tr>
 </tbody>
 </table>
@@ -512,7 +522,7 @@ pp. 875-883. <a href="http://doi.org/10.1672/07-169.1" class="external-link">do
 
       <footer><div class="copyright">
   <p></p>
-<p>Developed by Contact Info.</p>
+<p>Developed by Lewis Skyler, Peng Inigo.</p>
 </div>
 
 <div class="pkgdown">
