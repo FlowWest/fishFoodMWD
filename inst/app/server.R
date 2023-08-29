@@ -124,7 +124,18 @@ function(input, output, session){
     # shinyjs::showElement(id = 'loading_action')
     ff_make_leaflet() |>
       ff_layer_streams() |>
-      ff_layer_canals()
+      ff_layer_canals() |>
+      ff_layer_wetdry() |>
+      leaflet::addLayersControl(baseGroups = c("watersheds", "wetdry", "none"),
+                                                             overlayGroups = c("fields", "returns-canals-streams"),
+                                                             position = "bottomleft",
+                                                             options = leaflet::layersControlOptions(collapsed = FALSE)) |>
+      htmlwidgets::onRender("
+                              function() {
+                                  $('.leaflet-control-layers-base').prepend('<label>Select a Base Layer</label>');
+                                  $('.leaflet-control-layers-overlays').prepend('<label>Show/Hide Overlays</label>');
+                              }
+                              ")
   })
 
   measure_data <- eventReactive(input$runButton, {
@@ -148,7 +159,6 @@ function(input, output, session){
                         selected_group = selected_point$group_id,
                         selected_return = selected_point$return_point_id,
                         measure = input$calculationButton) |>
-        leaflet::addLayersControl(overlayGroups = c("watersheds", "fields"), position = "topleft") |>
         leaflet::setView(lng = selected_point$long, lat = selected_point$lat, zoom = 11) |>
         leaflet.extras2::stopSpinner()
       shinyjs::hideElement(id = 'loading_radio')
@@ -174,6 +184,39 @@ function(input, output, session){
       shinyjs::hideElement(id = 'loading_radio')
     }
 
+  })
+
+  observeEvent(input$field_map_groups, {
+    proxy <- leaflet::leafletProxy("field_map") |>
+      leaflet::removeControl(layerId=c("legend_watersheds", "legend_wetdry"))
+    if ("wetdry" %in% input$field_map_groups){
+      proxy <- proxy |>
+        leaflet::removeControl(layerId="legend_watersheds") |>
+        addLegend("topright",
+                  colors = c("#FFE4B5", "#66CDAA"),
+                  labels = c("Dry (behind levee)","Wet (active floodplain)"),
+                  title = "Production area<br />wet vs. dry sides",
+                  opacity = 1,
+                  layerId = "legend_wetdry",
+                  group = "wetdry"
+        )
+    } else if ("watersheds" %in% input$field_map_groups){
+      proxy <- proxy |>
+        leaflet::removeControl(layerId="legend_wetdry") |>
+        addLegend("topright",
+                  pal = leaflet::colorFactor(palette = c("#ADD8E6", "#FFB6C1", "#FFE4B5"),
+                                             levels = c("Direct", "Indirect", "Lateral")),
+                  values=ff_watersheds_gcs$return_category,
+                  title = "Watersheds<br />by return type",
+                  opacity = 1,
+                  layerId = "legend_watersheds",
+                  group = "watersheds"
+        )
+    }else{
+      proxy <- proxy |>
+        leaflet::removeControl(layerId="legend_wetdry") |>
+        leaflet::removeControl(layerId="legend_watersheds")
+    }
   })
 
   downloader <- function(dataset, basename) {
