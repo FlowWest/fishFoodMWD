@@ -126,7 +126,7 @@ function(input, output, session){
       ff_layer_streams() |>
       ff_layer_canals() |>
       ff_layer_wetdry() |>
-      leaflet::addLayersControl(baseGroups = c("watersheds", "wetdry"),
+      leaflet::addLayersControl(baseGroups = c("watersheds", "wetdry", "none"),
                                                              overlayGroups = c("fields", "returns-canals-streams"),
                                                              position = "bottomleft",
                                                              options = leaflet::layersControlOptions(collapsed = FALSE)) |>
@@ -198,7 +198,7 @@ function(input, output, session){
                   title = "Production area<br />wet vs. dry sides",
                   opacity = 1,
                   layerId = "legend_wetdry",
-                  group = "wetdry",
+                  group = "wetdry"
         )
     } else if ("watersheds" %in% input$field_map_groups){
       proxy <- proxy |>
@@ -212,6 +212,10 @@ function(input, output, session){
                   layerId = "legend_watersheds",
                   group = "watersheds"
         )
+    }else{
+      proxy <- proxy |>
+        leaflet::removeControl(layerId="legend_wetdry") |>
+        leaflet::removeControl(layerId="legend_watersheds")
     }
   })
 
