@@ -153,7 +153,6 @@ function(input, output, session){
                                   overlayGroups = c("fields", "returns-canals-streams"),
                                   position = "bottomleft",
                                   options = leaflet::layersControlOptions(collapsed = FALSE)) |>
-        leaflet::hideGroup("wetdry") |>
         leaflet::setView(lng = selected_point$long, lat = selected_point$lat, zoom = 11) |>
         leaflet.extras2::stopSpinner()
       shinyjs::hideElement(id = 'loading_radio')
