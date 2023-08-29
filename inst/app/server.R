@@ -132,7 +132,7 @@ function(input, output, session){
                                                              options = leaflet::layersControlOptions(collapsed = FALSE)) |>
       htmlwidgets::onRender("
                               function() {
-                                  $('.leaflet-control-layers-base').prepend('<label>Show/Hide Base Layers</label>');
+                                  $('.leaflet-control-layers-base').prepend('<label>Select a Base Layer</label>');
                                   $('.leaflet-control-layers-overlays').prepend('<label>Show/Hide Overlays</label>');
                               }
                               ")
