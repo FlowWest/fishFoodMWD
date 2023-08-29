@@ -59,5 +59,11 @@ div.leaflet-Watersheds-pane, div.leaflet-WetDry-pane {
   list-style-type: none;
 */
 
+.leaflet-control-layers-base > label:not(:first-child)  {
+  font-weight: normal;
+}
+.leaflet-control-layers-overlays > label:not(:first-child)  {
+  font-weight: normal;
+}
 
 }
