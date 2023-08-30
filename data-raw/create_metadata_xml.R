@@ -50,14 +50,14 @@ create_metadata_xml <- function(output_xml, title_text, summary_text, descriptio
 
 common_tags <- c("Sacramento Valley", "rice field", "salmonid", "habitat")
 
-create_metadata_xml(output_xml = "data-raw/xml/fishFoodMWD_distances.xml",
+create_metadata_xml(output_xml = "inst/app/xml/fishFoodMWD_distances.csv.xml",
                     title_text = "Rice field distance attributes",
                     summary_text = "Results of the FlowWest analysis of flow distances to the nearest fish-bearing stream. Intended to be joined to the fields dataset.",
                     tags = c(common_tags, "distance"),
                     credits = "FlowWest",
                     )
 
-create_metadata_xml(output_xml = "data-raw/xml/fishFoodMWD_fields.xml",
+create_metadata_xml(output_xml = "inst/app/xml/fishFoodMWD_fields.shp.xml",
                     title_text = "Rice field geometries",
                     summary_text = "Polygon geometries of rice fields based on crop mapping from YYYY.",
                     tags = c(common_tags, "crops"),
@@ -65,7 +65,7 @@ create_metadata_xml(output_xml = "data-raw/xml/fishFoodMWD_fields.xml",
                     sf_df = fishFoodMWD::ff_fields,
 )
 
-create_metadata_xml(output_xml = "data-raw/xml/fishFoodMWD_watersheds.xml",
+create_metadata_xml(output_xml = "inst/app/xml/fishFoodMWD_watersheds.shp.xml",
                     title_text = "Watershed polygons used to group rice fields and organize flow patterns. Based on HUC10 watersheds, but split in some cases where necessary.",
                     summary_text = "hello",
                     tags = c(common_tags, "watersheds", "huc10", "groups"),
@@ -73,7 +73,7 @@ create_metadata_xml(output_xml = "data-raw/xml/fishFoodMWD_watersheds.xml",
                     sf_df = fishFoodMWD::ff_watersheds,
 )
 
-create_metadata_xml(output_xml = "data-raw/xml/fishFoodMWD_returns.xml",
+create_metadata_xml(output_xml = "inst/app/xml/fishFoodMWD_returns.shp.xml",
                     title_text = "Return points",
                     summary_text = "Point locations of outlets for return flow from rice field drainage networks into adjacent canals or streams.",
                     tags = c(common_tags, "outlets", "outfalls", "returns", "confluence"),
@@ -81,7 +81,7 @@ create_metadata_xml(output_xml = "data-raw/xml/fishFoodMWD_returns.xml",
                     sf_df = fishFoodMWD::ff_returns,
 )
 
-create_metadata_xml(output_xml = "data-raw/xml/fishFoodMWD_streams.xml",
+create_metadata_xml(output_xml = "inst/app/xml/fishFoodMWD_streams.shp.xml",
                     title_text = "Fish-bearing streams",
                     summary_text = "Supplementary geometry layer containing the fish-bearing streams. Used to calculate flow distances.",
                     tags = c(common_tags, "flowlines", "streams", "rivers", "rearing"),
@@ -89,7 +89,7 @@ create_metadata_xml(output_xml = "data-raw/xml/fishFoodMWD_streams.xml",
                     sf_df = fishFoodMWD::ff_streams,
 )
 
-create_metadata_xml(output_xml = "data-raw/xml/fishFoodMWD_canals.xml",
+create_metadata_xml(output_xml = "inst/app/xml/fishFoodMWD_canals.shp.xml",
                     title_text = "Secondary canals",
                     summary_text = "Non-fish-bearing streams and canals that connect indirect return points to fish-bearing streams. Used to calculate flow distances.",
                     tags = c(common_tags, "flowlines", "streams", "canals"),
@@ -97,7 +97,7 @@ create_metadata_xml(output_xml = "data-raw/xml/fishFoodMWD_canals.xml",
                     sf_df = fishFoodMWD::ff_canals,
 )
 
-create_metadata_xml(output_xml = "data-raw/xml/fishFoodMWD_wetdry.xml",
+create_metadata_xml(output_xml = "inst/app/xml/fishFoodMWD_wetdry.shp.xml",
                     title_text = "Sacramento Valley wet and dry areas",
                     summary_text = "polygons identifying which parts of the Sacramento Valley are behind levees (dry) or directly exposed to rivers or floodways (wet).",
                     tags = c(common_tags, "levee", "drainage", "reclamation", "floodplain"),
