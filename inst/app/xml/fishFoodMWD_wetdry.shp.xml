@@ -18,12 +18,12 @@
     <idCredit>FlowWest; compiled from data from Ducks Unlimited and others</idCredit>
     <dataExt>
       <geoEle>
-        <GeoBndBox>
+        <GeoBndBox esriExtentType="search">
+          <exTypeCode>1</exTypeCode>
           <westBL>-122.308614347245</westBL>
           <eastBL>-121.278290948239</eastBL>
-          <southBL>38.3130479479367</southBL>
           <northBL>39.883793948301</northBL>
-          <exTypeCode>1</exTypeCode>
+          <southBL>38.3130479479367</southBL>
         </GeoBndBox>
       </geoEle>
     </dataExt>

@@ -17,12 +17,12 @@
     <idCredit>FlowWest</idCredit>
     <dataExt>
       <geoEle>
-        <GeoBndBox>
+        <GeoBndBox esriExtentType="search">
+          <exTypeCode>1</exTypeCode>
           <westBL>-122.097709861216</westBL>
           <eastBL>-121.52363841902</eastBL>
-          <southBL>38.177678820759</southBL>
           <northBL>39.6304557520542</northBL>
-          <exTypeCode>1</exTypeCode>
+          <southBL>38.177678820759</southBL>
         </GeoBndBox>
       </geoEle>
     </dataExt>

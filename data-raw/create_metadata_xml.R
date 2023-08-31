@@ -37,12 +37,12 @@ create_metadata_xml <- function(output_xml, title_text, summary_text, descriptio
   if (!is.null(bbox_gcs)) {
     dataExt = XML::newXMLNode("dataExt", parent = dataIdInfo)
     geoEle = XML::newXMLNode("geoEle", parent = dataExt)
-    GeoBndBox = XML::newXMLNode("GeoBndBox", parent = geoEle)
+    GeoBndBox = XML::newXMLNode("GeoBndBox", parent = geoEle, attrs=c("esriExtentType" = "search"))
+    exTypeCode = XML::newXMLNode("exTypeCode", 1, parent = GeoBndBox) # 1 if "extent contains the resource
     westBL = XML::newXMLNode("westBL", bbox_gcs["xmin"], parent = GeoBndBox)
     eastBL = XML::newXMLNode("eastBL", bbox_gcs["xmax"], parent = GeoBndBox)
-    southBL = XML::newXMLNode("southBL", bbox_gcs["ymin"], parent = GeoBndBox)
     northBL = XML::newXMLNode("northBL", bbox_gcs["ymax"], parent = GeoBndBox)
-    exTypeCode = XML::newXMLNode("exTypeCode", 1, parent = GeoBndBox) # 1 if "extent contains the resource
+    southBL = XML::newXMLNode("southBL", bbox_gcs["ymin"], parent = GeoBndBox)
   }
   #return(doc)
   XML::saveXML(doc, file = output_xml)
