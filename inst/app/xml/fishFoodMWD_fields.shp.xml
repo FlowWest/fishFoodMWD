@@ -1,0 +1,28 @@
+<?xml version="1.0"?>
+<metadata>
+  <dataIdInfo>
+    <idPurp>Polygon geometries of rice fields based on crop mapping from YYYY.</idPurp>
+    <idCitation>
+      <resTitle>Rice field geometries</resTitle>
+    </idCitation>
+    <searchKeys>
+      <keyword>Sacramento Valley</keyword>
+      <keyword>rice field</keyword>
+      <keyword>salmonid</keyword>
+      <keyword>habitat</keyword>
+      <keyword>crops</keyword>
+    </searchKeys>
+    <idCredit>FlowWest</idCredit>
+    <dataExt>
+      <geoEle>
+        <GeoBndBox esriExtentType="search">
+          <exTypeCode>1</exTypeCode>
+          <westBL>-122.294829272307</westBL>
+          <eastBL>-121.295090622323</eastBL>
+          <northBL>39.7057153955857</northBL>
+          <southBL>38.4870570649393</southBL>
+        </GeoBndBox>
+      </geoEle>
+    </dataExt>
+  </dataIdInfo>
+</metadata>

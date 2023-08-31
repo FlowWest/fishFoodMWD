@@ -232,8 +232,10 @@ function(input, output, session){
         } else if ("data.frame" %in% class(dataset)) {
           readr::write_excel_csv(dataset, paste0(basename,".csv"))
         }
-        zip::zip(zipfile=paste0(basename,".zip"),
-                 files=Sys.glob(paste0(basename,".*")))
+        if (file.exists(paste0("xml/",basename,".shp.xml"))){
+          file.copy(paste0("xml/",basename,".shp.xml"), paste0(basename,".shp.xml"))
+        }
+        zip::zip(zipfile=paste0(basename,".zip"), files=Sys.glob(paste0(basename,".*")))
         file.copy(paste0(basename,".zip"), file)
         if (length(Sys.glob(paste0(basename,".*")))>0){
           file.remove(Sys.glob(paste0(basename,".*")))
