@@ -4,10 +4,19 @@
 \name{fishFoodMWD-package}
 \alias{fishFoodMWD}
 \alias{fishFoodMWD-package}
-\title{fishFoodMWD: Sacramento Valley Rice Field Prioritization for Salmonid Rearing}
+\title{fishFoodMWD: Fish Food: Sacramento Valley Rice Field Prioritization for Salmonid Rearing}
 \description{
 \if{html}{\figure{logo.png}{options: style='float: right' alt='logo' width='120'}}
 
-More about what it does (maybe more than one line) Use four spaces when indenting paragraphs within the Description.
+Provides access to a spatial dataset describing the Sacramento Valley rice field drainage system and potential for salmonid rearing on rice fields. Datasets include calculated drainage system characteristics influencing suitability for fish food production and/or delivery. The package also provides calculation and plotting functions and an interactive map.
+}
+\author{
+\strong{Maintainer}: Lewis Skyler \email{slewis@flowwest.com}
+
+Authors:
+\itemize{
+  \item Peng Inigo \email{ipeng@flowwest.com}
+}
+
 }
 \keyword{internal}

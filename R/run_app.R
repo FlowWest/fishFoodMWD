@@ -3,7 +3,9 @@
 #' enter data to the run fishFoodMWD functions.
 #' @details the fishFoodMWD application can be run when the user has a dataset that they want to visualize.
 #' @examples
+#' \dontrun{
 #' fishFoodMWD::run_app()
+#' }
 #' @md
 #' @export
 run_app <- function() {
