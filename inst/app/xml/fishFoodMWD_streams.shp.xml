@@ -1,0 +1,31 @@
+<?xml version="1.0"?>
+<metadata>
+  <dataIdInfo>
+    <idPurp>Supplementary geometry layer containing the fish-bearing streams. Used to calculate flow distances.</idPurp>
+    <idCitation>
+      <resTitle>Fish-bearing streams</resTitle>
+    </idCitation>
+    <searchKeys>
+      <keyword>Sacramento Valley</keyword>
+      <keyword>rice field</keyword>
+      <keyword>salmonid</keyword>
+      <keyword>habitat</keyword>
+      <keyword>flowlines</keyword>
+      <keyword>streams</keyword>
+      <keyword>rivers</keyword>
+      <keyword>rearing</keyword>
+    </searchKeys>
+    <idCredit>FlowWest; modified from CVPIA rearing habitat</idCredit>
+    <dataExt>
+      <geoEle>
+        <GeoBndBox esriExtentType="search">
+          <exTypeCode>1</exTypeCode>
+          <westBL>-122.339563397792</westBL>
+          <eastBL>-121.221091532402</eastBL>
+          <northBL>40.1546401166144</northBL>
+          <southBL>38.060425354995</southBL>
+        </GeoBndBox>
+      </geoEle>
+    </dataExt>
+  </dataIdInfo>
+</metadata>

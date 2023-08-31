@@ -158,7 +158,7 @@ ff_layer_returns <- function(m, show = TRUE, selected_return=NULL) {
     pal <- leaflet::colorFactor(palette = c("#00688b", "#8b1a1a"),
                                 levels = c("Direct", "Indirect"))
     if(!is.null(selected_return)) {
-      df <- ff_returns_gcs |> dplyr::filter(return_id == {{selected_return}})
+      df <- ff_returns_gcs |> dplyr::filter(return_id == selected_return)
     } else {
       df <- ff_returns_gcs
     }

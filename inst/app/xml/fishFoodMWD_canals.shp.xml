@@ -1,0 +1,30 @@
+<?xml version="1.0"?>
+<metadata>
+  <dataIdInfo>
+    <idPurp>Non-fish-bearing streams and canals that connect indirect return points to fish-bearing streams. Used to calculate flow distances.</idPurp>
+    <idCitation>
+      <resTitle>Secondary canals</resTitle>
+    </idCitation>
+    <searchKeys>
+      <keyword>Sacramento Valley</keyword>
+      <keyword>rice field</keyword>
+      <keyword>salmonid</keyword>
+      <keyword>habitat</keyword>
+      <keyword>flowlines</keyword>
+      <keyword>streams</keyword>
+      <keyword>canals</keyword>
+    </searchKeys>
+    <idCredit>FlowWest</idCredit>
+    <dataExt>
+      <geoEle>
+        <GeoBndBox esriExtentType="search">
+          <exTypeCode>1</exTypeCode>
+          <westBL>-122.097709861216</westBL>
+          <eastBL>-121.52363841902</eastBL>
+          <northBL>39.6304557520542</northBL>
+          <southBL>38.177678820759</southBL>
+        </GeoBndBox>
+      </geoEle>
+    </dataExt>
+  </dataIdInfo>
+</metadata>
