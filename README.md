@@ -41,10 +41,10 @@ The R package **fishFoodMWD**, and this accompanying website, provides
 access to the resulting spatial database. Results, including the
 distances and relationships between rice fields and their connected
 canals and rivers, can be explored and filtered using the [**interactive
-map**](link-to-map) on this website. The datasets and accompanying
-plotting and calculation functions can be accessed directly by
-installing the R package. Datasets are also available in standard GIS
-(shapefile) format.
+map**](https://flowwest.shinyapps.io/fishFoodMWD) on this website. The
+datasets and accompanying plotting and calculation functions can be
+accessed directly by installing the R package. Datasets are also
+available in standard GIS (shapefile) format.
 
 # Installation
 
