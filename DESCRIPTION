@@ -3,8 +3,8 @@ Type: Package
 Title: Fish Food: Sacramento Valley Rice Field Prioritization for Salmonid Rearing
 Version: 0.1.0
 Author: FlowWest
-Authors@R: c(person("Lewis", "Skyler", email = "slewis@flowwest.com", role = c("aut", "cre")),
-             person("Peng", "Inigo", email = "ipeng@flowwest.com", role = "aut"))
+Authors@R: c(person("Skyler", "Lewis", email = "slewis@flowwest.com", role = c("aut", "cre")),
+             person("Inigo", "Peng", email = "ipeng@flowwest.com", role = "aut"))
 Description: Provides access to a spatial dataset describing the Sacramento Valley 
     rice field drainage system and potential for salmonid rearing on rice fields. 
     Datasets include calculated drainage system characteristics influencing suitability 
