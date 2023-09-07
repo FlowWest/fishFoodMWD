@@ -1,6 +1,13 @@
 #template:
 #  bootstrap: 5
 #  bootswatch: cerulean
+authors:
+  Bethany Hackenjos:
+    href: mailto:bhackenjos@gmail.com
+  Skyler Lewis:
+    href: mailto:slewis@flowwest.com
+  Inigo Peng:
+    href: mailto:ipeng@flowwest.com
 reference:
 - title: "Static plots"
   desc: "Functions for quickly viewing the spatial results"
