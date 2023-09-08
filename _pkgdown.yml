@@ -39,5 +39,5 @@ navbar:
     left:  [reference, articles, maplink]
   components:
     maplink:
-      href: https://flowwest.shinyapps.io/fishFoodMWD/
+      href: https://flowwest.shinyapps.io/riceflows4ff/
       text: "Interactive Map and Data Download"

@@ -1,10 +1,10 @@
-fishFoodMWD
+riceflows4ff
 ================
 
-<img src="man/figures/logo.png" align="right" alt="fishFoodMWD" style="height: 139px; margin: 24px"/>
+<img src="man/figures/logo-480.png" align="right" alt="riceflows4ff" style="height: 240px; margin: 24px"/>
 
-***A spatial database for salmonid rearing on Sacramento Valley rice
-fields***
+***A spatial database for salmonid food production on Sacramento Valley
+rice fields***
 
 Substantial recent research has demonstrated the food production
 benefits of floodplain inundation can increase growth and survival of
@@ -29,29 +29,29 @@ Valley rice field drainage system, mapping and calculating drainage
 system characteristics influencing suitability for fish food production
 and/or delivery, such as:
 
-- the locations of outflows from arterial canals into fish-bearing
+- the locations of outflows from arterial canals into salmonid rearing
   streams
 - groupings of rice fields by their outflow location
 - distance from rice fields to their flow delivery site and the nearest
-  fish-bearing stream
+  salmonid rearing stream
 - estimated invertebrate food mass production based on rice field
   acreage
 
-The R package **fishFoodMWD**, and this accompanying website, provides
+The R package **riceflows4ff**, and this accompanying website, provides
 access to the resulting spatial database. Results, including the
 distances and relationships between rice fields and their connected
 canals and rivers, can be explored and filtered using the [**interactive
-map**](https://flowwest.shinyapps.io/fishFoodMWD) on this website. The
+map**](https://flowwest.shinyapps.io/riceflows4ff) on this website. The
 datasets and accompanying plotting and calculation functions can be
 accessed directly by installing the R package. Datasets are also
 available in standard GIS (shapefile) format.
 
 # Installation
 
-Install the latest development version of **fishFoodMWD** from GitHub:
+Install the latest development version of **riceflows4ff** from GitHub:
 
 ``` r
-remotes::install_github("flowwest/fishFoodMWD")
+remotes::install_github("flowwest/riceflows4ff")
 ```
 
 # Getting started
@@ -60,7 +60,7 @@ Once the package is installed, call the package library to load all the
 datasets and access all the calculation and plotting functions.
 
 ``` r
-library(fishFoodMWD)
+library(riceflows4ff)
 ```
 
 The names of all the provided datasets and functions are prefixed with

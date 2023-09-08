@@ -1,4 +1,4 @@
-library(fishFoodMWD)
+library(riceflows4ff)
 library(shiny)
 library(leaflet)
 library(tidyverse)

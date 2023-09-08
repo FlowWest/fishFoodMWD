@@ -50,57 +50,57 @@ create_metadata_xml <- function(output_xml, title_text, summary_text, descriptio
 
 common_tags <- c("Sacramento Valley", "rice field", "salmonid", "habitat")
 
-create_metadata_xml(output_xml = "inst/app/xml/fishFoodMWD_distances.csv.xml",
+create_metadata_xml(output_xml = "inst/app/xml/riceflows4ff_distances.csv.xml",
                     title_text = "Rice field distance attributes",
                     summary_text = "Results of the FlowWest analysis of flow distances to the nearest fish-bearing stream. Intended to be joined to the fields dataset.",
                     tags = c(common_tags, "distance"),
                     credits = "FlowWest",
                     )
 
-create_metadata_xml(output_xml = "inst/app/xml/fishFoodMWD_fields.shp.xml",
+create_metadata_xml(output_xml = "inst/app/xml/riceflows4ff_fields.shp.xml",
                     title_text = "Rice field geometries",
-                    summary_text = "Polygon geometries of rice fields based on crop mapping from YYYY.",
+                    summary_text = "Polygon geometries of rice fields based on DWR i15 crop mapping from 2019.",
                     tags = c(common_tags, "crops"),
                     credits = "FlowWest",
-                    sf_df = fishFoodMWD::ff_fields,
+                    sf_df = riceflows4ff::ff_fields,
 )
 
-create_metadata_xml(output_xml = "inst/app/xml/fishFoodMWD_watersheds.shp.xml",
+create_metadata_xml(output_xml = "inst/app/xml/riceflows4ff_watersheds.shp.xml",
                     title_text = "Watershed polygons used to group rice fields and organize flow patterns. Based on HUC10 watersheds, but split in some cases where necessary.",
                     summary_text = "hello",
                     tags = c(common_tags, "watersheds", "huc10", "groups"),
                     credits = "FlowWest; based on USGS National Hydrography Dataset (NHD)",
-                    sf_df = fishFoodMWD::ff_watersheds,
+                    sf_df = riceflows4ff::ff_watersheds,
 )
 
-create_metadata_xml(output_xml = "inst/app/xml/fishFoodMWD_returns.shp.xml",
+create_metadata_xml(output_xml = "inst/app/xml/riceflows4ff_returns.shp.xml",
                     title_text = "Return points",
                     summary_text = "Point locations of outlets for return flow from rice field drainage networks into adjacent canals or streams.",
                     tags = c(common_tags, "outlets", "outfalls", "returns", "confluence"),
                     credits = "FlowWest",
-                    sf_df = fishFoodMWD::ff_returns,
+                    sf_df = riceflows4ff::ff_returns,
 )
 
-create_metadata_xml(output_xml = "inst/app/xml/fishFoodMWD_streams.shp.xml",
+create_metadata_xml(output_xml = "inst/app/xml/riceflows4ff_streams.shp.xml",
                     title_text = "Fish-bearing streams",
                     summary_text = "Supplementary geometry layer containing the fish-bearing streams. Used to calculate flow distances.",
                     tags = c(common_tags, "flowlines", "streams", "rivers", "rearing"),
                     credits = "FlowWest; modified from CVPIA rearing habitat",
-                    sf_df = fishFoodMWD::ff_streams,
+                    sf_df = riceflows4ff::ff_streams,
 )
 
-create_metadata_xml(output_xml = "inst/app/xml/fishFoodMWD_canals.shp.xml",
+create_metadata_xml(output_xml = "inst/app/xml/riceflows4ff_canals.shp.xml",
                     title_text = "Secondary canals",
                     summary_text = "Non-fish-bearing streams and canals that connect indirect return points to fish-bearing streams. Used to calculate flow distances.",
                     tags = c(common_tags, "flowlines", "streams", "canals"),
                     credits = "FlowWest",
-                    sf_df = fishFoodMWD::ff_canals,
+                    sf_df = riceflows4ff::ff_canals,
 )
 
-create_metadata_xml(output_xml = "inst/app/xml/fishFoodMWD_wetdry.shp.xml",
+create_metadata_xml(output_xml = "inst/app/xml/riceflows4ff_wetdry.shp.xml",
                     title_text = "Sacramento Valley wet and dry areas",
                     summary_text = "polygons identifying which parts of the Sacramento Valley are behind levees (dry) or directly exposed to rivers or floodways (wet).",
                     tags = c(common_tags, "levee", "drainage", "reclamation", "floodplain"),
                     credits = "FlowWest; compiled from data from Ducks Unlimited and others",
-                    sf_df = fishFoodMWD::ff_wetdry,
+                    sf_df = riceflows4ff::ff_wetdry,
 )
