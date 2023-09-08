@@ -104,8 +104,7 @@ ff_fields |>
   ggplot() + 
     geom_sf(aes(fill=return_dis/5280), color=NA) + 
     scale_fill_gradient(low="moccasin", high="tomato", name="Return distance (mi)") + 
-    geom_sf(data=ff_returns) +
-    geom_sf(data=ff_canals) +
+    geom_sf(data=filter(ff_returns, return_direct=="Direct")) +
     geom_sf(data=ff_streams) +
     scale_graticule_lat + scale_graticule_lon
 ```
