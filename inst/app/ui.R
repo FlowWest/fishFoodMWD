@@ -3,7 +3,7 @@
 shinyUI(
   navbarPage(
     tags$link(rel = "stylesheet", type = "text/css", href = "style.css"),
-    title = "fishFood MWD Dashboard",
+    title = "riceflows4ff Dashboard",
     id = "tabs",
     collapsible = TRUE,
     tabPanel("Interactive Map",
