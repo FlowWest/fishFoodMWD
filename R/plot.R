@@ -15,11 +15,11 @@
 #' ff_plot_fields(filename="temp/out.png", width=5, height=7, units="in")
 ff_plot_fields <- function(filename, width=NA, height=NA, units=NULL) {
   gg <- ggplot2::ggplot() +
-    ggplot2::geom_sf(data = fishFoodMWD::ff_watersheds, color="white", fill="antiquewhite1") +
-    ggplot2::geom_sf(data = fishFoodMWD::ff_fields, color="goldenrod1") +
-    ggplot2::geom_sf(data = fishFoodMWD::ff_returns, ggplot2::aes(color=return_direct)) +
-    ggplot2::geom_sf(data = fishFoodMWD::ff_canals, ggplot2::aes(color="Indirect")) +
-    ggplot2::geom_sf(data = fishFoodMWD::ff_streams, ggplot2::aes(color="Direct")) +
+    ggplot2::geom_sf(data = riceflows4ff::ff_watersheds, color="white", fill="antiquewhite1") +
+    ggplot2::geom_sf(data = riceflows4ff::ff_fields, color="goldenrod1") +
+    ggplot2::geom_sf(data = riceflows4ff::ff_returns, ggplot2::aes(color=return_direct)) +
+    ggplot2::geom_sf(data = riceflows4ff::ff_canals, ggplot2::aes(color="Indirect")) +
+    ggplot2::geom_sf(data = riceflows4ff::ff_streams, ggplot2::aes(color="Direct")) +
     ggplot2::scale_color_manual(values = c("Direct" = "deepskyblue4", "Indirect" = "firebrick4"),
                                 name="Return to \nfish-bearing stream") +
     ggplot2::theme_minimal() +
@@ -59,13 +59,13 @@ ff_plot_fields <- function(filename, width=NA, height=NA, units=NULL) {
 #' ff_plot_distances() + ggplot2::ggtitle("Rice Field Distances") + ggplot2::theme_void()
 ff_plot_distances <- function(filename=NULL, width=NULL, height=NULL, units=NULL,
                            colors=NULL, direction=1) {
-  df <- fishFoodMWD::ff_fields |> dplyr::left_join(fishFoodMWD::ff_distances)
+  df <- riceflows4ff::ff_fields |> dplyr::left_join(riceflows4ff::ff_distances)
   legend_name <- "Distance to \nfish-bearing stream \n(mi)"
   gg <- ggplot2::ggplot() +
     ggplot2::geom_sf(data = df, ggplot2::aes(fill=totdist_mi, color=totdist_mi)) +
-    ggplot2::geom_sf(data = fishFoodMWD::ff_returns) +
-    ggplot2::geom_sf(data = fishFoodMWD::ff_canals) +
-    ggplot2::geom_sf(data = fishFoodMWD::ff_streams) +
+    ggplot2::geom_sf(data = riceflows4ff::ff_returns) +
+    ggplot2::geom_sf(data = riceflows4ff::ff_canals) +
+    ggplot2::geom_sf(data = riceflows4ff::ff_streams) +
     ggplot2::theme_minimal() +
     ggplot2::scale_y_continuous(breaks = seq(38, 40, by=0.5)) +
     ggplot2::scale_x_continuous(breaks = seq(-122.5, -120.5, by=0.5))
@@ -108,15 +108,15 @@ ff_plot_distances <- function(filename=NULL, width=NULL, height=NULL, units=NULL
 #' # Returns a ggplot object that can be chained to additional ggplot functions
 #' ff_plot_watersheds() + ggplot2::ggtitle("Watersheds") + ggplot2::theme_void()
 ff_plot_watersheds <- function(filename, width=NA, height=NA, units=NULL) {
-  df <- fishFoodMWD::ff_watersheds |> dplyr::left_join(sf::st_drop_geometry(fishFoodMWD::ff_returns)) |>
+  df <- riceflows4ff::ff_watersheds |> dplyr::left_join(sf::st_drop_geometry(riceflows4ff::ff_returns)) |>
     dplyr::mutate(category = dplyr::case_when(is.na(ds_fbs_dist) ~ "Lateral",
                                        ds_fbs_dist==0 ~ "Direct",
                                        TRUE ~ "Indirect"))
   gg <- ggplot2::ggplot() +
     ggplot2::geom_sf(data = df, ggplot2::aes(fill=category), color="white") +
-    ggplot2::geom_sf(data = fishFoodMWD::ff_returns, ggplot2::aes(color=return_direct)) +
-    ggplot2::geom_sf(data = fishFoodMWD::ff_canals, ggplot2::aes(color="Indirect")) +
-    ggplot2::geom_sf(data = fishFoodMWD::ff_streams, ggplot2::aes(color="Direct")) +
+    ggplot2::geom_sf(data = riceflows4ff::ff_returns, ggplot2::aes(color=return_direct)) +
+    ggplot2::geom_sf(data = riceflows4ff::ff_canals, ggplot2::aes(color="Indirect")) +
+    ggplot2::geom_sf(data = riceflows4ff::ff_streams, ggplot2::aes(color="Direct")) +
     ggplot2::scale_color_manual(values = c("Direct" = "deepskyblue4", "Indirect" = "firebrick4"),
                                 name="Return to \nfish-bearing stream") +
     ggplot2::scale_fill_manual(values = c("Direct" = "lightblue", "Indirect" = "lightpink", "Lateral" = "moccasin"),
@@ -158,13 +158,13 @@ ff_plot_watersheds <- function(filename, width=NA, height=NA, units=NULL) {
 #' ff_plot_inv_mass(14) + ggplot2::ggtitle("Rice Field Distances") + ggplot2::theme_void()
 ff_plot_inv_mass <- function(day=1, filename=NULL, width=NULL, height=NULL, units=NULL,
                            colors=NULL, direction=1) {
-  df <- fishFoodMWD::ff_fields |> fishFoodMWD::ff_calc_inv_mass(day)
+  df <- riceflows4ff::ff_fields |> riceflows4ff::ff_calc_inv_mass(day)
   legend_name <- paste0("Total ",day,"-day \ninvertebrate mass \nproduction (kg)")
   gg <- ggplot2::ggplot() +
     ggplot2::geom_sf(data = df, ggplot2::aes(fill=total_prod_kg, color=total_prod_kg)) +
-    ggplot2::geom_sf(data = fishFoodMWD::ff_returns) +
-    ggplot2::geom_sf(data = fishFoodMWD::ff_canals) +
-    ggplot2::geom_sf(data = fishFoodMWD::ff_streams) +
+    ggplot2::geom_sf(data = riceflows4ff::ff_returns) +
+    ggplot2::geom_sf(data = riceflows4ff::ff_canals) +
+    ggplot2::geom_sf(data = riceflows4ff::ff_streams) +
     ggplot2::theme_minimal() +
     ggplot2::scale_y_continuous(breaks = seq(38, 40, by=0.5)) +
     ggplot2::scale_x_continuous(breaks = seq(-122.5, -120.5, by=0.5))
@@ -208,7 +208,7 @@ ff_plot_inv_mass <- function(day=1, filename=NULL, width=NULL, height=NULL, unit
 #' # Save the output (or for more options, follow the function with a call to ggplot2::ggsave)
 #' ff_plot_wetdry(filename="temp/out.png", width=5, height=7, units="in")
 ff_plot_wetdry <- function(filename, width=NA, height=NA, units=NULL) {
-  df <- fishFoodMWD::ff_fields |> dplyr::left_join(fishFoodMWD::ff_distances)
+  df <- riceflows4ff::ff_fields |> dplyr::left_join(riceflows4ff::ff_distances)
   gg <- ggplot2::ggplot() +
     ggplot2::geom_sf(data=ff_wetdry, ggplot2::aes(fill=wet_dry), alpha=0.5, color=NA) +
     ggplot2::geom_sf(data=df, ggplot2::aes(fill=wet_dry, color=wet_dry)) +
