@@ -29,15 +29,17 @@ reference:
   - -starts_with("ff_map_")
   - -starts_with("ff_make_")
   - -starts_with("ff_layer_")
+  - -contains("run_app")
 - title: "Leaflet"
   desc: "Behind-the-scenes functions for the interactive leaflet map"
   contents:
   - starts_with("ff_make_")
   - starts_with("ff_layer_")
+  - contains("run_app")
 navbar:
   structure:
     left:  [reference, articles, maplink]
   components:
     maplink:
-      href: https://flowwest.shinyapps.io/fishFoodMWD/
+      href: https://flowwest.shinyapps.io/riceflows4ff/
       text: "Interactive Map and Data Download"

@@ -1,0 +1,30 @@
+<?xml version="1.0"?>
+<metadata>
+  <dataIdInfo>
+    <idPurp>hello</idPurp>
+    <idCitation>
+      <resTitle>Watershed polygons used to group rice fields and organize flow patterns. Based on HUC10 watersheds, but split in some cases where necessary.</resTitle>
+    </idCitation>
+    <searchKeys>
+      <keyword>Sacramento Valley</keyword>
+      <keyword>rice field</keyword>
+      <keyword>salmonid</keyword>
+      <keyword>habitat</keyword>
+      <keyword>watersheds</keyword>
+      <keyword>huc10</keyword>
+      <keyword>groups</keyword>
+    </searchKeys>
+    <idCredit>FlowWest; based on USGS National Hydrography Dataset (NHD)</idCredit>
+    <dataExt>
+      <geoEle>
+        <GeoBndBox esriExtentType="search">
+          <exTypeCode>1</exTypeCode>
+          <westBL>-122.460963261653</westBL>
+          <eastBL>-121.000622885559</eastBL>
+          <northBL>39.9333613062436</northBL>
+          <southBL>38.1420904139262</southBL>
+        </GeoBndBox>
+      </geoEle>
+    </dataExt>
+  </dataIdInfo>
+</metadata>

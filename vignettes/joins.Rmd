@@ -20,7 +20,7 @@ knitr::opts_chunk$set(
 ggplot2::theme_set(ggplot2::theme_minimal())
 library(tidyverse)
 library(sf)
-library(fishFoodMWD)
+library(riceflows4ff)
 ```
 
 This vignette describes the structure of provided datasets and the possibilities for joining these datasets for further analysis.
@@ -44,7 +44,7 @@ Finally, additional `sf` geometry layers are provided for basemap and context pu
 
 | dataset      | type         | description |
 | ------------ | ------------ | ----------- |
-| `ff_streams`    | `sf` Line    | Fish-bearing streams |
+| `ff_streams`    | `sf` Line    | Salmonid rearing streams |
 | `ff_canals`     | `sf` Line    | Selected secondary canals that connect indirect return points to their downstream returns to fish-bearing streams |
 | `ff_wetdry`     | `sf` Polygon | Polygons indicating the "wet" and "dry" areas of the Sacramento Valley based on levee locations |
 

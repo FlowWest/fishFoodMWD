@@ -8,13 +8,13 @@ run_app()
 }
 \description{
 \code{run_app()} launches a shiny application that allows the user to
-enter data to the run fishFoodMWD functions.
+enter data to the run riceflows4ff functions.
 }
 \details{
-the fishFoodMWD application can be run when the user has a dataset that they want to visualize.
+The riceflows4ff application can be run when the user has a dataset that they want to visualize.
 }
 \examples{
 \dontrun{
-fishFoodMWD::run_app()
+riceflows4ff::run_app()
 }
 }

@@ -244,12 +244,12 @@ function(input, output, session){
     return(dh)
   }
 
-  output$download_streams <- downloader(ff_streams, "fishFoodMWD_streams")
-  output$download_fields <- downloader(ff_fields, "fishFoodMWD_fields")
-  output$download_watersheds <- downloader(ff_watersheds, "fishFoodMWD_watersheds")
-  output$download_canals <- downloader(ff_canals, "fishFoodMWD_canals")
-  output$download_returns <- downloader(ff_returns, "fishFoodMWD_returns")
-  output$download_distances <- downloader(ff_distances, "fishFoodMWD_distances")
-  output$download_wetdry <- downloader(ff_wetdry, "fishFoodMWD_wetdry")
+  output$download_streams <- downloader(ff_streams, "riceflows4ff_streams")
+  output$download_fields <- downloader(ff_fields, "riceflows4ff_fields")
+  output$download_watersheds <- downloader(ff_watersheds, "riceflows4ff_watersheds")
+  output$download_canals <- downloader(ff_canals, "riceflows4ff_canals")
+  output$download_returns <- downloader(ff_returns, "riceflows4ff_returns")
+  output$download_distances <- downloader(ff_distances, "riceflows4ff_distances")
+  output$download_wetdry <- downloader(ff_wetdry, "riceflows4ff_wetdry")
 
 }
