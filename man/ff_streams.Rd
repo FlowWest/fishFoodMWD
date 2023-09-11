@@ -8,7 +8,7 @@
 An object of class \code{sf} (inherits from \code{tbl_df}, \code{tbl}, \code{data.frame}) with 41 rows and 3 columns.
 }
 \source{
-Modified from CVPIA rearing habitat
+FlowWest; modified from CVPIA rearing habitat
 }
 \usage{
 ff_streams

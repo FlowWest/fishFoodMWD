@@ -8,7 +8,7 @@
 An object of class \code{sf} (inherits from \code{tbl_df}, \code{tbl}, \code{data.frame}) with 9628 rows and 7 columns.
 }
 \source{
-California Department of Water Resources Land Use Program - i15 Crop Mapping 2019; FlowWest
+Developed by \href{mailto:bhackenjos@flowwest.com}{Bethany Hackenjos}, \href{mailto:akelleher@flowwest.com}{Aidan Kelleher}, \href{mailto:slewis@flowwest.com}{Skyler Lewis}, FlowWest, 2023, based on California Department of Water Resources & Land IQ \href{https://gis.data.ca.gov/datasets/363c00277ad74c4ba4f64238edc5430c_0}{i15 Crop Mapping 2019}
 }
 \usage{
 ff_fields

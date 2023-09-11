@@ -118,16 +118,18 @@ for this function.</p>
 <pre><code><span><span class="va">ff_fields</span></span></code></pre>
 <table class="table">
 <colgroup>
+<col width="10%">
+<col width="7%">
 <col width="12%">
-<col width="8%">
-<col width="38%">
-<col width="13%">
+<col width="34%">
 <col width="12%">
-<col width="13%">
+<col width="10%">
+<col width="12%">
 </colgroup>
 <thead><tr class="header">
 <th align="left">unique_id</th>
 <th align="left">county</th>
+<th align="left">elev_grp</th>
 <th align="left">geometry</th>
 <th align="left">group_id</th>
 <th align="right">area_ac</th>
@@ -137,6 +139,7 @@ for this function.</p>
 <tr class="odd">
 <td align="left">1103539</td>
 <td align="left">Glenn</td>
+<td align="left">90 to 100</td>
 <td align="left">POLYGON ((6526707 2289953, …</td>
 <td align="left">1802010405</td>
 <td align="right">23.428379</td>
@@ -145,6 +148,7 @@ for this function.</p>
 <tr class="even">
 <td align="left">1102849</td>
 <td align="left">Glenn</td>
+<td align="left">110 to 120</td>
 <td align="left">POLYGON ((6517766 2307611, …</td>
 <td align="left">1802010405</td>
 <td align="right">23.476331</td>
@@ -153,6 +157,7 @@ for this function.</p>
 <tr class="odd">
 <td align="left">1103353</td>
 <td align="left">Glenn</td>
+<td align="left">120 to 130</td>
 <td align="left">POLYGON ((6501679 2309168, …</td>
 <td align="left">1802010405</td>
 <td align="right">1.055052</td>
@@ -161,6 +166,7 @@ for this function.</p>
 <tr class="even">
 <td align="left">1103425</td>
 <td align="left">Glenn</td>
+<td align="left">120 to 130</td>
 <td align="left">POLYGON ((6525986 2324730, …</td>
 <td align="left">1802010403</td>
 <td align="right">1.339829</td>
@@ -169,6 +175,7 @@ for this function.</p>
 <tr class="odd">
 <td align="left">1103546</td>
 <td align="left">Glenn</td>
+<td align="left">70 to 80</td>
 <td align="left">POLYGON ((6535820 2277869, …</td>
 <td align="left">1802010403</td>
 <td align="right">48.900074</td>
@@ -188,21 +195,23 @@ on area</li>
 days provided</li>
 </ul>
 <pre><code><span><span class="fu"><a href="../reference/ff_calc_inv_mass.html">ff_calc_inv_mass</a></span><span class="op">(</span><span class="va">ff_fields</span>, <span class="fl">14</span><span class="op">)</span></span></code></pre>
-<table class="table">
+<table style="width:100%;" class="table">
 <colgroup>
-<col width="8%">
+<col width="7%">
 <col width="5%">
-<col width="26%">
-<col width="9%">
 <col width="8%">
-<col width="9%">
-<col width="9%">
-<col width="11%">
-<col width="11%">
+<col width="23%">
+<col width="8%">
+<col width="7%">
+<col width="8%">
+<col width="8%">
+<col width="10%">
+<col width="10%">
 </colgroup>
 <thead><tr class="header">
 <th align="left">unique_id</th>
 <th align="left">county</th>
+<th align="left">elev_grp</th>
 <th align="left">geometry</th>
 <th align="left">group_id</th>
 <th align="right">area_ac</th>
@@ -215,6 +224,7 @@ days provided</li>
 <tr class="odd">
 <td align="left">1103539</td>
 <td align="left">Glenn</td>
+<td align="left">90 to 100</td>
 <td align="left">POLYGON ((6526707 2289953, …</td>
 <td align="left">1802010405</td>
 <td align="right">23.428379</td>
@@ -226,6 +236,7 @@ days provided</li>
 <tr class="even">
 <td align="left">1102849</td>
 <td align="left">Glenn</td>
+<td align="left">110 to 120</td>
 <td align="left">POLYGON ((6517766 2307611, …</td>
 <td align="left">1802010405</td>
 <td align="right">23.476331</td>
@@ -237,6 +248,7 @@ days provided</li>
 <tr class="odd">
 <td align="left">1103353</td>
 <td align="left">Glenn</td>
+<td align="left">120 to 130</td>
 <td align="left">POLYGON ((6501679 2309168, …</td>
 <td align="left">1802010405</td>
 <td align="right">1.055052</td>
@@ -248,6 +260,7 @@ days provided</li>
 <tr class="even">
 <td align="left">1103425</td>
 <td align="left">Glenn</td>
+<td align="left">120 to 130</td>
 <td align="left">POLYGON ((6525986 2324730, …</td>
 <td align="left">1802010403</td>
 <td align="right">1.339829</td>
@@ -259,6 +272,7 @@ days provided</li>
 <tr class="odd">
 <td align="left">1103546</td>
 <td align="left">Glenn</td>
+<td align="left">70 to 80</td>
 <td align="left">POLYGON ((6535820 2277869, …</td>
 <td align="left">1802010403</td>
 <td align="right">48.900074</td>
@@ -521,7 +535,7 @@ pp. 875-883. <a href="http://doi.org/10.1672/07-169.1" class="external-link">do
 
       <footer><div class="copyright">
   <p></p>
-<p>Developed by <a href="mailto:bhackenjos@gmail.com">Bethany Hackenjos</a>, <a href="mailto:slewis@flowwest.com">Skyler Lewis</a>, <a href="mailto:ipeng@flowwest.com">Inigo Peng</a>.</p>
+<p>Developed by <a href="mailto:bhackenjos@gmail.com">Bethany Hackenjos</a>, <a href="mailto:slewis@flowwest.com">Skyler Lewis</a>, <a href="mailto:ipeng@flowwest.com">Inigo Peng</a>, <a href="mailto:akelleher@flowwest.com">Aidan Kelleher</a>.</p>
 </div>
 
 <div class="pkgdown">

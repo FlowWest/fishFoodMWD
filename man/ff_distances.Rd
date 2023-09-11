@@ -8,7 +8,7 @@
 An object of class \code{tbl_df} (inherits from \code{tbl}, \code{data.frame}) with 9628 rows and 11 columns.
 }
 \source{
-FlowWest
+\href{mailto:slewis@flowwest.com}{Skyler Lewis}, \href{mailto:bhackenjos@flowwest.com}{Bethany Hackenjos}, FlowWest, 2023.
 }
 \usage{
 ff_distances

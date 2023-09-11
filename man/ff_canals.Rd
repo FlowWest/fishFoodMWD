@@ -8,7 +8,7 @@
 An object of class \code{sf} (inherits from \code{tbl_df}, \code{tbl}, \code{data.frame}) with 80 rows and 3 columns.
 }
 \source{
-NHD; FlowWest
+FlowWest; modified from USGS National Hydrography Dataset
 }
 \usage{
 ff_canals

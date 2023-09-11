@@ -8,7 +8,7 @@
 An object of class \code{sf} (inherits from \code{tbl_df}, \code{tbl}, \code{data.frame}) with 125 rows and 4 columns.
 }
 \source{
-compiled from data from Ducks Unlimited and others
+\href{mailto:akelleher@flowwest.com}{Aidan Kelleher}, \href{mailto:bhackenjos@flowwest.com}{Bethany Hackenjos}, FlowWest, 2023, compiled from data from Ducks Unlimited and others.
 }
 \usage{
 ff_wetdry
