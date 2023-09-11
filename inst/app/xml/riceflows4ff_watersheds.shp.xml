@@ -1,9 +1,9 @@
 <?xml version="1.0"?>
 <metadata>
   <dataIdInfo>
-    <idPurp>hello</idPurp>
+    <idPurp>Watershed polygons used to group rice fields and organize flow patterns. Based on HUC10 watersheds, but split in some cases where necessary.</idPurp>
     <idCitation>
-      <resTitle>Watershed polygons used to group rice fields and organize flow patterns. Based on HUC10 watersheds, but split in some cases where necessary.</resTitle>
+      <resTitle>Watershed Groups</resTitle>
     </idCitation>
     <searchKeys>
       <keyword>Sacramento Valley</keyword>
@@ -14,7 +14,8 @@
       <keyword>huc10</keyword>
       <keyword>groups</keyword>
     </searchKeys>
-    <idCredit>FlowWest; based on USGS National Hydrography Dataset (NHD)</idCredit>
+    <idAbs>&lt;p&gt;Dataset started with HUC 10 shapefile from USGS, and split in locations as necessary to more accurately define distances to the nearest outfall return location or distance to nearest salmon rearing stream.&lt;/p&gt;&lt;p&gt;&lt;b&gt;Fields:&lt;/b&gt;&lt;/p&gt;&lt;ul&gt;&lt;li&gt;&lt;b&gt;group_id&lt;/b&gt; =the unique identifier of the watershed group, which is based on the HUC10&lt;/li&gt;&lt;li&gt;&lt;b&gt;return_id&lt;/b&gt; =the corresponding unique identifier of the return point, used to join to the `returns` dataset. For watersheds with a `return_id` of zero, fields are assumed to flow laterally into the nearest major stream rather than via the return point.&lt;/li&gt;&lt;li&gt;&lt;b&gt;huc10&lt;/b&gt; =the original HUC10 identifier from the NHD dataset&lt;/li&gt;&lt;li&gt;&lt;b&gt;watershed_name&lt;/b&gt; =the original HUC10 common name from the NHD dataset&lt;/li&gt;&lt;/ul&gt;</idAbs>
+    <idCredit>Bethany Hackenjos [bhackenjos@flowwest.com], FlowWest, 2023</idCredit>
     <dataExt>
       <geoEle>
         <GeoBndBox esriExtentType="search">

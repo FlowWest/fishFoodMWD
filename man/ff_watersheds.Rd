@@ -8,7 +8,7 @@
 An object of class \code{sf} (inherits from \code{tbl_df}, \code{tbl}, \code{data.frame}) with 47 rows and 6 columns.
 }
 \source{
-NHD; FlowWest
+Developed by \href{mailto:bhackenjos@flowwest.com}{Bethany Hackenjos}, FlowWest, 2023, based on USGS NHD/Watershed Boundary Dataset.
 }
 \usage{
 ff_watersheds

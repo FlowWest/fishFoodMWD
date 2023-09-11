@@ -8,6 +8,8 @@ authors:
     href: mailto:slewis@flowwest.com
   Inigo Peng:
     href: mailto:ipeng@flowwest.com
+  Aidan Kelleher:
+    href: mailto:akelleher@flowwest.com
 reference:
 - title: "Static plots"
   desc: "Functions for quickly viewing the spatial results"

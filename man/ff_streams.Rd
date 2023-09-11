@@ -3,18 +3,18 @@
 \docType{data}
 \name{ff_streams}
 \alias{ff_streams}
-\title{Fish-bearing streams}
+\title{Salmonid rearing streams}
 \format{
 An object of class \code{sf} (inherits from \code{tbl_df}, \code{tbl}, \code{data.frame}) with 41 rows and 3 columns.
 }
 \source{
-Modified from CVPIA rearing habitat
+FlowWest; modified from CVPIA rearing habitat
 }
 \usage{
 ff_streams
 }
 \description{
-Supplementary `sf` geometry layer containing the fish-bearing streams used to calculate flow distances
+Supplementary `sf` geometry layer containing the salmonid rearing streams used to calculate flow distances
 }
 \examples{
 head(ff_streams)

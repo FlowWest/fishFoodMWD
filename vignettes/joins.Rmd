@@ -1,7 +1,7 @@
 ---
 title: "Data Structure and Joins"
-author: "FlowWest"
-date: "`r Sys.Date()`"
+#author: "FlowWest"
+#date: "`r Sys.Date()`"
 output: rmarkdown::html_vignette
 vignette: >
   %\VignetteIndexEntry{Data Structure and Joins}
@@ -157,7 +157,7 @@ ggplot() +
   geom_sf(data=ff_returns, aes(color=return_direct))
 ```
 
-The `ff_wetdry` layer simply provides polygons outlining "wet" (river/floodway-exposed) and "dry" (levee-protected) areas of the Sacramento Valley.
+The `ff_wetdry` layer simply provides polygons outlining "wet" (river/floodway-exposed) and "dry" (levee-protected) areas of the Sacramento Valley within the project boundary.
 
 ```
 ff_wetdry
@@ -169,4 +169,10 @@ ff_wetdry |> head(5) |> knitr::kable()
 ```{r dataset-wetdry-plot, message=FALSE, warning=FALSE}
 ggplot() + 
   geom_sf(data=ff_wetdry, aes(fill=wet_dry, color=wet_dry)) 
+```
+
+Finally, the `ff_aoi` layer is the project analysis boundary, for reference.
+```{r dataset-aoi-plot, message=FALSE, warning=FALSE}
+ggplot() + 
+  geom_sf(data=ff_aoi) 
 ```

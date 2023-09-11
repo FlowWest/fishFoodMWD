@@ -3,18 +3,18 @@
 \docType{data}
 \name{ff_canals}
 \alias{ff_canals}
-\title{Canals connecting indirect return points to fish-bearing streams}
+\title{Canals connecting indirect return points to salmonid rearing streams}
 \format{
 An object of class \code{sf} (inherits from \code{tbl_df}, \code{tbl}, \code{data.frame}) with 80 rows and 3 columns.
 }
 \source{
-NHD; FlowWest
+FlowWest; modified from USGS National Hydrography Dataset
 }
 \usage{
 ff_canals
 }
 \description{
-Supplementary `sf` geometry layer containing the non-fish-bearing streams and canals used to calculate the flow distances from indirect return points to their nearest fish-bearing stream (in the `ds_fbs_dist` attribute of `returns`)
+Supplementary `sf` geometry layer containing the non-salmonid rearing streams and canals used to calculate the flow distances from indirect return points to their nearest salmonid rearing stream (in the `ds_fbs_dist` attribute of `returns`)
 }
 \examples{
 head(ff_canals)

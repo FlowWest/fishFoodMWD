@@ -89,9 +89,7 @@
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>Modeling Approach and Methods</h1>
-                        <h4 data-toc-skip class="author">FlowWest</h4>
             
-            <h4 data-toc-skip class="date">2023-09-08</h4>
       
       
       <div class="hidden name"><code>model.Rmd</code></div>
@@ -108,60 +106,115 @@ distances from rice fields to fish-bearing streams.</p>
 <p>First, we divided the Sacramento Valley into watersheds based on the
 National Hydrography Dataset (NHD) HUC-10 watersheds, and further split
 them as needed after inspection of drainage canal flow patterns.</p>
-<p>Each watershed’s outlet is a return into either a major fish-bearing
-stream, or into a secondary canal that drains into a fish-bearing
-stream. We identified fish-bearing streams based on prior CVPIA modeling
-work and expert consultation.</p>
+<p>Each watershed was categorized by “flow type”. A “direct” flow type
+identifies a watershed where the point of return is to a salmonid
+rearing stream. An “indirect” flow type identifies a watershed where the
+point of return is to a secondary channel that does not support salmonid
+rearing. A “lateral” flow type identifies a watershed that drains
+laterally into a salmonid rearing stream instead of to a singular point
+of return. Example figures are shown for clarification below.</p>
 <p><img src="model_files/figure-html/model-watersheds-1.png" width="680"></p>
-<p>Watersheds draining directly into fish-bearing streams are considered
-“direct” returns.</p>
+<div class="section level3">
+<h3 id="direct-flow">Direct flow<a class="anchor" aria-label="anchor" href="#direct-flow"></a>
+</h3>
+<p>The following figure shows watersheds that drain directly into
+fish-bearing streams along with their “direct” points of return.</p>
 <p><img src="model_files/figure-html/model-watersheds-direct-1.png" width="680"></p>
-<p>Watersheds draining into secondary canals are considered “indirect”
-returns.</p>
+</div>
+<div class="section level3">
+<h3 id="indirect-flow">Indirect flow<a class="anchor" aria-label="anchor" href="#indirect-flow"></a>
+</h3>
+<p>The following figure shows watersheds that drain indirectly into
+secondary channels along with their “indirect” points of return.</p>
 <p><img src="model_files/figure-html/model-watersheds-indirect-1.png" width="680"></p>
-<p>A third set of watersheds, without defined return points, assumed to
-drain laterally into the fish-bearing stream that they are fronting.</p>
+</div>
+<div class="section level3">
+<h3 id="lateral-flow">Lateral flow<a class="anchor" aria-label="anchor" href="#lateral-flow"></a>
+</h3>
+<p>The following figure shows the third set of watersheds that drain
+laterally into salmonid-rearing streams, without defined return
+points.</p>
 <p><img src="model_files/figure-html/model-watersheds-lateral-1.png" width="680"></p>
 </div>
+</div>
 <div class="section level2">
-<h2 id="distance-calculation">Distance calculation<a class="anchor" aria-label="anchor" href="#distance-calculation"></a>
+<h2 id="distance-calculations">Distance calculations<a class="anchor" aria-label="anchor" href="#distance-calculations"></a>
 </h2>
 <p>We used the center point (centroid) of each rice field to calculate
 distance to either its watershed’s return point (for the direct and
 indirect watersheds) or to the nearest stream (for the lateral flow
 watersheds). In all cases, straight-line distances provided a simple
-distance approximation for this planning-level analysis.</p>
-<p>For the lateral flow watersheds, straight-line distances were
-calculated from the field centroid to the nearest fish-bearing stream
-within the field’s watershed.</p>
-<p><img src="model_files/figure-html/model-distances-lateral-1.png" width="680"></p>
-<p>For all other watersheds, straight-line distances were calculated
-from the field centroid to its assigned watershed return point.</p>
+distance approximation for this planning-level analysis. For indirect
+drainages, flow distances along the secondary channels were calculated
+and added to the straight line distances from the rice fields to the
+point of return. Example figures and details are provided below.</p>
+<div class="section level3">
+<h3 id="direct-flow-1">Direct flow<a class="anchor" aria-label="anchor" href="#direct-flow-1"></a>
+</h3>
+<p>Distances for direct flow watersheds were calculated as simple
+straight-line distances from each rice field centroid to the assigned
+watershed return point, located on a salmonid-rearing stream. The
+following figure shows rice field distances within the direct flow
+watersheds.</p>
+<p><img src="model_files/figure-html/model-distances-direct-1.png" width="680"></p>
+</div>
+<div class="section level3">
+<h3 id="indirect-flow-1">Indirect flow<a class="anchor" aria-label="anchor" href="#indirect-flow-1"></a>
+</h3>
+<p>Distance calculations for indirect watersheds use a combination of a
+simple straight-line distance and a flow distance along the secondary
+channel.</p>
+<p>First, straight-line distances were calculated from each rice field
+centroid to the indirect point of return assigned to the watershed,
+using the same method as the direct returns previously described.</p>
+<p><img src="model_files/figure-html/model-distances-indirect-field-1.png" width="680"></p>
+<p>Then, the flow distances along the secondary channel, from the return
+point (<code>return_id</code>) into the downstream return point on the
+salmonid-rearing stream (<code>dtfbs_id</code>)<a href="#fn1" class="footnote-ref" id="fnref1"><sup>1</sup></a>, were calculated.</p>
+<p><img src="model_files/figure-html/model-distances-indirect-canal-1.png" width="680"></p>
+<p>The straight-line distances were added to the flow distances along
+secondary channels to get a total distance for each field. Total
+distance results for indirect watershed are shown in the following
+figure.</p>
 <p><img src="model_files/figure-html/model-distances-returns-1.png" width="680"></p>
-<p>Each “indirect” return (the watersheds that flowed indirectly to
-fish-bearing streams via a seconary canal) also needed the flow distance
-along the secondary canal from the return point into the downstream
-fish-bearing stream. These distances were calculated using the actual
-flow lengths along the canal lines.</p>
-<p><img src="model_files/figure-html/model-distances-canal-1.png" width="680"></p>
-<p>Field-to-return point distances were added to the indirect canal flow
-distances, where applicable, and combined with the lateral flow dataset
-to produce a final mapping of distances from each rice field to its
-closest fish-bearing stream.</p>
-<p><img src="model_files/figure-html/model-distances-total-1.png" width="680"></p>
+</div>
+<div class="section level3">
+<h3 id="lateral-flow-1">Lateral flow<a class="anchor" aria-label="anchor" href="#lateral-flow-1"></a>
+</h3>
+<p>Distances for lateral flow watersheds were calculated as simple
+straight-line distances from each rice field centroid to the nearest
+salmonid-rearing stream within the watershed. The following figure shows
+rice field distances within the lateral flow watersheds.</p>
+<p><img src="model_files/figure-html/model-distances-lateral-1.png" width="680"></p>
+</div>
+<div class="section level3">
+<h3 id="note-rectangular-distances">Note: Rectangular distances<a class="anchor" aria-label="anchor" href="#note-rectangular-distances"></a>
+</h3>
 <p>An alternative “rectangular” distance calculation was also included,
 using grid distance (east-west plus north-south) rather than
 straight-line (hypotenuse) distance. At the scale of this analysis, the
-difference between the two versions is minimal.</p>
+difference between the two versions is minimal. Total distance results
+using the grid distance are shown in the following figure.</p>
 <p><img src="model_files/figure-html/model-distances-total-rect-1.png" width="680"></p>
 <p>The straight-line and rectangular distance measures help to place a
 lower and upper bound, respectively, on the true flow distance from each
-rice field to its return point. Except for very circuitous flow paths,
-all distances should be between these two values. Rectangular distances
-are never greater than sqrt(2) times the straight-line flow distance, so
-true return flow distances will not be more than 1.41 times the
-straight-line approximation used in this study.</p>
+rice field to the nearest point of return on a salmonid-rearing stream.
+Since the majority of the drainage infrastructure is on a grid pattern,
+all distances should lie between these two values. The following figure
+shows that distances are never greater than sqrt(2) times the
+straight-line flow distance. This means that true return flow distances
+will not be more than 1.41 times the straight-line approximation used in
+this study.</p>
 <p><img src="model_files/figure-html/model-distances-comparison-1.png" width="680"></p>
+</div>
+</div>
+<div class="footnotes footnotes-end-of-document">
+<hr>
+<ol>
+<li id="fn1"><p>Salmonid rearing streams are frequently abbreviated as
+<code>fbs</code> in source code and attribute names; this is short for
+<em>fish-bearing stream</em><a href="#fnref1" class="footnote-back">↩︎</a></p></li>
+</ol>
 </div>
   </div>
 
@@ -177,7 +230,7 @@ straight-line approximation used in this study.</p>
 
       <footer><div class="copyright">
   <p></p>
-<p>Developed by <a href="mailto:bhackenjos@gmail.com">Bethany Hackenjos</a>, <a href="mailto:slewis@flowwest.com">Skyler Lewis</a>, <a href="mailto:ipeng@flowwest.com">Inigo Peng</a>.</p>
+<p>Developed by <a href="mailto:bhackenjos@gmail.com">Bethany Hackenjos</a>, <a href="mailto:slewis@flowwest.com">Skyler Lewis</a>, <a href="mailto:ipeng@flowwest.com">Inigo Peng</a>, <a href="mailto:akelleher@flowwest.com">Aidan Kelleher</a>.</p>
 </div>
 
 <div class="pkgdown">

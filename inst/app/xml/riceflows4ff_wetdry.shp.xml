@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <metadata>
   <dataIdInfo>
-    <idPurp>polygons identifying which parts of the Sacramento Valley are behind levees (dry) or directly exposed to rivers or floodways (wet).</idPurp>
+    <idPurp>Polygons identifying which parts of the Sacramento Valley, within the project area, are behind levees (dry) or directly exposed to rivers or floodways (wet).</idPurp>
     <idCitation>
       <resTitle>Sacramento Valley wet and dry areas</resTitle>
     </idCitation>
@@ -15,7 +15,8 @@
       <keyword>reclamation</keyword>
       <keyword>floodplain</keyword>
     </searchKeys>
-    <idCredit>FlowWest; compiled from data from Ducks Unlimited and others</idCredit>
+    <idAbs>&lt;p&gt;Identification and prioritization of rice fields.&lt;/p&gt;&lt;ul&gt;&lt;li&gt;Dry side is separated from fish bearing stream by levees.&lt;/li&gt;&lt;li&gt;Wet side is connected to the fish bearing stream via floodplain activation.Note:  Areas outside of the project boundary and areas where rice fields are not present may not be defined accurately. Areas north of Stony Creek coarsely defined as &#x2018;Dry&#x2019; for the purposes of this study.&lt;/li&gt;&lt;/ul&gt;&lt;p&gt;&lt;b&gt;Fields:&lt;/b&gt;&lt;/p&gt;&lt;ul&gt;&lt;li&gt;&lt;b&gt;wet_dry&lt;/b&gt; =identification of polygon as being on the wet-side or dry-side of a fish bearing stream&lt;/li&gt;&lt;li&gt;&lt;b&gt;area_name&lt;/b&gt; =name given to the area defined by the polygon&lt;/li&gt;&lt;li&gt;&lt;b&gt;source&lt;/b&gt; =source of the polygon and determination of hydrology (wet or dry)&lt;/li&gt;&lt;/ul&gt;</idAbs>
+    <idCredit>Aidan Kelleher [akelleher@flowwest.com], Bethany Hackenjos [bhackenjos@flowwest.com], FlowWest, 2023</idCredit>
     <dataExt>
       <geoEle>
         <GeoBndBox esriExtentType="search">

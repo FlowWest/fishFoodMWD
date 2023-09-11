@@ -21,6 +21,7 @@ ff_returns <-
   st_transform(project_crs) |>
   select(return_name = name,
          return_id,
+         water_sup,
          ds_return_id = dtfbs_id,
          ds_fbs_dist = dist_fbs,
          ds_fbs_name = fbs_name
@@ -49,7 +50,7 @@ ff_fields <-
   read_sf(dsn = "data-raw/shp", layer = "ricefield_groups") |>
   janitor::clean_names() |>
   st_transform(project_crs) |>
-  select(unique_id, county)
+  select(unique_id, county, elev_grp)
 
 watershed_xw <- ff_fields |>
   st_centroid() |>
@@ -81,7 +82,13 @@ ff_wetdry <-
   read_sf(dsn = "data-raw/shp", layer = "wet_and_dry_sides_20230802") |>
   janitor::clean_names() |>
   st_transform(project_crs) |>
-  select(wet_dry = hydro) |>
+  select(wet_dry = hydro, area_name, source) |>
+  st_zm()
+
+ff_aoi <-
+  read_sf(dsn = "data-raw/shp", layer = "project_boundary") |>
+  st_transform(project_crs) |>
+  summarize() |>
   st_zm()
 
 # Go back and add the return type to the watersheds layer
@@ -108,6 +115,7 @@ usethis::use_data(ff_streams, overwrite = TRUE)
 usethis::use_data(ff_canals, overwrite = TRUE)
 usethis::use_data(ff_wetdry, overwrite = TRUE)
 usethis::use_data(ff_fields_joined, overwrite = TRUE)
+usethis::use_data(ff_aoi, overwrite = TRUE)
 
 # reproject spatial datasets to WGS84 GCS to use for Leaflet maps
 leaflet_crs <- "+proj=longlat +datum=WGS84"
@@ -119,6 +127,7 @@ ff_streams_gcs <- ff_streams |> st_transform(leaflet_crs) |> mutate(object_id = 
 ff_canals_gcs <- ff_canals |> st_transform(leaflet_crs) |> mutate(object_id = paste0("C",row_number()))
 ff_wetdry_gcs <- ff_wetdry |> st_transform(leaflet_crs) |> mutate(object_id = paste0("D",row_number()))
 ff_fields_joined_gcs <- ff_fields_joined |> st_transform(leaflet_crs) |> mutate(object_id = paste0("F",row_number()))
+ff_aoi_gcs <- ff_aoi |> st_transform(leaflet_crs) |> mutate(object_id = paste0("A",row_number()))
 
 ff_watersheds_gcs |> usethis::use_data(overwrite = TRUE)
 ff_returns_gcs |> usethis::use_data(overwrite = TRUE)
@@ -127,4 +136,5 @@ ff_streams_gcs |> usethis::use_data(overwrite = TRUE)
 ff_canals_gcs |> usethis::use_data(overwrite = TRUE)
 ff_wetdry_gcs |> usethis::use_data(overwrite = TRUE)
 ff_fields_joined_gcs |> usethis::use_data(overwrite = TRUE)
+ff_aoi_gcs |> usethis::use_data(overwrite = TRUE)
 

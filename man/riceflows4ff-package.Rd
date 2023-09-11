@@ -17,6 +17,7 @@ Authors:
 \itemize{
   \item Bethany Hackenjos \email{bhackenjos@gmail.com} [project director]
   \item Inigo Peng \email{ipeng@flowwest.com}
+  \item Aidan Kelleher \email{akelleher@flowwest.com}
 }
 
 }

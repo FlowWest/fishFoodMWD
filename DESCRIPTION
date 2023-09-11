@@ -5,7 +5,8 @@ Version: 0.1.0
 Author: FlowWest
 Authors@R: c(person("Bethany", "Hackenjos", email = "bhackenjos@gmail.com", role = c("aut", "pdr")),
              person("Skyler", "Lewis", email = "slewis@flowwest.com", role = c("aut", "cre")),
-             person("Inigo", "Peng", email = "ipeng@flowwest.com", role = "aut"))
+             person("Inigo", "Peng", email = "ipeng@flowwest.com", role = c("aut")),
+             person("Aidan", "Kelleher", email = "akelleher@flowwest.com", role = c("aut")))
 Description: Provides access to a spatial dataset describing the Sacramento Valley 
     rice field drainage system and potential for salmonid food production on rice fields. 
     Datasets include calculated drainage system characteristics influencing suitability 

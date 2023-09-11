@@ -25,6 +25,7 @@ ff_make_leaflet <- function(bbox=c(xmin=-122.3, ymin=38.5, xmax=-121.3, ymax=39.
     leaflet::addMapPane("Fields", zIndex = 460) |>
     leaflet::addMapPane("Flowlines", zIndex = 470) |>
     leaflet::addMapPane("Returns", zIndex = 480) |>
+    leaflet::addMapPane("AOI", zIndex = 490) |>
     leaflet::addProviderTiles(leaflet::providers$Stamen.Terrain,
                               options = leaflet::providerTileOptions(noWrap = TRUE,
                                                                      opacity = 0.5,
@@ -447,6 +448,52 @@ ff_layer_wetdry <- function(m, show = TRUE) {
     m |> leaflet::removeShape(ff_wetdry_gcs$object_id) |> leaflet::removeControl("legend_wetdry")
   }
 }
+
+#' @name ff_layer_aoi
+#' @title Show or hide leaflet aoi layer
+#' @description
+#' Function to toggle the aoi layer on an existing leaflet map.
+#' @param m An initialized `leaflet` map object or `leafletProxy` object.
+#' @param show A boolean value indicating whether the function call will be adding the layer to the map (`TRUE`) or removing the layer from the map (`FALSE`). Designed to be changed via `shiny` checkbox input by calling the function inside an observer.
+#' @md
+#' @export
+#' @examples
+#' # show the layer on a leaflet map object ("m")
+#' m <- ff_make_leaflet()
+#' m |> ff_layer_aoi(show = TRUE)
+#'
+#' # hide the layer on a leaflet map object ("m")
+#' m |> ff_layer_aoi(show = FALSE)
+#'
+#' # use as part of a Shiny app with map "mainMap" and a boolean selector "show_aoi"
+#' if(FALSE){
+#'   shiny::observe({
+#'     proxy <- leaflet::leafletProxy("mainMap")
+#'     proxy |> ff_layer_aoi(show = input$show_aoi)
+#'   })
+#' }
+#'
+ff_layer_aoi <- function(m, show = TRUE) {
+  if(show) {
+    m |> leaflet::removeShape(ff_aoi_gcs$object_id) |>
+      leaflet::addPolylines(data = ff_aoi_gcs,
+                           layerId = ~object_id,
+                           label = "Project Boundary",
+                           color = "black",
+                           weight = 2,
+                           dashArray = "2, 2",
+                           fillOpacity = 0,
+                           options = leaflet::pathOptions(pane = "AOI"),
+                           group = "aoi",
+                           highlightOptions = leaflet::highlightOptions(color = "#FDD20E",
+                                                                        weight = 3,
+                                                                        bringToFront = FALSE)
+      )
+  } else {
+    m |> leaflet::removeShape(ff_aoi_gcs$object_id)
+  }
+}
+
 
 #' @name ff_map_watersheds
 #' @title Interactive map of watersheds

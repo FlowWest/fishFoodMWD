@@ -5,22 +5,23 @@
 \alias{ff_fields}
 \title{Rice field geometries}
 \format{
-An object of class \code{sf} (inherits from \code{tbl_df}, \code{tbl}, \code{data.frame}) with 9628 rows and 6 columns.
+An object of class \code{sf} (inherits from \code{tbl_df}, \code{tbl}, \code{data.frame}) with 9628 rows and 7 columns.
 }
 \source{
-California Department of Water Resources Land Use Program - i15 Crop Mapping YYYY; FlowWest
+Developed by \href{mailto:bhackenjos@flowwest.com}{Bethany Hackenjos}, \href{mailto:akelleher@flowwest.com}{Aidan Kelleher}, \href{mailto:slewis@flowwest.com}{Skyler Lewis}, FlowWest, 2023, based on California Department of Water Resources & Land IQ \href{https://gis.data.ca.gov/datasets/363c00277ad74c4ba4f64238edc5430c_0}{i15 Crop Mapping 2019}
 }
 \usage{
 ff_fields
 }
 \description{
-This \code{sf} dataset contains polygon geometries of rice fields based on crop mapping from YYYY.
+This \code{sf} dataset contains polygon geometries of rice fields based on DWR i15 crop mapping from 2019.
 }
 \details{
 \itemize{
 \item \code{unique_id} = the unique identifier of the rice field as defined in the original CNRA dataset
 \item \code{group_id} = the unique identifier of the watershed group, obtained via spatial join, used to join to the \code{watersheds} dataset
 \item \code{county} = common name of the county in which th erice field is located
+\item \code{elev_grp} = an elevation interval
 \item \code{area_ac} = area of the rice field polygon calculated in acres
 \item \code{volume_af} = inundated volume of the rice field assuming 5 inches of water
 }

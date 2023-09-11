@@ -1,0 +1,33 @@
+<?xml version="1.0"?>
+<metadata>
+  <dataIdInfo>
+    <idPurp>The project boundary for this analysis. Covers 7 Counties:  Butte, Colusa, Glenn, Placer, Sutter, Yolo, and Yuba.</idPurp>
+    <idCitation>
+      <resTitle>Rice field drainage project boundary</resTitle>
+    </idCitation>
+    <searchKeys>
+      <keyword>Sacramento Valley</keyword>
+      <keyword>rice field</keyword>
+      <keyword>salmonid</keyword>
+      <keyword>habitat</keyword>
+      <keyword>levee</keyword>
+      <keyword>drainage</keyword>
+      <keyword>reclamation</keyword>
+      <keyword>floodplain</keyword>
+      <keyword>boundary</keyword>
+    </searchKeys>
+    <idAbs>&lt;ul&gt;&lt;li&gt;West boundary determined by Tehema canal from the top of Glenn county border until Yolo County border.&lt;/li&gt;&lt;li&gt;South boundary follows Yolo County until its intersection of Placer County and follows rice fields until the intersection of Yuba and Placer County at the Camp Far West Reservoir.&lt;/li&gt;&lt;li&gt;East boundary follows the Yuba County border until it intersects with the Yuba River, then follows the rice fields until Highway 99. Following highway 99 until it reaches the top of Butte County Boundary.&lt;/li&gt;&lt;li&gt;North boundary begins at the intersection of Tehema Canal and Glenn County Boundary, following the boundary right until it intersects Butte County Boundary. Following Butte County Boundary north until the intersection of highway 99.&lt;/li&gt;&lt;/ul&gt;</idAbs>
+    <idCredit>Aidan Kelleher [akelleher@flowwest.com], Bethany Hackenjos [bhackenjos@flowwest.com], FlowWest, 2023</idCredit>
+    <dataExt>
+      <geoEle>
+        <GeoBndBox esriExtentType="search">
+          <exTypeCode>1</exTypeCode>
+          <westBL>-122.307799274687</westBL>
+          <eastBL>-121.277465539061</eastBL>
+          <northBL>39.8849750606266</northBL>
+          <southBL>38.3142263939093</southBL>
+        </GeoBndBox>
+      </geoEle>
+    </dataExt>
+  </dataIdInfo>
+</metadata>

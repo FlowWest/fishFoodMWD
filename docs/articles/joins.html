@@ -89,9 +89,7 @@
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>Data Structure and Joins</h1>
-                        <h4 data-toc-skip class="author">FlowWest</h4>
             
-            <h4 data-toc-skip class="date">2023-09-08</h4>
       
       
       <div class="hidden name"><code>joins.Rmd</code></div>
@@ -264,17 +262,19 @@ Valley based on levee locations</td>
 <pre><code><span><span class="va">ff_returns</span></span></code></pre>
 <table class="table">
 <colgroup>
-<col width="29%">
+<col width="24%">
+<col width="5%">
+<col width="16%">
 <col width="7%">
-<col width="9%">
+<col width="7%">
+<col width="15%">
+<col width="14%">
 <col width="8%">
-<col width="19%">
-<col width="17%">
-<col width="9%">
 </colgroup>
 <thead><tr class="header">
 <th align="left">return_name</th>
 <th align="right">return_id</th>
+<th align="left">water_sup</th>
 <th align="right">ds_return_id</th>
 <th align="right">ds_fbs_dist</th>
 <th align="left">ds_fbs_name</th>
@@ -285,6 +285,7 @@ Valley based on levee locations</td>
 <tr class="odd">
 <td align="left">Sacramento River Deep Water Ship Channel</td>
 <td align="right">1</td>
+<td align="left">NA</td>
 <td align="right">1</td>
 <td align="right">0</td>
 <td align="left">North Delta</td>
@@ -294,6 +295,7 @@ Valley based on levee locations</td>
 <tr class="even">
 <td align="left">Sankey Diversion</td>
 <td align="right">9</td>
+<td align="left">Natomas Cross Canal</td>
 <td align="right">9</td>
 <td align="right">0</td>
 <td align="left">Lower-mid Sacramento River</td>
@@ -303,6 +305,7 @@ Valley based on levee locations</td>
 <tr class="odd">
 <td align="left">Knights Landing Outfall Gates</td>
 <td align="right">10</td>
+<td align="left">Colusa Basin Drainage Canal</td>
 <td align="right">10</td>
 <td align="right">0</td>
 <td align="left">Lower-mid Sacramento River</td>
@@ -312,6 +315,7 @@ Valley based on levee locations</td>
 <tr class="even">
 <td align="left">Rough and Ready Pumping Plant</td>
 <td align="right">11</td>
+<td align="left">NA</td>
 <td align="right">11</td>
 <td align="right">0</td>
 <td align="left">Lower-mid Sacramento River</td>
@@ -321,6 +325,7 @@ Valley based on levee locations</td>
 <tr class="odd">
 <td align="left">Drainage Pumping Plant RD 70</td>
 <td align="right">12</td>
+<td align="left">Unidentified</td>
 <td align="right">12</td>
 <td align="right">0</td>
 <td align="left">Upper-mid Sacramento River</td>
@@ -332,16 +337,18 @@ Valley based on levee locations</td>
 <pre><code><span><span class="va">ff_fields</span></span></code></pre>
 <table class="table">
 <colgroup>
+<col width="10%">
+<col width="7%">
 <col width="12%">
-<col width="8%">
-<col width="38%">
-<col width="13%">
+<col width="34%">
 <col width="12%">
-<col width="13%">
+<col width="10%">
+<col width="12%">
 </colgroup>
 <thead><tr class="header">
 <th align="left">unique_id</th>
 <th align="left">county</th>
+<th align="left">elev_grp</th>
 <th align="left">geometry</th>
 <th align="left">group_id</th>
 <th align="right">area_ac</th>
@@ -351,6 +358,7 @@ Valley based on levee locations</td>
 <tr class="odd">
 <td align="left">1103539</td>
 <td align="left">Glenn</td>
+<td align="left">90 to 100</td>
 <td align="left">POLYGON ((6526707 2289953, …</td>
 <td align="left">1802010405</td>
 <td align="right">23.428379</td>
@@ -359,6 +367,7 @@ Valley based on levee locations</td>
 <tr class="even">
 <td align="left">1102849</td>
 <td align="left">Glenn</td>
+<td align="left">110 to 120</td>
 <td align="left">POLYGON ((6517766 2307611, …</td>
 <td align="left">1802010405</td>
 <td align="right">23.476331</td>
@@ -367,6 +376,7 @@ Valley based on levee locations</td>
 <tr class="odd">
 <td align="left">1103353</td>
 <td align="left">Glenn</td>
+<td align="left">120 to 130</td>
 <td align="left">POLYGON ((6501679 2309168, …</td>
 <td align="left">1802010405</td>
 <td align="right">1.055052</td>
@@ -375,6 +385,7 @@ Valley based on levee locations</td>
 <tr class="even">
 <td align="left">1103425</td>
 <td align="left">Glenn</td>
+<td align="left">120 to 130</td>
 <td align="left">POLYGON ((6525986 2324730, …</td>
 <td align="left">1802010403</td>
 <td align="right">1.339829</td>
@@ -383,6 +394,7 @@ Valley based on levee locations</td>
 <tr class="odd">
 <td align="left">1103546</td>
 <td align="left">Glenn</td>
+<td align="left">70 to 80</td>
 <td align="left">POLYGON ((6535820 2277869, …</td>
 <td align="left">1802010403</td>
 <td align="right">48.900074</td>
@@ -634,32 +646,50 @@ secondary <code>ff_canals</code>.</p>
 <p><img src="joins_files/figure-html/dataset-streams-canals-returns-1.png" width="680"></p>
 <p>The <code>ff_wetdry</code> layer simply provides polygons outlining
 “wet” (river/floodway-exposed) and “dry” (levee-protected) areas of the
-Sacramento Valley.</p>
+Sacramento Valley within the project boundary.</p>
 <pre><code><span><span class="va">ff_wetdry</span></span></code></pre>
-<table class="table">
+<table style="width:100%;" class="table">
+<colgroup>
+<col width="11%">
+<col width="14%">
+<col width="30%">
+<col width="43%">
+</colgroup>
 <thead><tr class="header">
 <th align="left">wet_dry</th>
+<th align="left">area_name</th>
+<th align="left">source</th>
 <th align="left">geometry</th>
 </tr></thead>
 <tbody>
 <tr class="odd">
 <td align="left">Dry</td>
+<td align="left">NA</td>
+<td align="left">Daniel Fehringer (DU)</td>
 <td align="left">POLYGON ((6623854 2379216, …</td>
 </tr>
 <tr class="even">
 <td align="left">Dry</td>
+<td align="left">NA</td>
+<td align="left">Daniel Fehringer (DU)</td>
 <td align="left">POLYGON ((6735708 2143171, …</td>
 </tr>
 <tr class="odd">
 <td align="left">Dry</td>
+<td align="left">NA</td>
+<td align="left">Daniel Fehringer (DU)</td>
 <td align="left">POLYGON ((6645812 2284995, …</td>
 </tr>
 <tr class="even">
 <td align="left">Dry</td>
+<td align="left">NA</td>
+<td align="left">Daniel Fehringer (DU)</td>
 <td align="left">POLYGON ((6674774 2180693, …</td>
 </tr>
 <tr class="odd">
 <td align="left">Dry</td>
+<td align="left">NA</td>
+<td align="left">Daniel Fehringer (DU)</td>
 <td align="left">POLYGON ((6482270 2236010, …</td>
 </tr>
 </tbody>
@@ -668,6 +698,12 @@ Sacramento Valley.</p>
 <code class="sourceCode R"><span><span class="fu">ggplot</span><span class="op">(</span><span class="op">)</span> <span class="op">+</span> </span>
 <span>  <span class="fu">geom_sf</span><span class="op">(</span>data<span class="op">=</span><span class="va">ff_wetdry</span>, <span class="fu">aes</span><span class="op">(</span>fill<span class="op">=</span><span class="va">wet_dry</span>, color<span class="op">=</span><span class="va">wet_dry</span><span class="op">)</span><span class="op">)</span> </span></code></pre></div>
 <p><img src="joins_files/figure-html/dataset-wetdry-plot-1.png" width="680"></p>
+<p>Finally, the <code>ff_aoi</code> layer is the project analysis
+boundary, for reference.</p>
+<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu">ggplot</span><span class="op">(</span><span class="op">)</span> <span class="op">+</span> </span>
+<span>  <span class="fu">geom_sf</span><span class="op">(</span>data<span class="op">=</span><span class="va">ff_aoi</span><span class="op">)</span> </span></code></pre></div>
+<p><img src="joins_files/figure-html/dataset-aoi-plot-1.png" width="680"></p>
 </div>
 </div>
   </div>
@@ -684,7 +720,7 @@ Sacramento Valley.</p>
 
       <footer><div class="copyright">
   <p></p>
-<p>Developed by <a href="mailto:bhackenjos@gmail.com">Bethany Hackenjos</a>, <a href="mailto:slewis@flowwest.com">Skyler Lewis</a>, <a href="mailto:ipeng@flowwest.com">Inigo Peng</a>.</p>
+<p>Developed by <a href="mailto:bhackenjos@gmail.com">Bethany Hackenjos</a>, <a href="mailto:slewis@flowwest.com">Skyler Lewis</a>, <a href="mailto:ipeng@flowwest.com">Inigo Peng</a>, <a href="mailto:akelleher@flowwest.com">Aidan Kelleher</a>.</p>
 </div>
 
 <div class="pkgdown">

@@ -3,7 +3,7 @@
 shinyUI(
   navbarPage(
     tags$link(rel = "stylesheet", type = "text/css", href = "style.css"),
-    title = "fishFood MWD Dashboard",
+    title = "riceflows4ff Dashboard",
     id = "tabs",
     collapsible = TRUE,
     tabPanel("Interactive Map",
@@ -17,7 +17,7 @@ shinyUI(
               c("Return Type" = "return",
                 "Distance" = "distance",
                 "Wet/Dry" = "wetdry",
-                "Invertebrate Mass Days" = "invmass"
+                "Invertebrate Mass" = "invmass"
               )
             ),
             conditionalPanel(id = "invmassControlPanel",
@@ -68,14 +68,14 @@ shinyUI(
                  downloadButton("download_returns", "Return Points (shp)", class="download_button"),
              ),
              div(class="download_item",
-                 h3("Fish-bearing Streams"),
-                 p("Fish-bearing streams used to calculate flow distances."),
+                 h3("Salmonid Rearing Streams"),
+                 p("Salmonid rearing streams used to calculate flow distances."),
                  actionButton("info_streams", "More Info", onclick ="window.open('https://flowwest.github.io/riceflows4ff/reference/ff_streams.html', '_blank')"),
-                 downloadButton("download_streams", "Fish-bearing Streams (shp)", class="download_button"),
+                 downloadButton("download_streams", "Salmonid Rearing Streams (shp)", class="download_button"),
              ),
              div(class="download_item",
                  h3("Secondary Canals"),
-                 p("Non-fish-bearing streams and canals used to calculate the flow distances from indirect return points to their nearest fish-bearing stream"),
+                 p("Non-rearing streams and canals used to calculate the flow distances from indirect return points to their nearest fish-bearing stream"),
                  actionButton("info_canals", "More Info", onclick ="window.open('https://flowwest.github.io/riceflows4ff/reference/ff_canals.html', '_blank')"),
                  downloadButton("download_canals", "Secondary Canals (shp)", class="download_button"),
              ),
@@ -84,6 +84,12 @@ shinyUI(
                  p("Polygons identifying which parts of the Sacramento Valley are behind levees (dry) or directly exposed to rivers or floodways (wet)"),
                  actionButton("info_wetdry", "More Info", onclick ="window.open('https://flowwest.github.io/riceflows4ff/reference/ff_wetdry.html', '_blank')"),
                  downloadButton("download_wetdry", "Wet/Dry Sides (shp)", class="download_button"),
+             ),
+             div(class="download_item",
+                 h3("Project boundary"),
+                 p("Study area of the rice field drainage analysis."),
+                 actionButton("info_aoi", "More Info", onclick ="window.open('https://flowwest.github.io/riceflows4ff/reference/ff_aoi.html', '_blank')"),
+                 downloadButton("download_aoi", "Project Boundary (shp)", class="download_button"),
              ),
     )
   )
