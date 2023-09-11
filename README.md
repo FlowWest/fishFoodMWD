@@ -17,12 +17,13 @@ native fish.
 
 Detailed data on rice field drainage conveyance systems that move water
 between farm fields and the Delta and its watershed is essential to
-scale up fish food production management actions. This project—a
-collaborative effort between FlowWest, RD108, the California Rice
-Commission, the Metropolitan Water District of Southern California, and
-CalTrout—addresses the significant information gap around the system of
-natural channels, canals, and structures that move flows (and in some
-cases fish) to and from these fields.
+scale up fish food production management actions. This project addresses
+the significant information gap around the system of natural channels,
+canals, and structures that move flows (and in some cases fish) to and
+from these fields. The analysis was completed by FlowWest with funding
+from the Metropolitan Water District of Southern California (MWD) and
+technical support from RD108, the California Rice Commission, and
+CalTrout.
 
 FlowWest assembled a quantitative spatial database of the Sacramento
 Valley rice field drainage system, mapping and calculating drainage
