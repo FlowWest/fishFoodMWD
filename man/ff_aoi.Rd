@@ -3,23 +3,30 @@
 \docType{data}
 \name{ff_aoi}
 \alias{ff_aoi}
-\alias{ff_wetdry}
-\title{Project Boundary}
+\title{Project boundary}
 \format{
-An object of class \code{sf} (inherits from \code{tbl_df}, \code{tbl}, \code{data.frame}) with 125 rows and 2 columns.
+An object of class \code{sf} (inherits from \code{tbl_df}, \code{tbl}, \code{data.frame}) with 1 rows and 1 columns.
 }
 \source{
 County boundaries
 }
 \usage{
-ff_wetdry
+ff_aoi
 }
 \description{
-This \code{sf} dataset contains a polygon defining the project boundary.
+This \code{sf} dataset contains a polygon defining the project for this analysis. Covers 7 Counties:  Butte, Colusa, Glenn, Placer, Sutter, Yolo, and Yuba.
+}
+\details{
+\itemize{
+\item West boundary determined by Tehema canal from the top of Glenn county border until Yolo County border.
+\item South boundary follows Yolo County until its intersection of Placer County and follows rice fields until the intersection of Yuba and Placer County at the Camp Far West Reservoir.
+\item East boundary follows the Yuba County border until it intersects with the Yuba River, then follows the rice fields until Highway 99. Following highway 99 until it reaches the top of Butte County Boundary.
+\item North boundary begins at the intersection of Tehema Canal and Glenn County Boundary, following the boundary right until it intersects Butte County Boundary. Following Butte County Boundary north until the intersection of highway 99.
+}
 }
 \examples{
-head(ff_wetdry)
+head(ff_aoi)
 
-plot(ff_wetdry)
+plot(ff_aoi)
 }
 \keyword{datasets}

@@ -20,10 +20,10 @@ This \code{sf} dataset contains the point locations of outlets for return flow f
 \itemize{
 \item \code{return_id} = the unique identifier of the return point
 \item \code{return_name} = the name of the return
-\item \code{return_direct} = "Direct" if directly connected to a fish-bearing stream, else "Indirect"
-\item \code{ds_fbs_dist} = for Indirect returns, the distance to the downstream return to a fish-bearing stream, else zero
-\item \code{ds_return_id} = for Indirect returns, the \code{return_id} of the downstream return that this return flows into, else the identifier of this same return if it directly flows into a fish-bearing stream
-\item \code{ds_fbs_name} = name of the fish-bearing stream that the return drains directly or indirectly into
+\item \code{return_direct} = "Direct" if directly connected to a salmonid rearing stream, else "Indirect"
+\item \code{ds_fbs_dist} = for Indirect returns, the distance to the downstream return to a salmonid rearing stream, else zero
+\item \code{ds_return_id} = for Indirect returns, the \code{return_id} of the downstream return that this return flows into, else the identifier of this same return if it directly flows into a salmonid rearing stream
+\item \code{ds_fbs_name} = name of the salmonid rearing stream that the return drains directly or indirectly into
 }
 }
 \examples{

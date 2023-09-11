@@ -19,6 +19,9 @@ This \code{sf} dataset contains polygons identifying which parts of the Sacramen
 \details{
 \itemize{
 \item \code{wet_dry} = identifier of the enclosed area as "wet" or "dry"
+\item \code{area_name} = name given to the area defined by the polygon,
+\item \code{source} = source of the polygon and determination of hydrology (wet or dry),
+\item \code{notes} = documentation of any notes
 }
 }
 \examples{

@@ -21,6 +21,7 @@ ff_returns <-
   st_transform(project_crs) |>
   select(return_name = name,
          return_id,
+         water_sup,
          ds_return_id = dtfbs_id,
          ds_fbs_dist = dist_fbs,
          ds_fbs_name = fbs_name
@@ -81,7 +82,7 @@ ff_wetdry <-
   read_sf(dsn = "data-raw/shp", layer = "wet_and_dry_sides_20230802") |>
   janitor::clean_names() |>
   st_transform(project_crs) |>
-  select(wet_dry = hydro, ) |>
+  select(wet_dry = hydro, area_name, source) |>
   st_zm()
 
 ff_aoi <-

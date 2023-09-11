@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <metadata>
   <dataIdInfo>
-    <idPurp>Non-fish-bearing streams and canals that connect indirect return points to fish-bearing streams. Used to calculate flow distances.</idPurp>
+    <idPurp>Non-fish-bearing streams and canals that connect indirect return points to fish-bearing streams. Used to calculate flow distances. </idPurp>
     <idCitation>
       <resTitle>Secondary canals</resTitle>
     </idCitation>

@@ -14,20 +14,20 @@ FlowWest
 ff_distances
 }
 \description{
-A data frame containing the results of the FlowWest analysis of flow distances to the nearest fish-bearing stream. Intended to be joined to the \code{fields} dataset.
+A data frame containing the results of the FlowWest analysis of flow distances to the nearest salmonid rearing stream. Intended to be joined to the \code{fields} dataset.
 }
 \details{
 \itemize{
 \item \code{unique_id} = the unique identifier of the rice field as defined in the original CNRA dataset
 \item \code{return_id} = the return point from the \code{returns} dataset used in the distance calculation for this rice field, as determined based on watershed in which the field is located.  For watersheds with a \code{return_id} of zero, fields are assumed to flow laterally into the nearest major stream rather than via the return point
-\item \code{ds_fbs_dist} = for fields flowing into "Indirect" return points, this is the downstream flow distance from the return point to the nearest fish-bearing stream, else zero
-\item \code{return_dis} = linear distance from the centroid of the rice field to the return point (or laterally to the nearest fish-bearing stream)
-\item \code{return_rec} = rectangular grid distance from the centroid of the rice field to the return point (or laterally to the nearest fish-bearing stream)
-\item \code{totdist_ft} = total distance from the rice field to the nearest fish-bearing stream, calculated via \code{ds_fbs_dist} + \code{return_dis} using linear distances
-\item \code{totrect_ft} = total distance from the rice field to the nearest fish-bearing stream, calculated via \code{ds_fbs_dist} + \code{return_rec} using rectangular grid distances
+\item \code{ds_fbs_dist} = for fields flowing into "Indirect" return points, this is the downstream flow distance from the return point to the nearest salmonid rearing stream, else zero
+\item \code{return_dis} = linear distance from the centroid of the rice field to the return point (or laterally to the nearest salmonid rearing stream)
+\item \code{return_rec} = rectangular grid distance from the centroid of the rice field to the return point (or laterally to the nearest salmonid rearing stream)
+\item \code{totdist_ft} = total distance from the rice field to the nearest salmonid rearing stream, calculated via \code{ds_fbs_dist} + \code{return_dis} using linear distances
+\item \code{totrect_ft} = total distance from the rice field to the nearest salmonid rearing stream, calculated via \code{ds_fbs_dist} + \code{return_rec} using rectangular grid distances
 \item \code{totdist_mi} = \code{totdist_ft} converted to miles
 \item \code{totrect_mi} = \code{totrect_ft} converted to miles
-\item \code{wet_dry} = identifier of the rice field as on the wet or dry side of the levee
+\item \code{wet_dry} =  of the rice field as on theidentifier wet or dry side of the levee
 }
 }
 \examples{

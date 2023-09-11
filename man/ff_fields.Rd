@@ -8,19 +8,20 @@
 An object of class \code{sf} (inherits from \code{tbl_df}, \code{tbl}, \code{data.frame}) with 9628 rows and 7 columns.
 }
 \source{
-California Department of Water Resources Land Use Program - i15 Crop Mapping YYYY; FlowWest
+California Department of Water Resources Land Use Program - i15 Crop Mapping 2019; FlowWest
 }
 \usage{
 ff_fields
 }
 \description{
-This \code{sf} dataset contains polygon geometries of rice fields based on crop mapping from YYYY.
+This \code{sf} dataset contains polygon geometries of rice fields based on DWR i15 crop mapping from 2019.
 }
 \details{
 \itemize{
 \item \code{unique_id} = the unique identifier of the rice field as defined in the original CNRA dataset
 \item \code{group_id} = the unique identifier of the watershed group, obtained via spatial join, used to join to the \code{watersheds} dataset
 \item \code{county} = common name of the county in which th erice field is located
+\item \code{elev_grp} = an elevation interval
 \item \code{area_ac} = area of the rice field polygon calculated in acres
 \item \code{volume_af} = inundated volume of the rice field assuming 5 inches of water
 }
