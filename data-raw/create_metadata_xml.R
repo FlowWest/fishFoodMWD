@@ -17,7 +17,7 @@ create_metadata_xml <- function(output_xml, title_text, summary_text, descriptio
   }
   if (!missing(description_text) | !missing(fields_list)) {
     if (!missing(description_text)){
-      description_text_parsed <- description_text |> markdown::mark_html(template=FALSE)
+      description_text_parsed <- description_text |> markdown::mark_html(template=FALSE) |> stringr::str_remove_all("[\r\n]")
     } else {
       description_text_parsed <- ""
     }
@@ -124,7 +124,7 @@ create_metadata_xml(output_xml = "inst/app/xml/riceflows4ff_fields.shp.xml",
                       "volume_af" = "inundated volume of the rice field assuming 5 inches of water"
                     ),
                     tags = c(common_tags, "crops"),
-                    credits = paste(sep="\n",
+                    credits = paste(sep="\n\n",
                                     "Aidan Kelleher [akelleher@flowwest.com], Bethany Hackenjos [bhackenjos@flowwest.com], FlowWest, 2023",
                                     "Original Datasets:",
                                     "i15 Crop Mapping dataset (2019) https://gis.data.ca.gov/datasets/363c00277ad74c4ba4f64238edc5430c_0/about (Land IQ was contracted by DWR to develop a comprehensive and accurate spatial land use database for the 2019 water year).",

@@ -12,23 +12,15 @@
       <keyword>habitat</keyword>
       <keyword>crops</keyword>
     </searchKeys>
-    <idAbs>&lt;p&gt;Creating a spatial database of Sacramento Valley rice field drainage system conveyance characteristics and operations. This dataset shows all rice fields mapped as of 2019, categorized by watershed and elevation. Starting with the LandIQ 2019 crop mapping, the following steps were taken to create the file. Datasets used mentioned in the credits below.&lt;/p&gt;
-&lt;ol&gt;
-&lt;li&gt;Filter out agriculture fields by MAIN-CROP = R1 (Rice)&lt;/li&gt;
-&lt;li&gt;Crop dataset to only include fields within our project boundary.&lt;/li&gt;
-&lt;li&gt;Create point feature using &#x2018;feature to point&#x2019; geoprocessing tool, converting all rice fields into a point at the center of the polygon (centroid).&lt;/li&gt;
-&lt;li&gt;Use &#x2018;Extract Values to Points&#x2019; geoprocessing tool to assign an elevation value from the DEM raster to each rice field point feature.&lt;/li&gt;
-&lt;li&gt;Spatial Join the rice field point feature dataset to the polygon features. Creating an elevation attribute for each rice field polygon.&lt;/li&gt;
-&lt;li&gt;Group rice fields into elevation intervals of 10 ft. 0-10,10-20, 20-30&#x2026;etc. (elev_grp)&lt;/li&gt;
-&lt;li&gt;Apply HUC10 codes and watershed names to rice field polygons based on location. If fields were located in multiple watersheds, the centroid of the polygon was used to determine which watershed it belonged to. (HUC10, NAME)
-Elevation Units - ft
-Vertical Datum - North American Vertical Datum 1988&lt;/li&gt;
-&lt;/ol&gt;
-&lt;p&gt;&lt;b&gt;Fields:&lt;/b&gt;&lt;/p&gt;&lt;ul&gt;&lt;li&gt;&lt;b&gt;unique_id&lt;/b&gt; =the unique identifier of the rice field as defined in the original CNRA dataset&lt;/li&gt;&lt;li&gt;&lt;b&gt;group_id&lt;/b&gt; =the unique identifier of the watershed group, obtained via spatial join, used to join to the `watersheds` dataset&lt;/li&gt;&lt;li&gt;&lt;b&gt;county&lt;/b&gt; =common name of the county in which th erice field is located&lt;/li&gt;&lt;li&gt;&lt;b&gt;area_ac&lt;/b&gt; =area of the rice field polygon calculated in acres&lt;/li&gt;&lt;li&gt;&lt;b&gt;volume_af&lt;/b&gt; =inundated volume of the rice field assuming 5 inches of water&lt;/li&gt;&lt;/ul&gt;</idAbs>
+    <idAbs>&lt;p&gt;Creating a spatial database of Sacramento Valley rice field drainage system conveyance characteristics and operations. This dataset shows all rice fields mapped as of 2019, categorized by watershed and elevation. Starting with the LandIQ 2019 crop mapping, the following steps were taken to create the file. Datasets used mentioned in the credits below.&lt;/p&gt;&lt;ol&gt;&lt;li&gt;Filter out agriculture fields by MAIN-CROP = R1 (Rice)&lt;/li&gt;&lt;li&gt;Crop dataset to only include fields within our project boundary.&lt;/li&gt;&lt;li&gt;Create point feature using &#x2018;feature to point&#x2019; geoprocessing tool, converting all rice fields into a point at the center of the polygon (centroid).&lt;/li&gt;&lt;li&gt;Use &#x2018;Extract Values to Points&#x2019; geoprocessing tool to assign an elevation value from the DEM raster to each rice field point feature.&lt;/li&gt;&lt;li&gt;Spatial Join the rice field point feature dataset to the polygon features. Creating an elevation attribute for each rice field polygon.&lt;/li&gt;&lt;li&gt;Group rice fields into elevation intervals of 10 ft. 0-10,10-20, 20-30&#x2026;etc. (elev_grp)&lt;/li&gt;&lt;li&gt;Apply HUC10 codes and watershed names to rice field polygons based on location. If fields were located in multiple watersheds, the centroid of the polygon was used to determine which watershed it belonged to. (HUC10, NAME)Elevation Units - ftVertical Datum - North American Vertical Datum 1988&lt;/li&gt;&lt;/ol&gt;&lt;p&gt;&lt;b&gt;Fields:&lt;/b&gt;&lt;/p&gt;&lt;ul&gt;&lt;li&gt;&lt;b&gt;unique_id&lt;/b&gt; =the unique identifier of the rice field as defined in the original CNRA dataset&lt;/li&gt;&lt;li&gt;&lt;b&gt;group_id&lt;/b&gt; =the unique identifier of the watershed group, obtained via spatial join, used to join to the `watersheds` dataset&lt;/li&gt;&lt;li&gt;&lt;b&gt;county&lt;/b&gt; =common name of the county in which th erice field is located&lt;/li&gt;&lt;li&gt;&lt;b&gt;area_ac&lt;/b&gt; =area of the rice field polygon calculated in acres&lt;/li&gt;&lt;li&gt;&lt;b&gt;volume_af&lt;/b&gt; =inundated volume of the rice field assuming 5 inches of water&lt;/li&gt;&lt;/ul&gt;</idAbs>
     <idCredit>Aidan Kelleher [akelleher@flowwest.com], Bethany Hackenjos [bhackenjos@flowwest.com], FlowWest, 2023
+
 Original Datasets:
+
 i15 Crop Mapping dataset (2019) https://gis.data.ca.gov/datasets/363c00277ad74c4ba4f64238edc5430c_0/about (Land IQ was contracted by DWR to develop a comprehensive and accurate spatial land use database for the 2019 water year).
+
 HUC 10 watersheds via USGS Watershed Boundary Dataset https://www.usgs.gov/national-hydrography/access-national-hydrography-products
+
 CA DEM via USGS 1 arc-second Digital Elevation Model https://portal.opentopography.org/datasetMetadata?otCollectionID=OT.012021.4269.2</idCredit>
     <dataExt>
       <geoEle>
