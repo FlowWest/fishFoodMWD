@@ -14,7 +14,7 @@
       <keyword>streams</keyword>
       <keyword>canals</keyword>
     </searchKeys>
-    <idCredit>FlowWest</idCredit>
+    <idCredit>FlowWest; modified from USGS NHD</idCredit>
     <dataExt>
       <geoEle>
         <GeoBndBox esriExtentType="search">

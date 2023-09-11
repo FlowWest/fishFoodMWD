@@ -11,7 +11,7 @@
 #' * `ds_fbs_dist` = for Indirect returns, the distance from this return to the downstream return to a salmonid rearing stream, else zero
 #' * `ds_fbs_name` = name of the salmonid rearing stream that the return drains directly or indirectly into
 #' @md
-#' @source FlowWest
+#' @source [Bethany Hackenjos](mailto:bhackenjos@flowwest.com), [Aidan Kelleher](mailto:akelleher@flowwest.com), [Skyler Lewis](mailto:slewis@flowwest.com), FlowWest, 2023.
 #' @examples
 #' head(ff_returns)
 #'
@@ -27,7 +27,7 @@
 #' * `huc10` = the original HUC10 identifier from the NHD dataset
 #' * `watershed_name` = the original HUC10 common name from the NHD dataset
 #' @md
-#' @source NHD; FlowWest
+#' @source Developed by [Bethany Hackenjos](mailto:bhackenjos@flowwest.com), FlowWest, 2023, based on USGS NHD/Watershed Boundary Dataset.
 #' @examples
 #' head(ff_watersheds)
 #'
@@ -45,7 +45,7 @@
 #' * `area_ac` = area of the rice field polygon calculated in acres
 #' * `volume_af` = inundated volume of the rice field assuming 5 inches of water
 #' @md
-#' @source California Department of Water Resources Land Use Program - i15 Crop Mapping 2019; FlowWest
+#' @source Developed by [Bethany Hackenjos](mailto:bhackenjos@flowwest.com), [Aidan Kelleher](mailto:akelleher@flowwest.com), [Skyler Lewis](mailto:slewis@flowwest.com), FlowWest, 2023, based on California Department of Water Resources & Land IQ [i15 Crop Mapping 2019](https://gis.data.ca.gov/datasets/363c00277ad74c4ba4f64238edc5430c_0)
 #' @examples
 #' head(ff_fields)
 #'
@@ -67,7 +67,7 @@
 #' * `totrect_mi` = `totrect_ft` converted to miles
 #' * `wet_dry` =  of the rice field as on theidentifier wet or dry side of the levee
 #' @md
-#' @source FlowWest
+#' @source [Skyler Lewis](mailto:slewis@flowwest.com), [Bethany Hackenjos](mailto:bhackenjos@flowwest.com), FlowWest, 2023.
 #' @importClassesFrom tibble tbl_df
 #' @examples
 #' head(ff_distances)
@@ -76,7 +76,7 @@
 #' @name ff_streams
 #' @title Salmonid rearing streams
 #' @description Supplementary `sf` geometry layer containing the salmonid rearing streams used to calculate flow distances
-#' @source Modified from CVPIA rearing habitat
+#' @source FlowWest; modified from CVPIA rearing habitat
 #' @examples
 #' head(ff_streams)
 #'
@@ -86,7 +86,7 @@
 #' @name ff_canals
 #' @title Canals connecting indirect return points to salmonid rearing streams
 #' @description Supplementary `sf` geometry layer containing the non-salmonid rearing streams and canals used to calculate the flow distances from indirect return points to their nearest salmonid rearing stream (in the `ds_fbs_dist` attribute of `returns`)
-#' @source NHD; FlowWest
+#' @source FlowWest; modified from USGS National Hydrography Dataset
 #' @examples
 #' head(ff_canals)
 #'
@@ -101,7 +101,7 @@
 #' * `area_name` = name given to the area defined by the polygon
 #' * `source` = source of the polygon and determination of hydrology (wet or dry)
 #' @md
-#' @source compiled from data from Ducks Unlimited and others
+#' @source [Aidan Kelleher](mailto:akelleher@flowwest.com), [Bethany Hackenjos](mailto:bhackenjos@flowwest.com), FlowWest, 2023, compiled from data from Ducks Unlimited and others.
 #' @examples
 #' head(ff_wetdry)
 #'
@@ -118,7 +118,7 @@
 #' * North boundary begins at the intersection of Tehema Canal and Glenn County Boundary, following the boundary right until it intersects Butte County Boundary. Following Butte County Boundary north until the intersection of highway 99.
 #'
 #' @md
-#' @source County boundaries
+#' @source [Aidan Kelleher](mailto:akelleher@flowwest.com), [Bethany Hackenjos](mailto:bhackenjos@flowwest.com), FlowWest, 2023.
 #' @examples
 #' head(ff_aoi)
 #'

@@ -168,7 +168,7 @@ create_metadata_xml(output_xml = "inst/app/xml/riceflows4ff_canals.shp.xml",
                     title_text = "Secondary canals",
                     summary_text = "Non-fish-bearing streams and canals that connect indirect return points to fish-bearing streams. Used to calculate flow distances. ",
                     tags = c(common_tags, "flowlines", "streams", "canals"),
-                    credits = "FlowWest",
+                    credits = "FlowWest; modified from USGS NHD",
                     sf_df = riceflows4ff::ff_canals,
 )
 
