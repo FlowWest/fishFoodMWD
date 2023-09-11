@@ -5,7 +5,7 @@
 \alias{ff_returns}
 \title{Return points}
 \format{
-An object of class \code{sf} (inherits from \code{tbl_df}, \code{tbl}, \code{data.frame}) with 38 rows and 7 columns.
+An object of class \code{sf} (inherits from \code{tbl_df}, \code{tbl}, \code{data.frame}) with 38 rows and 8 columns.
 }
 \source{
 FlowWest
@@ -17,12 +17,14 @@ ff_returns
 This \code{sf} dataset contains the point locations of outlets for return flow from rice field drainage networks into adjacent canals or streams.
 }
 \details{
+This dataset contains a combination of pump export locations and apparent watershed drainage network points. Pump export locations were obtained from multiple sources, including, reclamation districts, irrigation and drainage districts, and Trout Unlimited. The remainder of the locations were digitized by FlowWest using a combination of aerial imagery, drainage network and watershed information, and professional judgement.
 \itemize{
 \item \code{return_id} = the unique identifier of the return point
-\item \code{return_name} = the name of the return
+\item \code{return_name} = the name of the return for identification
 \item \code{return_direct} = "Direct" if directly connected to a salmonid rearing stream, else "Indirect"
-\item \code{ds_fbs_dist} = for Indirect returns, the distance to the downstream return to a salmonid rearing stream, else zero
-\item \code{ds_return_id} = for Indirect returns, the \code{return_id} of the downstream return that this return flows into, else the identifier of this same return if it directly flows into a salmonid rearing stream
+\item \code{water_sup} = the apparent water supply of the return
+\item \code{ds_return_id} = for Indirect returns, the \code{return_id} of the downstream return that this return flows into, else the identifier of this same return if it directly flows into a salmonid rearing stream. (i.e., if the return is on a salmonid rearing stream, the \code{return_id} and \code{ds_return_id} will be identical. If the point of return is in a canal or secondary drainage, upstream of salmonid rearing stream, this number will identify the location at which this secondary drainage enters a fish bearing stream.)
+\item \code{ds_fbs_dist} = for Indirect returns, the distance from this return to the downstream return to a salmonid rearing stream, else zero
 \item \code{ds_fbs_name} = name of the salmonid rearing stream that the return drains directly or indirectly into
 }
 }

@@ -5,7 +5,7 @@
 \alias{ff_wetdry}
 \title{Sacramento Valley wet and dry areas}
 \format{
-An object of class \code{sf} (inherits from \code{tbl_df}, \code{tbl}, \code{data.frame}) with 125 rows and 2 columns.
+An object of class \code{sf} (inherits from \code{tbl_df}, \code{tbl}, \code{data.frame}) with 125 rows and 4 columns.
 }
 \source{
 compiled from data from Ducks Unlimited and others
@@ -14,14 +14,13 @@ compiled from data from Ducks Unlimited and others
 ff_wetdry
 }
 \description{
-This \code{sf} dataset contains polygons identifying which parts of the Sacramento Valley are behind levees ("dry") or directly exposed to rivers or floodways ("wet")
+This \code{sf} dataset contains polygons identifying which parts of the Sacramento Valley, within the project area, are behind levees ("dry") or directly exposed to rivers or floodways ("wet")
 }
 \details{
 \itemize{
 \item \code{wet_dry} = identifier of the enclosed area as "wet" or "dry"
-\item \code{area_name} = name given to the area defined by the polygon,
-\item \code{source} = source of the polygon and determination of hydrology (wet or dry),
-\item \code{notes} = documentation of any notes
+\item \code{area_name} = name given to the area defined by the polygon
+\item \code{source} = source of the polygon and determination of hydrology (wet or dry)
 }
 }
 \examples{
