@@ -2,6 +2,7 @@
 
 export(ff_calc_inv_mass)
 export(ff_calc_inv_mass_ts)
+export(ff_layer_aoi)
 export(ff_layer_canals)
 export(ff_layer_fields)
 export(ff_layer_returns)

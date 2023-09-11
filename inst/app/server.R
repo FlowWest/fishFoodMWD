@@ -126,8 +126,10 @@ function(input, output, session){
       ff_layer_streams() |>
       ff_layer_canals() |>
       ff_layer_wetdry() |>
+      ff_layer_aoi() |>
+      leaflet::hideGroup("aoi") |>
       leaflet::addLayersControl(baseGroups = c("watersheds", "wetdry", "none"),
-                                                             overlayGroups = c("fields", "returns-canals-streams"),
+                                                             overlayGroups = c("fields", "returns-canals-streams", "aoi"),
                                                              position = "bottomleft",
                                                              options = leaflet::layersControlOptions(collapsed = FALSE)) |>
       htmlwidgets::onRender("
@@ -251,5 +253,6 @@ function(input, output, session){
   output$download_returns <- downloader(ff_returns, "riceflows4ff_returns")
   output$download_distances <- downloader(ff_distances, "riceflows4ff_distances")
   output$download_wetdry <- downloader(ff_wetdry, "riceflows4ff_wetdry")
+  output$download_aoi <- downloader(ff_aoi, "riceflows4ff_aoi")
 
 }

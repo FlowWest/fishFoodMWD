@@ -17,7 +17,7 @@ shinyUI(
               c("Return Type" = "return",
                 "Distance" = "distance",
                 "Wet/Dry" = "wetdry",
-                "Invertebrate Mass Days" = "invmass"
+                "Invertebrate Mass" = "invmass"
               )
             ),
             conditionalPanel(id = "invmassControlPanel",
@@ -84,6 +84,12 @@ shinyUI(
                  p("Polygons identifying which parts of the Sacramento Valley are behind levees (dry) or directly exposed to rivers or floodways (wet)"),
                  actionButton("info_wetdry", "More Info", onclick ="window.open('https://flowwest.github.io/riceflows4ff/reference/ff_wetdry.html', '_blank')"),
                  downloadButton("download_wetdry", "Wet/Dry Sides (shp)", class="download_button"),
+             ),
+             div(class="download_item",
+                 h3("Project boundary"),
+                 p("Study area of the rice field drainage analysis."),
+                 actionButton("info_aoi", "More Info", onclick ="window.open('https://flowwest.github.io/riceflows4ff/reference/ff_aoi.html', '_blank')"),
+                 downloadButton("download_aoi", "Project Boundary (shp)", class="download_button"),
              ),
     )
   )
