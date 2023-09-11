@@ -5,7 +5,7 @@
 \alias{ff_fields}
 \title{Rice field geometries}
 \format{
-An object of class \code{sf} (inherits from \code{tbl_df}, \code{tbl}, \code{data.frame}) with 9628 rows and 6 columns.
+An object of class \code{sf} (inherits from \code{tbl_df}, \code{tbl}, \code{data.frame}) with 9628 rows and 7 columns.
 }
 \source{
 California Department of Water Resources Land Use Program - i15 Crop Mapping YYYY; FlowWest

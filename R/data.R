@@ -102,3 +102,14 @@
 #'
 #' plot(ff_wetdry)
 "ff_wetdry"
+
+#' @name ff_aoi
+#' @title Project Boundary
+#' @description This `sf` dataset contains a polygon defining the project boundary.
+#' @md
+#' @source County boundaries
+#' @examples
+#' head(ff_wetdry)
+#'
+#' plot(ff_wetdry)
+"ff_wetdry"
