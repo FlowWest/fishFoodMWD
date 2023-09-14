@@ -66,4 +66,7 @@ div.leaflet-Watersheds-pane, div.leaflet-WetDry-pane {
   font-weight: normal;
 }
 
+.download_item {
+  margin-top: 1em;
+  margin-bottom: 1em;
 }
