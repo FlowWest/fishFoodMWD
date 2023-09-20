@@ -56,7 +56,8 @@ watershed_xw <- ff_fields |>
   st_centroid() |>
   st_join(ff_watersheds) |>
   st_drop_geometry() |>
-  select(unique_id, group_id)
+  select(unique_id, group_id) |>
+  mutate(group_id = case_when(unique_id=="0405891" ~ "1802015901", TRUE ~ group_id)) # a manual override of one field that's just over the border
 
 ff_fields <- ff_fields |>
   left_join(watershed_xw) |>
