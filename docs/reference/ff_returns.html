@@ -71,7 +71,7 @@
 
     <div id="format">
     <h2>Format</h2>
-    <p>An object of class <code>sf</code> (inherits from <code>tbl_df</code>, <code>tbl</code>, <code>data.frame</code>) with 38 rows and 8 columns.</p>
+    <p>An object of class <code>sf</code> (inherits from <code>tbl_df</code>, <code>tbl</code>, <code>data.frame</code>) with 38 rows and 10 columns.</p>
     </div>
     <div id="source">
     <h2>Source</h2>
@@ -86,17 +86,19 @@
 <li><p><code>ds_return_id</code> = for Indirect returns, the <code>return_id</code> of the downstream return that this return flows into, else the identifier of this same return if it directly flows into a salmonid rearing stream. (i.e., if the return is on a salmonid rearing stream, the <code>return_id</code> and <code>ds_return_id</code> will be identical. If the point of return is in a canal or secondary drainage, upstream of salmonid rearing stream, this number will identify the location at which this secondary drainage enters a fish bearing stream.)</p></li>
 <li><p><code>ds_fbs_dist</code> = for Indirect returns, the distance from this return to the downstream return to a salmonid rearing stream, else zero</p></li>
 <li><p><code>ds_fbs_name</code> = name of the salmonid rearing stream that the return drains directly or indirectly into</p></li>
+<li><p><code>area_ac</code> = total area of rice field polygons draining into this return point, calculated in acres</p></li>
+<li><p><code>volume_af</code> = total inundated volume of rice fields draining into this return point, assuming 5 inches of water</p></li>
 </ul></div>
 
     <div id="ref-examples">
     <h2>Examples</h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">ff_returns</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Simple feature collection with 6 features and 7 fields</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Simple feature collection with 6 features and 9 fields</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Geometry type: POINT</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Dimension:     XY</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Bounding box:  xmin: 6600611 ymin: 1826703 xmax: 6674516 ymax: 2151073</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Projected CRS: NAD83(2011) / California zone 2 (ftUS)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 6 × 8</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 6 × 10</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   return_name           return_id water_sup ds_return_id ds_fbs_dist ds_fbs_name</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                     <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>            <span style="color: #949494; font-style: italic;">&lt;int&gt;</span>       <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>      </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">1</span> Sacramento River Dee…         1 <span style="color: #BB0000;">NA</span>                   1           0 North Delta</span>
@@ -105,7 +107,8 @@
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">4</span> Rough and Ready Pump…        11 <span style="color: #BB0000;">NA</span>                  11           0 Lower-mid …</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">5</span> Drainage Pumping Pla…        12 Unidenti…           12           0 Upper-mid …</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">6</span> Karnak Drainage Faci…        16 Unidenti…           16           0 Lower-mid …</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># ℹ 2 more variables: geometry &lt;POINT [US_survey_foot]&gt;, return_direct &lt;chr&gt;</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># ℹ 4 more variables: geometry &lt;POINT [US_survey_foot]&gt;, return_direct &lt;chr&gt;,</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   area_ac &lt;dbl&gt;, volume_af &lt;dbl&gt;</span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">ff_returns</span><span class="op">$</span><span class="va">geometry</span><span class="op">)</span></span></span>
 <span class="r-plt img"><img src="ff_returns-1.png" alt="" width="700" height="433"></span>

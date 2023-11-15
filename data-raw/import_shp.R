@@ -52,6 +52,8 @@ ff_fields <-
   st_transform(project_crs) |>
   select(unique_id, county, elev_grp)
 
+# Add watershed attributes to the fields layer
+
 watershed_xw <- ff_fields |>
   st_centroid() |>
   st_join(ff_watersheds) |>
@@ -64,6 +66,38 @@ ff_fields <- ff_fields |>
   mutate(area_ac = units::drop_units(units::set_units(st_area(geometry), "acre")),
          volume_af = area_ac * 5/12) |>
   st_zm()
+
+# Summarize field areas/volumes at the watershed scale
+watershed_vols <- ff_fields |>
+  st_drop_geometry() |>
+  group_by(group_id) |>
+  summarize(area_ac = sum(area_ac),
+            volume_af = sum(volume_af))
+
+# Go back and add the return type and field areas/volumes to the watersheds layer
+ff_watersheds <- ff_watersheds |>
+  left_join(ff_returns |> st_drop_geometry() |> select(return_id, return_direct)) |>
+  mutate(return_direct = dplyr::case_when(return_direct %in% c("Direct", "Indirect") ~ return_direct, TRUE ~ "Lateral")) |>
+  rename(return_category = return_direct) |>
+  left_join(watershed_vols)
+
+# Summarize field areas/volumes at the return scale
+return_vols <- ff_watersheds |>
+  st_drop_geometry() |>
+  group_by(return_id) |>
+  summarize(area_ac = sum(area_ac),
+            volume_af = sum(volume_af))
+
+# Go back and add the field areas/volumes to the returns layer
+ff_returns <- ff_returns |>
+  left_join(return_vols)
+
+# FULLY JOINED FIELDS DATASET TO USE IN LEAFLET
+
+ff_fields_joined <- ff_fields |>
+  left_join(ff_watersheds |> st_drop_geometry() |> select(-c(area_ac, volume_af)), by = join_by("group_id")) |>
+  left_join(ff_returns |> st_drop_geometry() |> select(-c(return_direct, area_ac, volume_af)), by = join_by("return_id")) |>
+  left_join(ff_distances |> select(-return_id), by = join_by("unique_id"))
 
 # BASEMAP LAYERS
 
@@ -91,19 +125,6 @@ ff_aoi <-
   st_transform(project_crs) |>
   summarize() |>
   st_zm()
-
-# Go back and add the return type to the watersheds layer
-ff_watersheds <- ff_watersheds |>
-  left_join(ff_returns |> st_drop_geometry() |> select(return_id, return_direct)) |>
-  mutate(return_direct = dplyr::case_when(return_direct %in% c("Direct", "Indirect") ~ return_direct, TRUE ~ "Lateral")) |>
-  rename(return_category = return_direct)
-
-# FULLY JOINED FIELDS DATASET TO USE IN LEAFLET
-
-ff_fields_joined <- ff_fields |>
-  left_join(ff_watersheds |> st_drop_geometry(), by = join_by("group_id")) |>
-  left_join(ff_returns |> st_drop_geometry() |> select(-return_direct), by = join_by("return_id")) |>
-  left_join(ff_distances |> select(-return_id), by = join_by("unique_id"))
 
 # export tabular datasets
 usethis::use_data(ff_distances, overwrite = TRUE)
