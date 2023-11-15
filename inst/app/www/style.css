@@ -18,6 +18,19 @@ div.leaflet-Watersheds-pane, div.leaflet-WetDry-pane {
   mix-blend-mode: multiply;
 }
 
+.leaflet-container {
+  background-color: white;
+}
+.leaflet-Basemap-pane {
+  opacity: 0.75;
+  filter: saturate(0.75);
+}
+.leaflet-Reference-pane {
+  filter: saturate(0);
+  mix-blend-mode: multiply;
+  opacity: 0.33;
+}
+
 #invmassControlPanel {
   background: white;
   padding: 1em;
@@ -70,3 +83,9 @@ div.leaflet-Watersheds-pane, div.leaflet-WetDry-pane {
   margin-top: 1em;
   margin-bottom: 1em;
 }
+
+.leaflet-control-attribution {
+  max-width: calc(75vw - 200px);
+}
+
+
