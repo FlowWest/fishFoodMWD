@@ -20,16 +20,37 @@
 ff_make_leaflet <- function(bbox=c(xmin=-122.3, ymin=38.5, xmax=-121.3, ymax=39.7)) {
   m <- leaflet::leaflet() |>
     leaflet::addMapPane("Basemap", zIndex = 400) |>
+    leaflet::addMapPane("Reference", zIndex = 495) |>
     leaflet::addMapPane("Watersheds", zIndex = 440) |>
     leaflet::addMapPane("WetDry", zIndex = 450) |>
     leaflet::addMapPane("Fields", zIndex = 460) |>
     leaflet::addMapPane("Flowlines", zIndex = 470) |>
     leaflet::addMapPane("Returns", zIndex = 480) |>
     leaflet::addMapPane("AOI", zIndex = 490) |>
-    leaflet::addProviderTiles(leaflet::providers$Stamen.Terrain,
-                              options = leaflet::providerTileOptions(noWrap = TRUE,
-                                                                     opacity = 0.5,
-                                                                     pane = "Basemap")) |>
+    leaflet::addTiles(urlTemplate = 'https://server.arcgisonline.com/ArcGIS/rest/services/Ocean/World_Ocean_Base/MapServer/tile/{z}/{y}/{x}',
+             #attribution = 'Basemap tiles &copy; Esri &mdash; Sources: GEBCO, NOAA, CHS, OSU, UNH, CSUMB, National Geographic, DeLorme, NAVTEQ, and Esri',
+             options = leaflet::tileOptions(noWrap = TRUE,
+                                            opacity = 1,
+                                            maxNativeZoom = 13,
+                                            maxZoom = 13,
+                                            pane = "Basemap"
+             )) |>
+    leaflet::addTiles(urlTemplate = 'https://server.arcgisonline.com/ArcGIS/rest/services/Reference/World_Reference_Overlay/MapServer/tile/{z}/{y}/{x}',
+                      #attribution = 'Reference tiles &copy; Esri &mdash; Source: USGS, Esri, TANA, DeLorme, and NPS',
+                      options = leaflet::tileOptions(noWrap = TRUE,
+                                                     opacity = 1,
+                                                     minZoom = 10,
+                                                     pane = "Reference"
+                      )) |>
+    leaflet::addTiles(urlTemplate = 'https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}',
+             #attribution = 'Imagery tiles &copy; Esri &mdash; Source: Esri, i-cubed, USDA, USGS, AEX, GeoEye, Getmapping, Aerogrid, IGN, IGP, UPR-EGP, and the GIS User Community',
+             options = leaflet::tileOptions(noWrap = TRUE,
+                                   opacity = 0.5,
+                                   minZoom = 14,
+                                   maxNativeZoom = 23,
+                                   pane = "Basemap"
+             )) |>
+    leaflet::addTiles(urlTemplate = "", attribution = 'Tiles &copy; Esri &mdash; Sources: GEBCO, NOAA, CHS, OSU, UNH, CSUMB, National Geographic, DeLorme, NAVTEQ, IGN, IGP, UPR-EGP, i-cubed, USDA, USGS, AEX, GeoEye, Getmapping, Aerogrid, Esri, and the GIS User Community') |>
     leaflet::fitBounds(lng1 = bbox[["xmin"]],
                        lat1 = bbox[["ymin"]],
                        lng2 = bbox[["xmax"]],
