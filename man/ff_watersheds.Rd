@@ -22,8 +22,8 @@ This \code{sf} dataset contains watershed polygons used to group rice fields and
 \item \code{return_id} = the corresponding unique identifier of the return point, used to join to the \code{returns} dataset. For watersheds with a \code{return_id} of zero, fields are assumed to flow laterally into the nearest major stream rather than via the return point.
 \item \code{huc10} = the original HUC10 identifier from the NHD dataset
 \item \code{watershed_name} = the original HUC10 common name from the NHD dataset
-\item \code{area_ac} = total area of rice field polygons contained in this watershed, calculated in acres
-\item \code{volume_af} = total inundated volume of rice fields contained in this watershed, assuming 5 inches of water
+\item \code{area_ac_within} = total area of rice field polygons contained in this watershed, calculated in acres
+\item \code{volume_af_within} = total inundated volume of rice fields contained in this watershed, assuming 5 inches of water
 }
 }
 \examples{

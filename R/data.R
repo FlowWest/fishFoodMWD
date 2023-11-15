@@ -10,8 +10,8 @@
 #' * `ds_return_id` = for Indirect returns, the `return_id` of the downstream return that this return flows into, else the identifier of this same return if it directly flows into a salmonid rearing stream. (i.e., if the return is on a salmonid rearing stream, the `return_id` and `ds_return_id` will be identical. If the point of return is in a canal or secondary drainage, upstream of salmonid rearing stream, this number will identify the location at which this secondary drainage enters a fish bearing stream.)
 #' * `ds_fbs_dist` = for Indirect returns, the distance from this return to the downstream return to a salmonid rearing stream, else zero
 #' * `ds_fbs_name` = name of the salmonid rearing stream that the return drains directly or indirectly into
-#' * `area_ac` = total area of rice field polygons draining into this return point, calculated in acres
-#' * `volume_af` = total inundated volume of rice fields draining into this return point, assuming 5 inches of water
+#' * `area_ac_drained` = total area of rice field polygons draining into this return point, calculated in acres
+#' * `volume_af_drained` = total inundated volume of rice fields draining into this return point, assuming 5 inches of water
 #' @md
 #' @source [Bethany Hackenjos](mailto:bhackenjos@flowwest.com), [Aidan Kelleher](mailto:akelleher@flowwest.com), [Skyler Lewis](mailto:slewis@flowwest.com), FlowWest, 2023.
 #' @examples
@@ -28,8 +28,8 @@
 #' * `return_id` = the corresponding unique identifier of the return point, used to join to the `returns` dataset. For watersheds with a `return_id` of zero, fields are assumed to flow laterally into the nearest major stream rather than via the return point.
 #' * `huc10` = the original HUC10 identifier from the NHD dataset
 #' * `watershed_name` = the original HUC10 common name from the NHD dataset
-#' * `area_ac` = total area of rice field polygons contained in this watershed, calculated in acres
-#' * `volume_af` = total inundated volume of rice fields contained in this watershed, assuming 5 inches of water
+#' * `area_ac_within` = total area of rice field polygons contained in this watershed, calculated in acres
+#' * `volume_af_within` = total inundated volume of rice fields contained in this watershed, assuming 5 inches of water
 #' @md
 #' @source Developed by [Bethany Hackenjos](mailto:bhackenjos@flowwest.com), FlowWest, 2023, based on USGS NHD/Watershed Boundary Dataset.
 #' @examples

@@ -71,22 +71,23 @@ ff_fields <- ff_fields |>
 watershed_vols <- ff_fields |>
   st_drop_geometry() |>
   group_by(group_id) |>
-  summarize(area_ac = sum(area_ac),
-            volume_af = sum(volume_af))
+  summarize(area_ac_within = sum(area_ac),
+            volume_af_within = sum(volume_af))
 
 # Go back and add the return type and field areas/volumes to the watersheds layer
 ff_watersheds <- ff_watersheds |>
-  left_join(ff_returns |> st_drop_geometry() |> select(return_id, return_direct)) |>
-  mutate(return_direct = dplyr::case_when(return_direct %in% c("Direct", "Indirect") ~ return_direct, TRUE ~ "Lateral")) |>
-  rename(return_category = return_direct) |>
+  left_join(ff_returns |> st_drop_geometry() |> select(return_id, return_direct, ds_fbs_dist)) |>
+  mutate(return_category = dplyr::case_when(return_direct %in% c("Direct", "Indirect") ~ return_direct, TRUE ~ "Lateral"),
+         indirect_dist = dplyr::if_else(return_category == "Indirect", ds_fbs_dist, NA)) |>
+  select(-c(return_direct, ds_fbs_dist)) |>
   left_join(watershed_vols)
 
 # Summarize field areas/volumes at the return scale
 return_vols <- ff_watersheds |>
   st_drop_geometry() |>
   group_by(return_id) |>
-  summarize(area_ac = sum(area_ac),
-            volume_af = sum(volume_af))
+  summarize(area_ac_drained = sum(area_ac_within),
+            volume_af_drained = sum(volume_af_within))
 
 # Go back and add the field areas/volumes to the returns layer
 ff_returns <- ff_returns |>
@@ -95,8 +96,8 @@ ff_returns <- ff_returns |>
 # FULLY JOINED FIELDS DATASET TO USE IN LEAFLET
 
 ff_fields_joined <- ff_fields |>
-  left_join(ff_watersheds |> st_drop_geometry() |> select(-c(area_ac, volume_af)), by = join_by("group_id")) |>
-  left_join(ff_returns |> st_drop_geometry() |> select(-c(return_direct, area_ac, volume_af)), by = join_by("return_id")) |>
+  left_join(ff_watersheds |> st_drop_geometry() |> select(-c()), by = join_by("group_id")) |>
+  left_join(ff_returns |> st_drop_geometry() |> select(-c(return_direct)), by = join_by("return_id")) |>
   left_join(ff_distances |> select(-return_id), by = join_by("unique_id"))
 
 # BASEMAP LAYERS
