@@ -5,7 +5,7 @@
 \alias{ff_watersheds}
 \title{Watersheds}
 \format{
-An object of class \code{sf} (inherits from \code{tbl_df}, \code{tbl}, \code{data.frame}) with 47 rows and 8 columns.
+An object of class \code{sf} (inherits from \code{tbl_df}, \code{tbl}, \code{data.frame}) with 47 rows and 9 columns.
 }
 \source{
 Developed by \href{mailto:bhackenjos@flowwest.com}{Bethany Hackenjos}, FlowWest, 2023, based on USGS NHD/Watershed Boundary Dataset.
