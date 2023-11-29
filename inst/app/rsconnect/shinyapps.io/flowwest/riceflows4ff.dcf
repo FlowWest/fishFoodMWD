@@ -1,0 +1,12 @@
+name: riceflows4ff
+title: riceflows4ff
+username: flowwest
+account: flowwest
+server: shinyapps.io
+hostUrl: https://api.shinyapps.io/v1
+appId: 9810184
+bundleId: 7931562
+url: https://flowwest.shinyapps.io/riceflows4ff/
+version: 1
+asMultiple: FALSE
+asStatic: FALSE

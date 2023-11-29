@@ -81,6 +81,37 @@ ff_watersheds |>
     ggplot2::scale_x_continuous(breaks = seq(-122.5, -120.5, by=0.5))
 ```
 
+Now summarize that result by return point
+
+```{r}
+total_prod_by_return <- ff_watersheds |>
+  select(group_id, return_id) |>
+  inner_join(ff_returns |> st_drop_geometry()) |>
+  inner_join(total_prod_by_group) |>
+  group_by(return_id, return_name, return_direct, ds_fbs_dist, area_ac_drained, volume_af_drained) |>
+  summarize(sum_total_prod_kg = sum(sum_total_prod_kg)) |>
+  st_drop_geometry()
+
+total_prod_by_return |> arrange(-sum_total_prod_kg) |> knitr::kable()
+
+```
+
+Plot total field area drained (i.e. volume inundated, i.e. invertebrate mass produced) against flow distance to start to understand which return points are most optimal for fish food production. The upper left quadrant has high field area combined with direct or nearly direct flow to salmonid rearing streams.   
+
+```{r}
+total_prod_by_return |> ggplot(aes(x = ds_fbs_dist/5280, y = area_ac_drained)) + 
+  geom_point(color = "gray") + 
+  geom_text(aes(label = paste(return_id, return_name)), hjust = "left", size = 2.5) + 
+  scale_y_continuous(trans = "sqrt") + 
+  scale_x_continuous(trans = "sqrt", expand = expansion(add = c(0,2))) +
+  xlab("Flow distance (mi) to nearest salmonid rearing stream") +
+  ylab("Area (ac) of rice fields drained") + 
+  coord_cartesian(clip="off")
+```
+
+
+
+
 These results will always be directly proportional to total rice field acreage, as this is the only input into the relationship. 
 
 The `ff_calc_inv_mass_ts` function returns the growth in biomass over time for a selected number of days. This returns a simple `tibble` in the following format...

@@ -5,7 +5,7 @@
 \alias{ff_returns}
 \title{Return points}
 \format{
-An object of class \code{sf} (inherits from \code{tbl_df}, \code{tbl}, \code{data.frame}) with 38 rows and 8 columns.
+An object of class \code{sf} (inherits from \code{tbl_df}, \code{tbl}, \code{data.frame}) with 38 rows and 10 columns.
 }
 \source{
 \href{mailto:bhackenjos@flowwest.com}{Bethany Hackenjos}, \href{mailto:akelleher@flowwest.com}{Aidan Kelleher}, \href{mailto:slewis@flowwest.com}{Skyler Lewis}, FlowWest, 2023.
@@ -26,6 +26,8 @@ This dataset contains a combination of pump export locations and apparent waters
 \item \code{ds_return_id} = for Indirect returns, the \code{return_id} of the downstream return that this return flows into, else the identifier of this same return if it directly flows into a salmonid rearing stream. (i.e., if the return is on a salmonid rearing stream, the \code{return_id} and \code{ds_return_id} will be identical. If the point of return is in a canal or secondary drainage, upstream of salmonid rearing stream, this number will identify the location at which this secondary drainage enters a fish bearing stream.)
 \item \code{ds_fbs_dist} = for Indirect returns, the distance from this return to the downstream return to a salmonid rearing stream, else zero
 \item \code{ds_fbs_name} = name of the salmonid rearing stream that the return drains directly or indirectly into
+\item \code{area_ac_drained} = total area of rice field polygons draining into this return point, calculated in acres
+\item \code{volume_af_drained} = total inundated volume of rice fields draining into this return point, assuming 5 inches of water
 }
 }
 \examples{

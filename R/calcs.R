@@ -8,8 +8,8 @@
 #' # calculate the invertebrate mass after 14 days for each field
 #' ff_fields |> ff_calc_inv_mass(14)
 #' @md
-ff_calc_inv_mass <- function(df, day) {
-  df$area_m2 = df$area_ac * 4047
+ff_calc_inv_mass <- function(df, day, varname = area_ac) {
+  df$area_m2 = df |> dplyr::pull({{varname}}) * 4047
   df$daily_prod_kg = df$area_m2 * 0.186 / 1000
   if (!missing(day)){
     df$total_prod_kg = df$daily_prod_kg * day

@@ -5,7 +5,7 @@
 \alias{ff_watersheds}
 \title{Watersheds}
 \format{
-An object of class \code{sf} (inherits from \code{tbl_df}, \code{tbl}, \code{data.frame}) with 47 rows and 6 columns.
+An object of class \code{sf} (inherits from \code{tbl_df}, \code{tbl}, \code{data.frame}) with 47 rows and 9 columns.
 }
 \source{
 Developed by \href{mailto:bhackenjos@flowwest.com}{Bethany Hackenjos}, FlowWest, 2023, based on USGS NHD/Watershed Boundary Dataset.
@@ -22,6 +22,8 @@ This \code{sf} dataset contains watershed polygons used to group rice fields and
 \item \code{return_id} = the corresponding unique identifier of the return point, used to join to the \code{returns} dataset. For watersheds with a \code{return_id} of zero, fields are assumed to flow laterally into the nearest major stream rather than via the return point.
 \item \code{huc10} = the original HUC10 identifier from the NHD dataset
 \item \code{watershed_name} = the original HUC10 common name from the NHD dataset
+\item \code{area_ac_within} = total area of rice field polygons contained in this watershed, calculated in acres
+\item \code{volume_af_within} = total inundated volume of rice fields contained in this watershed, assuming 5 inches of water
 }
 }
 \examples{
